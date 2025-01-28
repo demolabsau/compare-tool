@@ -1,20 +1,18 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import _ from 'lodash';
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
-import { LuChevronRight, LuChevronDown, LuPlus, LuMinus, LuClipboardPenLine } from 'react-icons/lu';
-import { convertReport, type Report, type ConversionResult } from '@/lib/convert';
+import { Button } from "@/components/ui/button";
+import { LuChevronRight, LuChevronDown, LuPlus, LuMinus, LuClipboardPenLine, LuSave } from 'react-icons/lu';
+import { convertReport, type Report } from '@/lib/convert';
+import type { JsonValue, FileType, DiffStatus, JsonObject } from '@/types';
+import { compareObjects } from './lib/compare';
 
-type JsonValue = string | number | boolean | null | JsonArray | JsonObject;
-type JsonArray = JsonValue[];
-type JsonObject = { [key: string]: JsonValue };
-
-type DiffStatus = 'same' | 'added' | 'removed' | 'modified';
-type FileType = 'pre-process' | 'post-process';
+// Properties to ignore during comparison
+const IGNORED_PROPERTIES = ['id', 'source_entity', 'target_entity'];
 
 interface FileWithType {
   content: JsonValue;
@@ -23,7 +21,7 @@ interface FileWithType {
 
 interface TreeNodeProps {
   value: JsonValue;
-  otherValue: JsonValue;
+  otherValue: JsonValue | undefined;
   path: string;
   side: 'left' | 'right';
   level: number;
@@ -51,8 +49,14 @@ const App: React.FC = () => {
     return content;
   };
 
+  const compareResult = useMemo(() => {
+    if (!leftFile?.content || !rightFile?.content) return null;
+
+    return compareObjects(leftFile.content, rightFile.content, IGNORED_PROPERTIES);
+  }, [leftFile, rightFile]);
+
   const handleFileUpload = async (
-    e: React.ChangeEvent<HTMLInputElement>, 
+    e: React.ChangeEvent<HTMLInputElement>,
     side: 'left' | 'right',
     type: FileType
   ): Promise<void> => {
@@ -63,7 +67,7 @@ const App: React.FC = () => {
       const text = await file.text();
       const json = JSON.parse(text) as JsonValue;
       const processedJson = processJsonContent(json, type);
-      
+
       const fileWithType: FileWithType = {
         content: processedJson,
         type
@@ -90,13 +94,37 @@ const App: React.FC = () => {
     setExpandedPaths(newExpanded);
   };
 
-  const compareValues = (left: JsonValue | undefined, right: JsonValue | undefined): DiffStatus => {
-    if (_.isEqual(left, right)) return 'same';
+  const compareValues = (left: JsonValue | undefined, right: JsonValue | undefined, currentPath: string = ''): DiffStatus => {
+    // Get the last part of the path (the property name)
+    const pathParts = currentPath.split('.');
+    const currentProperty = pathParts[pathParts.length - 1];
+
+    // If the current property is in the ignored list, treat the values as equal
+    if (IGNORED_PROPERTIES.includes(currentProperty)) {
+      return 'same';
+    }
+
+    // Handle undefined cases
     if (left === undefined) return 'added';
     if (right === undefined) return 'removed';
-    if (typeof left !== typeof right) return 'modified';
-    if (Array.isArray(left) !== Array.isArray(right)) return 'modified';
-    return 'modified';
+    
+    // If both values are objects (but not arrays), compare their non-ignored properties
+    if (typeof left === 'object' && typeof right === 'object' && 
+        left !== null && right !== null && 
+        !Array.isArray(left) && !Array.isArray(right)) {
+      
+      const leftObj = left as JsonObject;
+      const rightObj = right as JsonObject;
+      
+      // Filter out ignored properties before comparison
+      const filteredLeft = _.omit(leftObj, IGNORED_PROPERTIES);
+      const filteredRight = _.omit(rightObj, IGNORED_PROPERTIES);
+      
+      return _.isEqual(filteredLeft, filteredRight) ? 'same' : 'modified';
+    }
+
+    // For other types (including arrays), use direct comparison
+    return _.isEqual(left, right) ? 'same' : 'modified';
   };
 
   const renderValue = (value: JsonValue | undefined): string => {
@@ -127,11 +155,11 @@ const App: React.FC = () => {
   };
 
   const renderTreeNode = ({ value, otherValue, path, side, level }: TreeNodeProps): JSX.Element => {
-    const diffStatus = compareValues(value, otherValue);
+    const diffStatus = compareValues(value, otherValue, path);
     const isExpanded = expandedPaths.has(path);
     const pathParts = path.split('.');
     const key = pathParts[pathParts.length - 1] || 'root';
-    
+
     const isExpandable = (
       (typeof value === 'object' && value !== null) ||
       (typeof otherValue === 'object' && otherValue !== null)
@@ -144,10 +172,14 @@ const App: React.FC = () => {
       }
     };
 
+    // If this is an ignored property, show it in gray
+    const isIgnoredProperty = IGNORED_PROPERTIES.includes(key);
+    const statusColor = isIgnoredProperty ? 'text-gray-400' : getStatusColor(diffStatus);
+
     return (
       <div key={`${side}-${path}`} className="py-1">
-        <div 
-          className={`flex items-center hover:bg-gray-50 cursor-pointer ${getStatusColor(diffStatus)}`}
+        <div
+          className={`flex items-center hover:bg-gray-50 cursor-pointer ${statusColor}`}
           onClick={handleClick}
           style={{ marginLeft: `${level * 16}px` }}
         >
@@ -156,20 +188,23 @@ const App: React.FC = () => {
               {isExpanded ? <LuChevronDown size={16} /> : <LuChevronRight size={16} />}
             </span>
           )}
-          {getStatusIcon(diffStatus)}
+          {!isIgnoredProperty && getStatusIcon(diffStatus)}
           <span className="font-semibold mx-2">{key}:</span>
           <span className="font-mono text-sm">
             {!isExpanded && renderValue(value)}
           </span>
+          {isIgnoredProperty && (
+            <span className="ml-2 text-xs text-gray-400">(ignored in comparison)</span>
+          )}
         </div>
 
         {isExpanded && isExpandable && value && typeof value === 'object' && (
           <div>
             {Object.entries(value).map(([childKey, childValue]) => {
               const newPath = path ? `${path}.${childKey}` : childKey;
-              const otherChildValue = otherValue && typeof otherValue === 'object' ? 
+              const otherChildValue = otherValue && typeof otherValue === 'object' ?
                 (otherValue as JsonObject)[childKey] : undefined;
-              
+
               return renderTreeNode({
                 value: childValue,
                 otherValue: otherChildValue,
@@ -189,7 +224,7 @@ const App: React.FC = () => {
     label: string;
   }> = ({ side, label }) => {
     const [fileType, setFileType] = useState<FileType>('post-process');
-    
+
     return (
       <div className="space-y-4">
         <Input
@@ -204,7 +239,7 @@ const App: React.FC = () => {
           name={`${side}-file-type`}
           defaultValue="post-process"
           className="flex items-center space-x-4"
-          onValueChange={setFileType}
+          onValueChange={(value) => setFileType(value as FileType)}
         >
           <div className="flex items-center space-x-2">
             <RadioGroupItem value="pre-process" id={`${side}-pre`} />
@@ -223,13 +258,13 @@ const App: React.FC = () => {
     if (!leftFile?.content || !rightFile?.content) return null;
 
     return (
-      <div className="grid grid-cols-2 gap-4">
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-lg">Left JSON ({leftFile.type})</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <ScrollArea className="h-[600px] w-full rounded-md border p-4">
+      <div className="grid grid-cols-2 gap-2">
+        <div>
+          <div>
+            <h1 className='text-lg font-bold my-4'>Left JSON ({leftFile.type})</h1>
+          </div>
+          <div>
+            <ScrollArea className="h-[700px] w-full rounded-md border p-2">
               {renderTreeNode({
                 value: leftFile.content,
                 otherValue: rightFile.content,
@@ -238,15 +273,15 @@ const App: React.FC = () => {
                 level: 0
               })}
             </ScrollArea>
-          </CardContent>
-        </Card>
+          </div>
+        </div>
 
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-lg">Right JSON ({rightFile.type})</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <ScrollArea className="h-[600px] w-full rounded-md border p-4">
+        <div>
+          <div>
+            <h1 className="text-lg font-bold my-4">Right JSON ({rightFile.type})</h1>
+          </div>
+          <div>
+            <ScrollArea className="h-[700px] w-full rounded-md border p-2">
               {renderTreeNode({
                 value: rightFile.content,
                 otherValue: leftFile.content,
@@ -255,34 +290,19 @@ const App: React.FC = () => {
                 level: 0
               })}
             </ScrollArea>
-          </CardContent>
-        </Card>
+          </div>
+        </div>
       </div>
     );
   };
 
   return (
     <div className="p-4 max-w-6xl mx-auto space-y-4">
-      <Card>
-        <CardHeader>
-          <CardTitle>JSON Comparison Tool</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="flex items-center space-x-4 mb-4">
-            <div className="flex space-x-2 items-center">
-              <LuPlus size={16} className="text-green-600" />
-              <span>Added</span>
-            </div>
-            <div className="flex space-x-2 items-center">
-              <LuMinus size={16} className="text-red-600" />
-              <span>Removed</span>
-            </div>
-            <div className="flex space-x-2 items-center">
-              <LuClipboardPenLine size={16} className="text-yellow-600" />
-              <span>Modified</span>
-            </div>
-          </div>
-          
+      <div>
+        <div className='text-2xl font-semibold mb-4'>
+          Lineage Report Comparison Tool
+        </div>
+        <div>
           <div className="grid grid-cols-2 gap-4">
             <FileUploadSection side="left" label="Left File" />
             <FileUploadSection side="right" label="Right File" />
@@ -293,11 +313,79 @@ const App: React.FC = () => {
               <AlertDescription>{error}</AlertDescription>
             </Alert>
           )}
-        </CardContent>
-      </Card>
+        </div>
+      </div>
 
       {renderComparison()}
+
+      <div className="flex items-center space-x-4 mb-4">
+        <div className="flex space-x-2 items-center">
+          <LuPlus size={16} className="text-green-600" />
+          <span className="text-green-600">Added</span>
+        </div>
+        <div className="flex space-x-2 items-center">
+          <LuMinus size={16} className="text-red-600" />
+          <span className="text-red-600">Removed</span>
+        </div>
+        <div className="flex space-x-2 items-center">
+          <LuClipboardPenLine size={16} className="text-yellow-600" />
+          <span className="text-yellow-600">Modified</span>
+        </div>
+      </div>
+
+      {
+        compareResult && (
+          <div className="flex flex-col space-y-2 border p-4 rounded-md">
+            <span className='font-semibold'>Similarity: {compareResult.similarityPercentage} %</span>
+            <span className='font-semibold'>Matching Properties: {compareResult.matchingProperties}</span>
+            <span className='font-semibold'>Total Properties: {compareResult.totalProperties}</span>
+          </div>
+        )
+      }
+      <div className="flex items-center space-x-4 my-4">
+        <SaveButton file={leftFile} side="left" disabled={!!error || !leftFile} />
+        <SaveButton file={rightFile} side="right" disabled={!!error || !rightFile} />
+      </div>
     </div>
+  );
+};
+
+interface SaveButtonProps {
+  file: FileWithType | null;
+  side: 'left' | 'right';
+  disabled?: boolean;
+}
+
+const SaveButton: React.FC<SaveButtonProps> = ({ file, side, disabled }) => {
+  const handleSave = async () => {
+    if (!file) return;
+    
+    try {
+      const blob = new Blob([JSON.stringify(file.content, null, 2)], { type: 'application/json' });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `${side}-${file.type}-${new Date().toISOString()}.json`;
+      document.body.appendChild(a);
+      a.click();
+      window.URL.revokeObjectURL(url);
+      document.body.removeChild(a);
+    } catch (error) {
+      console.error(`Error saving ${side} file:`, error);
+    }
+  };
+
+  return (
+    <Button
+      onClick={handleSave}
+      disabled={disabled || !file}
+      variant="outline"
+      size="sm"
+      className="gap-2"
+    >
+      <LuSave className="w-4 h-4" />
+      Save {side === 'left' ? 'Left' : 'Right'} File
+    </Button>
   );
 };
 
