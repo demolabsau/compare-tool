@@ -44,7 +44,6 @@ const App: React.FC = () => {
         throw new Error('Failed to convert report format');
       }
     }
-    console.log(content)
     return content;
   };
 
@@ -62,7 +61,7 @@ const App: React.FC = () => {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    try {
+    // try {
       const text = await file.text();
       const json = JSON.parse(text) as JsonValue;
       const processedJson = processJsonContent(json, type);
@@ -78,9 +77,9 @@ const App: React.FC = () => {
         setRightFile(fileWithType);
       }
       setError('');
-    } catch (err) {
-      setError(`Error processing file: ${err instanceof Error ? err.message : 'Unknown error'}`);
-    }
+    // } catch (err) {
+    //   setError(`Error processing file: ${err instanceof Error ? err.message : 'Unknown error'}`);
+    // }
   };
 
   const togglePath = (path: string): void => {

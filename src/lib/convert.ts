@@ -206,8 +206,6 @@ function analyzeJob(jobs: { [key: string]: Job }): { [key: string]: any } {
           const stageData = stage as Stage;
           const stageGraph = stageData.graph;
 
-          console.log("Merging stage", stageData);
-          
           let stageMerged: MergedResult = { dataframe: {}, operation: {} };
           if (stageGraph) {
             stageMerged = mergeOperation(stageGraph);
@@ -228,7 +226,6 @@ function analyzeXmlReport(report: Report): MergedReport {
 
   for (const [xmlName, jobs] of Object.entries(report)) {
     if (typeof xmlName === 'string' && xmlName.toLowerCase().includes('.xml')) {
-      console.log("Analyzing XML report", jobs);
       const mergedJobs = analyzeJob(jobs as { [key: string]: Job });
       mergedReport[xmlName] = mergedJobs;
     }
@@ -245,8 +242,6 @@ function convertReport(originalReport: Report): ConversionResult {
     const merged = analyzeXmlReport(originalReport);
     mergedReport = merged;
   }
-  console.log(mergedReport);
-  
   return {
     mergedReport,
   };
