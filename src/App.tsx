@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from 'react';
 import _ from 'lodash';
 import { Input } from "@/components/ui/input";
-import { ScrollArea } from "@/components/ui/scroll-area";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
@@ -12,7 +12,7 @@ import type { JsonValue, FileType, DiffStatus, JsonObject } from '@/types';
 import { compareObjects } from './lib/compare';
 
 // Properties to ignore during comparison
-const IGNORED_PROPERTIES = ['id', 'source_entity', 'target_entity'];
+const IGNORED_PROPERTIES = ['id', 'source_entity', 'target_entity', 'dropped_columns'];
 
 interface FileWithType {
   content: JsonValue;
@@ -270,6 +270,7 @@ const App: React.FC = () => {
                 side: 'left',
                 level: 0
               })}
+              <ScrollBar orientation="horizontal" />
             </ScrollArea>
           </div>
         </div>
@@ -287,6 +288,7 @@ const App: React.FC = () => {
                 side: 'right',
                 level: 0
               })}
+              <ScrollBar orientation="horizontal" />
             </ScrollArea>
           </div>
         </div>
