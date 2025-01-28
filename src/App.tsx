@@ -222,7 +222,7 @@ const App: React.FC = () => {
   const FileUploadSection: React.FC<{
     side: 'left' | 'right';
     label: string;
-  }> = ({ side, label }) => {
+  }> = ({ side }) => {
     const [fileType, setFileType] = useState<FileType>('post-process');
 
     return (

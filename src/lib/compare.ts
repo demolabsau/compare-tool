@@ -38,6 +38,7 @@ function compareObjects(
         counted.add(value);
 
         if (isJsonArray(value)) {
+            //@ts-ignore
             return value.reduce((sum, item) => sum + countProperties(item, counted), 0 as number);
         }
 
