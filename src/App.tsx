@@ -38,7 +38,6 @@ const App: React.FC = () => {
       try {
         const report = content as Report;
         const { mergedReport } = convertReport(report);
-        console.log(mergedReport);
         return mergedReport;
       } catch (err) {
         console.error('Error converting report:', err);

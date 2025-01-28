@@ -1,6 +1,9 @@
 interface Stage {
   graph?: Graph;
   key_info?: MergedResult;
+  name?: string;
+  entity_type?: string;
+  entity_value?: string;
 }
 
 interface Process {
@@ -20,13 +23,11 @@ interface Report {
 }
 
 interface MergedReport {
-  entire_report?: MergedResult;
   [key: string]: any;
 }
 
 interface ConversionResult {
   mergedReport: MergedReport;
-  updatedReport: Report;
 }
 
 interface Column {
@@ -37,7 +38,13 @@ interface Column {
 interface Node {
   id: string;
   name: string;
+  entity_type?: string;
+  entity_value?: string;
   columns: Column[] | { [key: string]: string };
+}
+
+interface NodeResult extends Omit<Node, 'columns'> {
+  columns: { [key: string]: string };
 }
 
 interface CodeInfo {
@@ -75,7 +82,7 @@ interface MergedOperation {
 }
 
 interface MergedResult {
-  dataframe: { [key: string]: Omit<Node, 'name'> };
+  dataframe: { [key: string]: NodeResult };
   operation: { [key: string]: Omit<MergedOperation, 'source_entity_name' | 'target_entity_name'> };
 }
 
@@ -100,7 +107,7 @@ function mergeOperation(graph: Graph | undefined): MergedResult {
   const entityDict: { [key: string]: string } = {};
 
   // Process nodes and convert to object with name as key
-  const dataframe: { [key: string]: Omit<Node, 'name'> } = {};
+  const dataframe: { [key: string]: NodeResult } = {};
   const existingDataframeKeys = new Set<string>();
 
   for (const node of nodes) {
@@ -113,8 +120,12 @@ function mergeOperation(graph: Graph | undefined): MergedResult {
     const uniqueKey = generateUniqueKey(node.name, existingDataframeKeys);
     existingDataframeKeys.add(uniqueKey);
 
+    // Include additional node properties in the dataframe
     dataframe[uniqueKey] = {
       id: node.id,
+      name: node.name,
+      entity_type: node.entity_type,
+      entity_value: node.entity_value,
       columns: columns
     };
     entityDict[node.id] = node.name;
@@ -168,7 +179,6 @@ function mergeOperation(graph: Graph | undefined): MergedResult {
     const uniqueKey = generateUniqueKey(baseKey, existingOperationKeys);
     existingOperationKeys.add(uniqueKey);
 
-    // Create new operation object without source_entity_name and target_entity_name
     const { source_entity_name, target_entity_name, ...operationWithoutNames } = mergedOp;
     operation[uniqueKey] = operationWithoutNames;
   }
@@ -179,75 +189,66 @@ function mergeOperation(graph: Graph | undefined): MergedResult {
   };
 }
 
-function analyzeJob(jobs: { [key: string]: Job }): [{ [key: string]: any }, { [key: string]: Job }] {
+function analyzeJob(jobs: { [key: string]: Job }): { [key: string]: any } {
   const mergedReport: { [key: string]: any } = {};
 
   for (const [jobName, job] of Object.entries(jobs)) {
+    mergedReport[jobName] = {};
+    
     for (const [processName, process] of Object.entries(job)) {
-      const processGraph = process.graph;
-      const processMerged = mergeOperation(processGraph);
+      mergedReport[jobName][processName] = {
+        stages: {} as { [key: string]: MergedResult }
+      };
 
-      if (!mergedReport[jobName]) {
-        mergedReport[jobName] = {};
-      }
-
-      mergedReport[jobName][processName] = processMerged;
-      const mergedStages: { [key: string]: MergedResult } = {};
-      mergedReport[jobName][processName].stages = mergedStages;
-
+      // Process each stage
       for (const [stageName, stage] of Object.entries(process)) {
-        if (stageName !== "graph") {
-          const stageGraph = (stage as Stage).graph;
-          let stageMerged: MergedResult = { dataframe: {}, operation: {} };
+        if (stageName !== "graph" && stageName !== "key_info") {
+          const stageData = stage as Stage;
+          const stageGraph = stageData.graph;
+
+          console.log("Merging stage", stageData);
           
+          let stageMerged: MergedResult = { dataframe: {}, operation: {} };
           if (stageGraph) {
             stageMerged = mergeOperation(stageGraph);
           }
 
-          mergedStages[stageName] = stageMerged;
-          (stage as Stage).key_info = stageMerged;
+          mergedReport[jobName][processName].stages[stageName] = stageMerged;
+          stageData.key_info = stageMerged;
         }
       }
-      
-      process.key_info = processMerged;
     }
   }
 
-  return [mergedReport, jobs];
+  return mergedReport;
 }
 
-function analyzeXmlReport(report: Report): [MergedReport, Report] {
-  if (!report.graph) {
-    if (report?.report?.report_result?.graph) {
-      report.graph = report.report.report_result.graph;
-    } else {
-      console.log("No graph to merge");
-      return [{ entire_report: { dataframe: {}, operation: {} } }, report];
-    }
-  }
+function analyzeXmlReport(report: Report): MergedReport {
   const mergedReport: MergedReport = {};
-  const reportGraph = report.graph;
-  const reportMerged = mergeOperation(reportGraph);
-
-  mergedReport.entire_report = reportMerged;
-  report.key_info = reportMerged;
 
   for (const [xmlName, jobs] of Object.entries(report)) {
     if (typeof xmlName === 'string' && xmlName.toLowerCase().includes('.xml')) {
-      const [mergedJobs, updatedJobs] = analyzeJob(jobs as { [key: string]: Job });
+      console.log("Analyzing XML report", jobs);
+      const mergedJobs = analyzeJob(jobs as { [key: string]: Job });
       mergedReport[xmlName] = mergedJobs;
-      report[xmlName] = updatedJobs;
     }
   }
 
-  return [mergedReport, report];
+  return mergedReport;
 }
 
 function convertReport(originalReport: Report): ConversionResult {
-  const [mergedReport, updatedReport] = analyzeXmlReport(originalReport);
+  let mergedReport:MergedReport = {}
+  if (originalReport?.report) {
+    mergedReport = analyzeXmlReport(originalReport.report.report_result);
+  } else {
+    const merged = analyzeXmlReport(originalReport);
+    mergedReport = merged;
+  }
+  console.log(mergedReport);
+  
   return {
     mergedReport,
-    updatedReport
   };
 }
 
