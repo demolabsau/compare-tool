@@ -12,11 +12,12 @@ import type { JsonValue, FileType, DiffStatus, JsonObject } from '@/types';
 import { compareObjects } from './lib/compare';
 
 // Properties to ignore during comparison
-const IGNORED_PROPERTIES = ['id', 'source_entity', 'target_entity', 'dropped_columns'];
+export const IGNORED_PROPERTIES = ['id', 'source_entity', 'target_entity', 'dropped_columns', 'entity_value'];
 
 interface FileWithType {
   content: JsonValue;
   type: FileType;
+  name: string;
 }
 
 interface TreeNodeProps {
@@ -62,21 +63,23 @@ const App: React.FC = () => {
     if (!file) return;
 
     // try {
-      const text = await file.text();
-      const json = JSON.parse(text) as JsonValue;
-      const processedJson = processJsonContent(json, type);
+    const text = await file.text();
+    const json = JSON.parse(text) as JsonValue;
+    const processedJson = processJsonContent(json, type);
+    const fileName = file.name;
 
-      const fileWithType: FileWithType = {
-        content: processedJson,
-        type
-      };
+    const fileWithType: FileWithType = {
+      content: processedJson,
+      name: fileName,
+      type
+    };
 
-      if (side === 'left') {
-        setLeftFile(fileWithType);
-      } else {
-        setRightFile(fileWithType);
-      }
-      setError('');
+    if (side === 'left') {
+      setLeftFile(fileWithType);
+    } else {
+      setRightFile(fileWithType);
+    }
+    setError('');
     // } catch (err) {
     //   setError(`Error processing file: ${err instanceof Error ? err.message : 'Unknown error'}`);
     // }
@@ -93,35 +96,54 @@ const App: React.FC = () => {
   };
 
   const compareValues = (left: JsonValue | undefined, right: JsonValue | undefined, currentPath: string = ''): DiffStatus => {
-    // Get the last part of the path (the property name)
-    const pathParts = currentPath.split('.');
-    const currentProperty = pathParts[pathParts.length - 1];
-
-    // If the current property is in the ignored list, treat the values as equal
-    if (IGNORED_PROPERTIES.includes(currentProperty)) {
-      return 'same';
-    }
-
     // Handle undefined cases
     if (left === undefined) return 'added';
     if (right === undefined) return 'removed';
-    
-    // If both values are objects (but not arrays), compare their non-ignored properties
-    if (typeof left === 'object' && typeof right === 'object' && 
-        left !== null && right !== null && 
-        !Array.isArray(left) && !Array.isArray(right)) {
-      
+
+    // If both values are objects (but not arrays), compare their properties recursively
+    if (typeof left === 'object' && typeof right === 'object' &&
+      left !== null && right !== null &&
+      !Array.isArray(left) && !Array.isArray(right)) {
+
       const leftObj = left as JsonObject;
       const rightObj = right as JsonObject;
-      
-      // Filter out ignored properties before comparison
-      const filteredLeft = _.omit(leftObj, IGNORED_PROPERTIES);
-      const filteredRight = _.omit(rightObj, IGNORED_PROPERTIES);
-      
-      return _.isEqual(filteredLeft, filteredRight) ? 'same' : 'modified';
+
+      // Get all unique keys from both objects
+      const allKeys = Array.from(new Set([...Object.keys(leftObj), ...Object.keys(rightObj)]));
+
+      // Check each property recursively
+      for (const key of allKeys) {
+        // Skip if the property is in the ignored list
+        if (IGNORED_PROPERTIES.includes(key)) continue;
+
+        // Compare the property values recursively
+        const propertyPath = currentPath ? `${currentPath}.${key}` : key;
+        const status = compareValues(leftObj[key], rightObj[key], propertyPath);
+
+        // If any property is different, the objects are different
+        if (status !== 'same') {
+          return 'modified';
+        }
+      }
+
+      return 'same';
     }
 
-    // For other types (including arrays), use direct comparison
+    // For arrays, compare each element recursively
+    if (Array.isArray(left) && Array.isArray(right)) {
+      if (left.length !== right.length) return 'modified';
+
+      for (let i = 0; i < left.length; i++) {
+        const status = compareValues(left[i], right[i], `${currentPath}[${i}]`);
+        if (status !== 'same') {
+          return 'modified';
+        }
+      }
+
+      return 'same';
+    }
+
+    // For primitive values, use direct comparison
     return _.isEqual(left, right) ? 'same' : 'modified';
   };
 
@@ -256,13 +278,13 @@ const App: React.FC = () => {
     if (!leftFile?.content || !rightFile?.content) return null;
 
     return (
-      <div className="grid grid-cols-2 gap-2">
+      <div className="grid grid-cols-2 gap-2 flex-1 max-w-7xl mx-auto">
         <div>
           <div>
-            <h1 className='text-lg font-bold my-4'>Left JSON ({leftFile.type})</h1>
+            <h1 className='text-lg font-bold my-4'>{leftFile.name} ({leftFile.type})</h1>
           </div>
           <div>
-            <ScrollArea className="h-[700px] w-full rounded-md border p-2">
+            <ScrollArea className="w-full rounded-md border p-2 h-[700px]">
               {renderTreeNode({
                 value: leftFile.content,
                 otherValue: rightFile.content,
@@ -277,10 +299,10 @@ const App: React.FC = () => {
 
         <div>
           <div>
-            <h1 className="text-lg font-bold my-4">Right JSON ({rightFile.type})</h1>
+            <h1 className="text-lg font-bold my-4">{rightFile.name} ({rightFile.type})</h1>
           </div>
           <div>
-            <ScrollArea className="h-[700px] w-full rounded-md border p-2">
+            <ScrollArea className="w-full rounded-md border p-2 h-[700px]">
               {renderTreeNode({
                 value: rightFile.content,
                 otherValue: leftFile.content,
@@ -297,8 +319,8 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="p-4 max-w-6xl mx-auto space-y-4">
-      <div>
+    <div className="p-4 flex flex-col">
+      <div className='max-w-6xl mx-auto'>
         <div className='text-2xl font-semibold mb-4'>
           Lineage Report Comparison Tool
         </div>
@@ -318,7 +340,7 @@ const App: React.FC = () => {
 
       {renderComparison()}
 
-      <div className="flex items-center space-x-4 mb-4">
+      <div className="flex items-center space-x-4 mt-8 mb-4 max-w-6xl mx-auto">
         <div className="flex space-x-2 items-center">
           <LuPlus size={16} className="text-green-600" />
           <span className="text-green-600">Added</span>
@@ -335,14 +357,14 @@ const App: React.FC = () => {
 
       {
         compareResult && (
-          <div className="flex flex-col space-y-2 border p-4 rounded-md">
+          <div className="flex flex-col space-y-2 border p-4 rounded-md max-w-6xl mx-auto">
             <span className='font-semibold'>Similarity: {compareResult.similarityPercentage} %</span>
             <span className='font-semibold'>Matching Properties: {compareResult.matchingProperties}</span>
             <span className='font-semibold'>Total Properties: {compareResult.totalProperties}</span>
           </div>
         )
       }
-      <div className="flex items-center space-x-4 my-4">
+      <div className="flex items-center space-x-4 my-4 max-w-6xl mx-auto">
         <SaveButton file={leftFile} side="left" disabled={!!error || !leftFile} />
         <SaveButton file={rightFile} side="right" disabled={!!error || !rightFile} />
       </div>
@@ -359,7 +381,7 @@ interface SaveButtonProps {
 const SaveButton: React.FC<SaveButtonProps> = ({ file, side, disabled }) => {
   const handleSave = async () => {
     if (!file) return;
-    
+
     try {
       const blob = new Blob([JSON.stringify(file.content, null, 2)], { type: 'application/json' });
       const url = window.URL.createObjectURL(blob);
