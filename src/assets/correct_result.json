@@ -293,7 +293,7 @@
                   "entity_value": "ddep-metadata://au.com.demolabs.ddep.abc025.transform/dataset/abc025_financial_analysis@latest",
                   "dropped_columns": []
                 },
-                "read_parquet_financial_analysis_2": {
+                "read_parquet_financial_analysis_1": {
                   "id": "5c8dfd50",
                   "name": "read_parquet_financial_analysis",
                   "columns": {
@@ -766,7 +766,7 @@
                   "source_entity_name": "joined_df",
                   "target_entity_name": "with_rates"
                 },
-                "joined_df_with_rates_2": {
+                "joined_df_with_rates_1": {
                   "code_info": {
                     "code": "with_rates = joined_df.withColumn(\"interest_rate\", when(col(\"risk_category\") == \"LOW\", 5.99).when(col(\"risk_category\") == \"MEDIUM\", 8.99).when(col(\"risk_category\") == \"HIGH\", 12.99).otherwise(15.99))",
                     "lineno": "41",
@@ -870,7 +870,7 @@
                   "source_entity_name": "with_decisions",
                   "target_entity_name": "with_decisions"
                 },
-                "with_rates_with_decisions_2": {
+                "with_rates_with_decisions_1": {
                   "code_info": {
                     "code": "with_decisions = with_rates.withColumn(\"decision_status\", when((col(\"risk_category\").isin(\"LOW\", \"MEDIUM\")) & (col(\"repayment_capacity\") == \"STRONG\") & (col(\"debt_to_income_ratio\") < 0.5) & (col(\"debt_service_coverage_ratio\") > 1.2) & (col(\"monthly_free_cash_flow\") > 0), \"APPROVED\").when((col(\"risk_category\") == \"HIGH\") & (col(\"repayment_capacity\") == \"ADEQUATE\") & (col(\"debt_to_income_ratio\") < 0.4) & (col(\"debt_service_coverage_ratio\") > 1.1) & (col(\"monthly_free_cash_flow\") > 0), \"CONDITIONALLY_APPROVED\").otherwise(\"REJECTED\")).withColumn(\"approved_amount\", when(col(\"decision_status\").isin(\"APPROVED\", \"CONDITIONALLY_APPROVED\"), col(\"loan_amount\")).otherwise(None))",
                     "lineno": "62",
@@ -1434,7 +1434,7 @@
                   "entity_value": "abc025_final_export table with added column",
                   "dropped_columns": []
                 },
-                "abc025_final_export_2": {
+                "abc025_final_export_1": {
                   "id": "c4a0c79c",
                   "name": "abc025_final_export",
                   "columns": {
@@ -1502,7 +1502,7 @@
                   "entity_value": "abc025_final_export table with added column",
                   "dropped_columns": []
                 },
-                "abc025_final_export_2": {
+                "abc025_final_export_1": {
                   "id": "f1ad65ca",
                   "name": "abc025_final_export",
                   "columns": {

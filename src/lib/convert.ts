@@ -160,7 +160,9 @@ function mergeOperation(graph: Graph | undefined): MergedResult {
         source_entity: edge.source_entity,
         target_columns: [edge.target_column],
         target_entity: edge.target_entity,
-        operation_description: edge.operation_description
+        operation_description: edge.operation_description,
+        source_entity_name: entityDict[edge.source_entity],
+        target_entity_name: entityDict[edge.target_entity]
       };
     } else {
       mergedOperation[key].source_columns.push(edge.source_column);
@@ -168,19 +170,16 @@ function mergeOperation(graph: Graph | undefined): MergedResult {
     }
   }
 
-  // Convert merged operations to object with source_entity_name-target_entity_name as key
-  const operation: { [key: string]: Omit<MergedOperation, 'source_entity_name' | 'target_entity_name'> } = {};
+  // Convert merged operations to object with source_entity_name_target_entity_name as key
+  const operation: { [key: string]: MergedOperation } = {};
   const existingOperationKeys = new Set<string>();
 
   for (const mergedOp of Object.values(mergedOperation)) {
-    const sourceEntityName = entityDict[mergedOp.source_entity] || 'unknown';
-    const targetEntityName = entityDict[mergedOp.target_entity] || 'unknown';
-    const baseKey = `${sourceEntityName}-${targetEntityName}`;
+    const baseKey = `${mergedOp.source_entity_name}_${mergedOp.target_entity_name}`;
     const uniqueKey = generateUniqueKey(baseKey, existingOperationKeys);
     existingOperationKeys.add(uniqueKey);
 
-    const { source_entity_name, target_entity_name, ...operationWithoutNames } = mergedOp;
-    operation[uniqueKey] = operationWithoutNames;
+    operation[uniqueKey] = mergedOp;
   }
 
   return {

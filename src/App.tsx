@@ -14,7 +14,7 @@ import correctResult from '@/assets/correct_result.json';
 // import ReportModal from './Modal';
 
 // Properties to ignore during comparison
-export const IGNORED_PROPERTIES = ['id', 'source_entity', 'target_entity', 'dropped_columns', 'entity_value'];
+export const IGNORED_PROPERTIES = ['id', 'source_entity', 'target_entity', 'dropped_columns', 'entity_value', 'operation_description'];
 
 interface FileWithType {
   content: JsonValue;
@@ -35,6 +35,7 @@ const App: React.FC = () => {
   const [rightFile, setRightFile] = useState<FileWithType | null>(null);
   const [error, setError] = useState<string>('');
   const [expandedPaths, setExpandedPaths] = useState<Set<string>>(new Set());
+  const [hoveredPath, setHoveredPath] = useState<string>('#');
   // const [modalOpen, setModalOpen] = useState(false);
 
   // const handleFileSelect = (file, position) => {
@@ -112,6 +113,10 @@ const App: React.FC = () => {
       newExpanded.add(path);
     }
     setExpandedPaths(newExpanded);
+  };
+
+  const toggleHover = (path : string): void => {
+    setHoveredPath(path);
   };
 
   const compareValues = (left: JsonValue | undefined, right: JsonValue | undefined, currentPath: string = ''): DiffStatus => {
@@ -193,9 +198,10 @@ const App: React.FC = () => {
     }
   };
 
-  const renderTreeNode = ({ value, otherValue, path, side, level }: TreeNodeProps): JSX.Element => {
+  const renderTreeNode = ({ level, otherValue, path, side, value }: TreeNodeProps): JSX.Element => {
     const diffStatus = compareValues(value, otherValue, path);
     const isExpanded = expandedPaths.has(path);
+    const isHovered = hoveredPath === path;
     const pathParts = path.split('.');
     const key = pathParts[pathParts.length - 1] || 'root';
 
@@ -211,6 +217,16 @@ const App: React.FC = () => {
       }
     };
 
+    const handleHover = (e: React.MouseEvent): void => {
+      e.stopPropagation();
+      toggleHover(path);
+    };
+
+    const handleUnhover = (e: React.MouseEvent): void => {
+      e.stopPropagation();
+      setHoveredPath('#');
+    }
+
     // If this is an ignored property, show it in gray
     const isIgnoredProperty = IGNORED_PROPERTIES.includes(key);
     const statusColor = isIgnoredProperty ? 'text-gray-400' : getStatusColor(diffStatus);
@@ -218,8 +234,10 @@ const App: React.FC = () => {
     return (
       <div key={`${side}-${path}`} className="py-1">
         <div
-          className={`flex items-center hover:bg-gray-50 cursor-pointer ${statusColor}`}
+          className={`flex items-center cursor-pointer ${statusColor} ${isHovered ? 'bg-yellow-100' : 'hover:bg-gray-50'}`}
           onClick={handleClick}
+          onMouseEnter={handleHover}
+          onMouseLeave={handleUnhover}
           style={{ marginLeft: `${level * 16}px` }}
         >
           {isExpandable && (
@@ -239,19 +257,21 @@ const App: React.FC = () => {
 
         {isExpanded && isExpandable && value && typeof value === 'object' && (
           <div>
-            {Object.entries(value).map(([childKey, childValue]) => {
-              const newPath = path ? `${path}.${childKey}` : childKey;
-              const otherChildValue = otherValue && typeof otherValue === 'object' ?
-                (otherValue as JsonObject)[childKey] : undefined;
+            {Object.entries(value)
+              .sort(([keyA], [keyB]) => keyA.localeCompare(keyB))
+              .map(([childKey, childValue]) => {
+                const newPath = path ? `${path}.${childKey}` : childKey;
+                const otherChildValue = otherValue && typeof otherValue === 'object' ?
+                  (otherValue as JsonObject)[childKey] : undefined;
 
-              return renderTreeNode({
-                value: childValue,
-                otherValue: otherChildValue,
-                path: newPath,
-                side,
-                level: level + 1
-              });
-            })}
+                return renderTreeNode({
+                  level: level + 1,
+                  otherValue: otherChildValue,
+                  path: newPath,
+                  side,
+                  value: childValue
+                });
+              })}
           </div>
         )}
       </div>
