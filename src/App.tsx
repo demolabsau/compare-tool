@@ -10,6 +10,8 @@ import { LuChevronRight, LuChevronDown, LuPlus, LuMinus, LuClipboardPenLine, LuS
 import { convertReport, type Report } from '@/lib/convert';
 import type { JsonValue, FileType, DiffStatus, JsonObject } from '@/types';
 import { compareObjects } from './lib/compare';
+import correctResult from '@/assets/correct_result.json';
+// import ReportModal from './Modal';
 
 // Properties to ignore during comparison
 export const IGNORED_PROPERTIES = ['id', 'source_entity', 'target_entity', 'dropped_columns', 'entity_value'];
@@ -33,6 +35,23 @@ const App: React.FC = () => {
   const [rightFile, setRightFile] = useState<FileWithType | null>(null);
   const [error, setError] = useState<string>('');
   const [expandedPaths, setExpandedPaths] = useState<Set<string>>(new Set());
+  // const [modalOpen, setModalOpen] = useState(false);
+
+  // const handleFileSelect = (file, position) => {
+  //   if (position === 'left') {
+  //     setLeftFile({
+  //       content: processJsonContent(file, 'pre-process'),
+  //       type: 'pre-process',
+  //       name: file.name
+  //     });
+  //   } else {
+  //     setRightFile({
+  //       content: processJsonContent(file, 'pre-process'),
+  //       type: 'pre-process',
+  //       name: file.name
+  //     });
+  //   }
+  // };
 
   const processJsonContent = (content: JsonValue, type: FileType): JsonValue => {
     if (type === 'pre-process') {
@@ -246,19 +265,12 @@ const App: React.FC = () => {
     const [fileType, setFileType] = useState<FileType>('post-process');
 
     return (
-      <div className="space-y-4">
-        <Input
-          type="file"
-          accept=".json"
-          onChange={(e) => {
-            handleFileUpload(e, side, fileType);
-          }}
-          className="mb-2"
-        />
+      <div className='border p-4 rounded-md'>
+        <h2 className='text-lg font-semibold mb-6'>{side.toLocaleUpperCase()} File</h2>
         <RadioGroup
           name={`${side}-file-type`}
           defaultValue="post-process"
-          className="flex items-center space-x-4"
+          className="flex items-center space-x-4 mb-4"
           onValueChange={(value) => setFileType(value as FileType)}
         >
           <div className="flex items-center space-x-2">
@@ -270,50 +282,88 @@ const App: React.FC = () => {
             <Label htmlFor={`${side}-post`}>Post-process</Label>
           </div>
         </RadioGroup>
+        <Input
+          type="file"
+          accept=".json"
+          onChange={(e) => {
+            handleFileUpload(e, side, fileType);
+          }}
+          className="mb-2"
+        />
+        Or &nbsp;&nbsp;
+        <Button variant="default" className='mt-6' onClick={() => {
+          if (side === 'left') {
+            setLeftFile({
+              content: correctResult,
+              type: 'post-process',
+              name: 'correct_result.json'
+            });
+          } else {
+            setRightFile({
+              content: correctResult,
+              type: 'post-process',
+              name: 'correct_result.json'
+            });
+          }
+        }}>Load Reference JSON</Button>
       </div>
     );
   };
 
   const renderComparison = (): JSX.Element | null => {
-    if (!leftFile?.content || !rightFile?.content) return null;
-
     return (
-      <div className="grid grid-cols-2 gap-2 flex-1 max-w-7xl mx-auto">
-        <div>
-          <div>
-            <h1 className='text-lg font-bold my-4'>{leftFile.name} ({leftFile.type})</h1>
-          </div>
-          <div>
-            <ScrollArea className="w-full rounded-md border p-2 h-[700px]">
-              {renderTreeNode({
-                value: leftFile.content,
-                otherValue: rightFile.content,
-                path: '',
-                side: 'left',
-                level: 0
-              })}
-              <ScrollBar orientation="horizontal" />
-            </ScrollArea>
-          </div>
-        </div>
+      <div className="grid grid-cols-2 gap-2 flex-1 max-w-7xl mx-auto my-4">
+        {
+          (leftFile && !(leftFile && rightFile)) && (
+            <h2 className='text-lg font-semibold'>{leftFile.name} Loaded</h2>
+          )
+        }
+        {
+          (rightFile && !(leftFile && rightFile)) && (
+            <h2 className='text-lg font-semibold'>{rightFile.name} Loaded</h2>
+          )
+        }
+        {
+          leftFile && rightFile && (
+            <>
+              <div>
+                <div>
+                  <h1 className='text-lg font-bold my-4'>{leftFile.name} ({leftFile.type})</h1>
+                </div>
+                <div>
+                  <ScrollArea className="w-full rounded-md border p-2 h-[700px]">
+                    {renderTreeNode({
+                      value: leftFile.content,
+                      otherValue: rightFile.content,
+                      path: '',
+                      side: 'left',
+                      level: 0
+                    })}
+                    <ScrollBar orientation="horizontal" />
+                  </ScrollArea>
+                </div>
+              </div>
 
-        <div>
-          <div>
-            <h1 className="text-lg font-bold my-4">{rightFile.name} ({rightFile.type})</h1>
-          </div>
-          <div>
-            <ScrollArea className="w-full rounded-md border p-2 h-[700px]">
-              {renderTreeNode({
-                value: rightFile.content,
-                otherValue: leftFile.content,
-                path: '',
-                side: 'right',
-                level: 0
-              })}
-              <ScrollBar orientation="horizontal" />
-            </ScrollArea>
-          </div>
-        </div>
+              <div>
+                <div>
+                  <h1 className="text-lg font-bold my-4">{rightFile.name} ({rightFile.type})</h1>
+                </div>
+                <div>
+                  <ScrollArea className="w-full rounded-md border p-2 h-[700px]">
+                    {renderTreeNode({
+                      value: rightFile.content,
+                      otherValue: leftFile.content,
+                      path: '',
+                      side: 'right',
+                      level: 0
+                    })}
+                    <ScrollBar orientation="horizontal" />
+                  </ScrollArea>
+                </div>
+              </div>
+            </>
+          )
+        }
       </div>
     );
   };
@@ -325,6 +375,7 @@ const App: React.FC = () => {
           Lineage Report Comparison Tool
         </div>
         <div>
+          {/* <Button className='mb-4' onClick={() => setModalOpen(true)}>Select Report for Comparison</Button> */}
           <div className="grid grid-cols-2 gap-4">
             <FileUploadSection side="left" label="Left File" />
             <FileUploadSection side="right" label="Right File" />
@@ -368,6 +419,11 @@ const App: React.FC = () => {
         <SaveButton file={leftFile} side="left" disabled={!!error || !leftFile} />
         <SaveButton file={rightFile} side="right" disabled={!!error || !rightFile} />
       </div>
+      {/* <ReportModal 
+        open={modalOpen}
+        onOpenChange={setModalOpen}
+        onSelectFile={handleFileSelect}
+      /> */}
     </div>
   );
 };
