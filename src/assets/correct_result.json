@@ -1015,7 +1015,7 @@
                     "file_path": "ddep-product://./src/abc025_loan_decision.py",
                     "end_lineno": ""
                   },
-                  "operation": "Dataframe Custom Transformation",
+                  "operation": "Copy",
                   "source_columns": [
                     "customer_id",
                     "application_id",
@@ -1379,7 +1379,7 @@
                     "file_path": "ddep-product://./sql/abc025_final_export.sql",
                     "end_lineno": ""
                   },
-                  "operation": "Dataframe Custom Transformation",
+                  "operation": "Copy",
                   "source_columns": [
                     "application_id",
                     "customer_id",
