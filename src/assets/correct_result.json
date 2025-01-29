@@ -365,14 +365,6 @@
             },
             "loan_decision_stage": {
               "dataframe": {
-                "ASTATIC_PROCESSING_TIMESTAMP": {
-                  "id": "340e9990",
-                  "name": "ASTATIC_PROCESSING_TIMESTAMP",
-                  "columns": {},
-                  "entity_type": "string",
-                  "entity_value": "20230403000000",
-                  "dropped_columns": []
-                },
                 "processing_timestamp": {
                   "id": "e42723ad",
                   "name": "processing_timestamp",
