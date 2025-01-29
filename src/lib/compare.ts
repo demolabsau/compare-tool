@@ -72,10 +72,8 @@ function compareObjects(
       counted.add(value1);
 
       let matches = 0;
-      const maxLength = Math.max(value1.length, value2.length);
-
-      for (let i = 0; i < maxLength; i++) {
-        if (i < value1.length && i < value2.length) {
+      for (let i = 0; i < value1.length; i++) {
+        if (i < value2.length) {
           matches += countMatches(value1[i], value2[i], counted);
         }
       }
@@ -88,10 +86,9 @@ function compareObjects(
       counted.add(value1);
 
       const props1 = getComparableProps(value1);
-      const props2 = getComparableProps(value2);
-
+      
       return props1.reduce((matches, prop) => {
-        if (!props2.includes(prop)) return matches;
+        if (!(prop in value2)) return matches;
         return matches + countMatches(value1[prop], value2[prop], counted);
       }, 0);
     }
@@ -100,11 +97,8 @@ function compareObjects(
     return 0;
   }
 
-  // Calculate total comparable properties
-  const totalProps = Math.max(
-    countProperties(obj1),
-    countProperties(obj2)
-  );
+  // Calculate total properties from obj1 only
+  const totalProps = countProperties(obj1);
 
   // Calculate matching properties
   const matchingProps = countMatches(obj1, obj2);

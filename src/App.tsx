@@ -11,6 +11,12 @@ import { convertReport, type Report } from '@/lib/convert';
 import type { JsonValue, FileType, DiffStatus, JsonObject } from '@/types';
 import { compareObjects } from './lib/compare';
 import correctResult from '@/assets/correct_result.json';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
 // import ReportModal from './Modal';
 
 // Properties to ignore during comparison
@@ -115,7 +121,7 @@ const App: React.FC = () => {
     setExpandedPaths(newExpanded);
   };
 
-  const toggleHover = (path : string): void => {
+  const toggleHover = (path: string): void => {
     setHoveredPath(path);
   };
 
@@ -426,15 +432,51 @@ const App: React.FC = () => {
         </div>
       </div>
 
-      {
-        compareResult && (
-          <div className="flex flex-col space-y-2 border p-4 rounded-md max-w-6xl mx-auto">
-            <span className='font-semibold'>Similarity: {compareResult.similarityPercentage} %</span>
-            <span className='font-semibold'>Matching Properties: {compareResult.matchingProperties}</span>
-            <span className='font-semibold'>Total Properties: {compareResult.totalProperties}</span>
-          </div>
-        )
-      }
+      <TooltipProvider>
+        <div className="flex flex-col space-y-2 border p-4 rounded-md max-w-6xl mx-auto">
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <span className="font-semibold cursor-help">
+                Similarity: {compareResult?.similarityPercentage ?? '0'} %
+              </span>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p className="max-w-xs">
+                Report similarities are calculated based on the number of matching properties.
+                Following properties are ignored during comparison: {IGNORED_PROPERTIES.join(', ')}.
+                This value may lower than expected since it only considers extact matches.
+              </p>
+            </TooltipContent>
+          </Tooltip>
+
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <span className="font-semibold cursor-help">
+                Matching Properties: {compareResult?.matchingProperties ?? '0'}
+              </span>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p className="max-w-xs">
+                The number of properties that are identical between the two
+                compared items. To be considered a match, each property must be identical.
+              </p>
+            </TooltipContent>
+          </Tooltip>
+
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <span className="font-semibold cursor-help">
+                Total Properties: {compareResult?.totalProperties ?? '0'}
+              </span>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p className="max-w-xs">
+                The total number of unique properties across both items being compared.
+              </p>
+            </TooltipContent>
+          </Tooltip>
+        </div>
+      </TooltipProvider>
       <div className="flex items-center space-x-4 my-4 max-w-6xl mx-auto">
         <SaveButton file={leftFile} side="left" disabled={!!error || !leftFile} />
         <SaveButton file={rightFile} side="right" disabled={!!error || !rightFile} />
