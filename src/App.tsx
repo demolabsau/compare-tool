@@ -20,7 +20,7 @@ import {
 // import ReportModal from './Modal';
 
 // Properties to ignore during comparison
-export const IGNORED_PROPERTIES = ['id', 'source_entity', 'target_entity', 'dropped_columns', 'entity_value', 'operation_description'];
+export const IGNORED_PROPERTIES = ['id', 'source_entity', 'target_entity', 'dropped_columns', 'entity_value', 'operation_description', 'entity_type'];
 
 interface FileWithType {
   content: JsonValue;
