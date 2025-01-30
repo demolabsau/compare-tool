@@ -1444,7 +1444,6 @@
                   ],
                   "source_entity": "5fe7e714",
                   "target_columns": [
-                    "monthly_payment",
                     "monthly_payment"
                   ],
                   "target_entity": "c4a0c79c",
