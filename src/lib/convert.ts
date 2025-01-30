@@ -165,8 +165,13 @@ function mergeOperation(graph: Graph | undefined): MergedResult {
         target_entity_name: entityDict[edge.target_entity]
       };
     } else {
-      mergedOperation[key].source_columns.push(edge.source_column);
-      mergedOperation[key].target_columns.push(edge.target_column);
+      // Add if not already present
+      if (!mergedOperation[key].source_columns.includes(edge.source_column)) {
+        mergedOperation[key].source_columns.push(edge.source_column);
+      }
+      if (!mergedOperation[key].target_columns.includes(edge.target_column)) {
+        mergedOperation[key].target_columns.push(edge.target_column);
+      }
     }
   }
 

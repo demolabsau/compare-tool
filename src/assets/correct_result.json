@@ -365,22 +365,6 @@
             },
             "loan_decision_stage": {
               "dataframe": {
-                "processing_timestamp": {
-                  "id": "e42723ad",
-                  "name": "processing_timestamp",
-                  "columns": {},
-                  "entity_type": "str",
-                  "entity_value": "20230403000000",
-                  "dropped_columns": []
-                },
-                "processing_date": {
-                  "id": "d09910a2",
-                  "name": "processing_date",
-                  "columns": {},
-                  "entity_type": "datetime",
-                  "entity_value": "2023-04-03 00:00:00",
-                  "dropped_columns": []
-                },
                 "sourceDatasets": {
                   "id": "65fa7386",
                   "name": "sourceDatasets",
@@ -852,7 +836,6 @@
                     "decision_status",
                     "loan_amount"
                   ],
-                  "common": "//The code may be referencing a column that doesn't exist, so it's OK without loan_amount.",
                   "source_entity": "4b941dd6",
                   "target_columns": [
                     "approved_amount"
