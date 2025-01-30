@@ -1390,6 +1390,25 @@
             "calculate_additional_metrics_columnTransforms_0": {
               "dataframe": {
                 "abc025_final_export": {
+                  "id": "c4a0c79c",
+                  "name": "abc025_final_export",
+                  "columns": {
+                    "application_id": "string",
+                    "customer_id": "string",
+                    "risk_category": "string",
+                    "decision_status": "string",
+                    "approved_amount": "decimal(15,2)",
+                    "interest_rate": "decimal(5,2)",
+                    "decision_date": "date",
+                    "ddep_year": "int",
+                    "ddep_month": "int",
+                    "ddep_day": "int"
+                  },
+                  "entity_type": "table",
+                  "entity_value": "abc025_final_export table with updated monthly_payment column",
+                  "dropped_columns": []
+                },
+                "abc025_final_export_1": {
                   "id": "5fe7e714",
                   "name": "abc025_final_export",
                   "columns": {
@@ -1407,25 +1426,6 @@
                   },
                   "entity_type": "table",
                   "entity_value": "abc025_final_export table with added column",
-                  "dropped_columns": []
-                },
-                "abc025_final_export_1": {
-                  "id": "c4a0c79c",
-                  "name": "abc025_final_export",
-                  "columns": {
-                    "application_id": "string",
-                    "customer_id": "string",
-                    "risk_category": "string",
-                    "decision_status": "string",
-                    "approved_amount": "decimal(15,2)",
-                    "interest_rate": "decimal(5,2)",
-                    "decision_date": "date",
-                    "ddep_year": "int",
-                    "ddep_month": "int",
-                    "ddep_day": "int"
-                  },
-                  "entity_type": "table",
-                  "entity_value": "abc025_final_export table with updated monthly_payment column",
                   "dropped_columns": []
                 }
               },
@@ -1456,6 +1456,26 @@
             "calculate_additional_metrics_columnTransforms_1": {
               "dataframe": {
                 "abc025_final_export": {
+                  "id": "f1ad65ca",
+                  "name": "abc025_final_export",
+                  "columns": {
+                    "application_id": "string",
+                    "customer_id": "string",
+                    "risk_category": "string",
+                    "decision_status": "string",
+                    "approved_amount": "decimal(15,2)",
+                    "interest_rate": "decimal(5,2)",
+                    "decision_date": "date",
+                    "ddep_year": "int",
+                    "ddep_month": "int",
+                    "ddep_day": "int",
+                    "monthly_payment": "DECIMAL(15, 2)"
+                  },
+                  "entity_type": "table",
+                  "entity_value": "abc025_final_export table with updated total_interest column",
+                  "dropped_columns": []
+                },
+                "abc025_final_export_1": {
                   "id": "c357e2db",
                   "name": "abc025_final_export",
                   "columns": {
@@ -1474,26 +1494,6 @@
                   },
                   "entity_type": "table",
                   "entity_value": "abc025_final_export table with added column",
-                  "dropped_columns": []
-                },
-                "abc025_final_export_1": {
-                  "id": "f1ad65ca",
-                  "name": "abc025_final_export",
-                  "columns": {
-                    "application_id": "string",
-                    "customer_id": "string",
-                    "risk_category": "string",
-                    "decision_status": "string",
-                    "approved_amount": "decimal(15,2)",
-                    "interest_rate": "decimal(5,2)",
-                    "decision_date": "date",
-                    "ddep_year": "int",
-                    "ddep_month": "int",
-                    "ddep_day": "int",
-                    "monthly_payment": "DECIMAL(15, 2)"
-                  },
-                  "entity_type": "table",
-                  "entity_value": "abc025_final_export table with updated total_interest column",
                   "dropped_columns": []
                 }
               },
