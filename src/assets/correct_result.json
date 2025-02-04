@@ -1,1795 +1,1988 @@
 {
-    "abc025_control_m.xml": {
-      "job_4": {
-        "process_1": {
-          "stages": {
-            "read_source_risk_assessment": {
-              "dataframe": {
-                "ddep-storage://au.com.demolabs.ddep.abc025/abc025/abc025_risk_assessment": {
-                  "id": "388325b1",
-                  "name": "ddep-storage://au.com.demolabs.ddep.abc025/abc025/abc025_risk_assessment",
-                  "columns": {
-                    "customer_id": "string",
-                    "application_id": "string",
-                    "overall_risk_score": "int",
-                    "risk_category": "string",
-                    "credit_history_score": "decimal(5,2)",
-                    "payment_behavior_score": "decimal(5,2)",
-                    "debt_burden_score": "decimal(5,2)",
-                    "has_recent_defaults": "boolean",
-                    "ddep_year": "int",
-                    "ddep_month": "int",
-                    "ddep_day": "int"
-                  },
-                  "entity_type": "au.com.demolabs.ddep.metadata.v2.process.connection.ProcessConnectionParquetFileSource",
-                  "entity_value": "ddep-metadata://au.com.demolabs.ddep.abc025.transform/dataset/abc025_risk_assessment@latest",
-                  "dropped_columns": []
+  "abc025_control_m.xml": {
+    "job_4": {
+      "process_0": {
+        "stages": {
+          "read_source_risk_assessment": {
+            "dataframe": {
+              "ddep-storage://au.com.demolabs.ddep.abc025/abc025/abc025_risk_assessment": {
+                "id": "388325b1",
+                "name": "ddep-storage://au.com.demolabs.ddep.abc025/abc025/abc025_risk_assessment",
+                "columns": {
+                  "customer_id": "string",
+                  "application_id": "string",
+                  "overall_risk_score": "int",
+                  "risk_category": "string",
+                  "credit_history_score": "decimal(5,2)",
+                  "payment_behavior_score": "decimal(5,2)",
+                  "debt_burden_score": "decimal(5,2)",
+                  "has_recent_defaults": "boolean",
+                  "ddep_year": "int",
+                  "ddep_month": "int",
+                  "ddep_day": "int"
                 },
-                "read_parquet_risk_assessment": {
-                  "id": "0cc96a2e",
-                  "name": "read_parquet_risk_assessment",
-                  "columns": {
-                    "customer_id": "string",
-                    "application_id": "string",
-                    "overall_risk_score": "int",
-                    "risk_category": "string",
-                    "credit_history_score": "decimal(5,2)",
-                    "payment_behavior_score": "decimal(5,2)",
-                    "debt_burden_score": "decimal(5,2)",
-                    "has_recent_defaults": "boolean",
-                    "ddep_year": "int",
-                    "ddep_month": "int",
-                    "ddep_day": "int"
-                  },
-                  "entity_type": "dataframe",
-                  "entity_value": "ddep-metadata://au.com.demolabs.ddep.abc025.transform/dataset/abc025_risk_assessment@latest",
-                  "dropped_columns": []
+                "entity_type": "au.com.demolabs.ddep.metadata.v2.process.connection.ProcessConnectionParquetFileSource",
+                "entity_value": "ddep-metadata://au.com.demolabs.ddep.abc025.transform/dataset/abc025_risk_assessment@latest",
+                "dropped_columns": []
+              },
+              "read_parquet_risk_assessment": {
+                "id": "0cc96a2e",
+                "name": "read_parquet_risk_assessment",
+                "columns": {
+                  "customer_id": "string",
+                  "application_id": "string",
+                  "overall_risk_score": "int",
+                  "risk_category": "string",
+                  "credit_history_score": "decimal(5,2)",
+                  "payment_behavior_score": "decimal(5,2)",
+                  "debt_burden_score": "decimal(5,2)",
+                  "has_recent_defaults": "boolean",
+                  "ddep_year": "int",
+                  "ddep_month": "int",
+                  "ddep_day": "int"
+                },
+                "entity_type": "dataframe",
+                "entity_value": "ddep-metadata://au.com.demolabs.ddep.abc025.transform/dataset/abc025_risk_assessment@latest",
+                "dropped_columns": []
+              }
+            },
+            "operation": {
+              "ddep-storage://au.com.demolabs.ddep.abc025/abc025/abc025_risk_assessment_read_parquet_risk_assessment": {
+                "code_info": {
+                  "code": "{'name': 'read_source_risk_assessment', 'description': 'Reads risk assessment source data', 'conditionals': [], 'connectionName': 'read_parquet_risk_assessment', '$': 'au.com.demolabs.ddep.metadata.v2.process.stage.ReadSourceStage'}",
+                  "lineno": 1,
+                  "file_path": "read_source_risk_assessment",
+                  "end_lineno": 1
+                },
+                "operation": "read",
+                "source_columns": [
+                  "customer_id",
+                  "application_id",
+                  "overall_risk_score",
+                  "risk_category",
+                  "credit_history_score",
+                  "payment_behavior_score",
+                  "debt_burden_score",
+                  "has_recent_defaults",
+                  "ddep_year",
+                  "ddep_month",
+                  "ddep_day"
+                ],
+                "source_entity": "388325b1",
+                "target_columns": [
+                  "customer_id",
+                  "application_id",
+                  "overall_risk_score",
+                  "risk_category",
+                  "credit_history_score",
+                  "payment_behavior_score",
+                  "debt_burden_score",
+                  "has_recent_defaults",
+                  "ddep_year",
+                  "ddep_month",
+                  "ddep_day"
+                ],
+                "target_entity": "0cc96a2e",
+                "operation_description": "Copy data from Parquet file to DataFrame",
+                "source_entity_name": "ddep-storage://au.com.demolabs.ddep.abc025/abc025/abc025_risk_assessment",
+                "target_entity_name": "read_parquet_risk_assessment"
+              }
+            }
+          },
+          "repartition_risk_assessment": {
+            "dataframe": {
+              "read_parquet_risk_assessment": {
+                "id": "f40c9244",
+                "name": "read_parquet_risk_assessment",
+                "columns": {
+                  "customer_id": "string",
+                  "application_id": "string",
+                  "overall_risk_score": "int",
+                  "risk_category": "string",
+                  "credit_history_score": "decimal(5,2)",
+                  "payment_behavior_score": "decimal(5,2)",
+                  "debt_burden_score": "decimal(5,2)",
+                  "has_recent_defaults": "boolean",
+                  "ddep_year": "int",
+                  "ddep_month": "int",
+                  "ddep_day": "int"
+                },
+                "entity_type": "dataframe",
+                "entity_value": "ddep-metadata://au.com.demolabs.ddep.abc025.transform/dataset/abc025_risk_assessment@latest",
+                "dropped_columns": []
+              },
+              "read_parquet_risk_assessment_1": {
+                "id": "0d6be52d",
+                "name": "read_parquet_risk_assessment",
+                "columns": {
+                  "customer_id": "string",
+                  "application_id": "string",
+                  "overall_risk_score": "int",
+                  "risk_category": "string",
+                  "credit_history_score": "decimal(5,2)",
+                  "payment_behavior_score": "decimal(5,2)",
+                  "debt_burden_score": "decimal(5,2)",
+                  "has_recent_defaults": "boolean",
+                  "ddep_year": "int",
+                  "ddep_month": "int",
+                  "ddep_day": "int"
+                },
+                "entity_type": "dataframe",
+                "entity_value": "ddep-metadata://au.com.demolabs.ddep.abc025.transform/dataset/abc025_risk_assessment@latest",
+                "dropped_columns": []
+              }
+            },
+            "operation": {
+              "read_parquet_risk_assessment_read_parquet_risk_assessment": {
+                "code_info": {
+                  "code": "{'name': 'repartition_risk_assessment', 'description': 'Repartition risk assessment data for processing', 'conditionals': [], 'dataset': 'ddep-metadata://au.com.demolabs.ddep.abc025.transform/dataset/abc025_risk_assessment@latest', 'strategy': {'partitions': 10, '$': 'au.com.demolabs.ddep.metadata.v2.process.stage.LiteralRepartitionStrategy'}, 'columns': [], '$': 'au.com.demolabs.ddep.metadata.v2.process.stage.RepartitionDataframeStage'}",
+                  "lineno": 1,
+                  "file_path": "repartition_risk_assessment",
+                  "end_lineno": 1
+                },
+                "operation": "repartition",
+                "source_columns": [
+                  "customer_id",
+                  "application_id",
+                  "overall_risk_score",
+                  "risk_category",
+                  "credit_history_score",
+                  "payment_behavior_score",
+                  "debt_burden_score",
+                  "has_recent_defaults",
+                  "ddep_year",
+                  "ddep_month",
+                  "ddep_day"
+                ],
+                "source_entity": "f40c9244",
+                "target_columns": [
+                  "customer_id",
+                  "application_id",
+                  "overall_risk_score",
+                  "risk_category",
+                  "credit_history_score",
+                  "payment_behavior_score",
+                  "debt_burden_score",
+                  "has_recent_defaults",
+                  "ddep_year",
+                  "ddep_month",
+                  "ddep_day"
+                ],
+                "target_entity": "0d6be52d",
+                "operation_description": "Redistribute data across 10 partitions",
+                "source_entity_name": "read_parquet_risk_assessment",
+                "target_entity_name": "read_parquet_risk_assessment"
+              }
+            }
+          },
+          "read_source_financial_analysis": {
+            "dataframe": {
+              "ddep-storage://au.com.demolabs.ddep.abc025/abc025/abc025_financial_analysis": {
+                "id": "18d109fb",
+                "name": "ddep-storage://au.com.demolabs.ddep.abc025/abc025/abc025_financial_analysis",
+                "columns": {
+                  "application_id": "string",
+                  "customer_id": "string",
+                  "debt_to_asset_ratio": "decimal(10,4)",
+                  "debt_service_coverage_ratio": "decimal(10,4)",
+                  "current_ratio": "decimal(10,4)",
+                  "monthly_free_cash_flow": "decimal(15,2)",
+                  "estimated_monthly_payment": "decimal(15,2)",
+                  "payment_to_income_ratio": "decimal(10,4)",
+                  "payment_to_free_cash_flow_ratio": "decimal(10,4)",
+                  "repayment_capacity": "string",
+                  "ddep_year": "int",
+                  "ddep_month": "int",
+                  "ddep_day": "int"
+                },
+                "entity_type": "au.com.demolabs.ddep.metadata.v2.process.connection.ProcessConnectionParquetFileSource",
+                "entity_value": "ddep-metadata://au.com.demolabs.ddep.abc025.transform/dataset/abc025_financial_analysis@latest",
+                "dropped_columns": []
+              },
+              "read_parquet_financial_analysis": {
+                "id": "93bc1a33",
+                "name": "read_parquet_financial_analysis",
+                "columns": {
+                  "application_id": "string",
+                  "customer_id": "string",
+                  "debt_to_asset_ratio": "decimal(10,4)",
+                  "debt_service_coverage_ratio": "decimal(10,4)",
+                  "current_ratio": "decimal(10,4)",
+                  "monthly_free_cash_flow": "decimal(15,2)",
+                  "estimated_monthly_payment": "decimal(15,2)",
+                  "payment_to_income_ratio": "decimal(10,4)",
+                  "payment_to_free_cash_flow_ratio": "decimal(10,4)",
+                  "repayment_capacity": "string",
+                  "ddep_year": "int",
+                  "ddep_month": "int",
+                  "ddep_day": "int"
+                },
+                "entity_type": "dataframe",
+                "entity_value": "ddep-metadata://au.com.demolabs.ddep.abc025.transform/dataset/abc025_financial_analysis@latest",
+                "dropped_columns": []
+              }
+            },
+            "operation": {
+              "ddep-storage://au.com.demolabs.ddep.abc025/abc025/abc025_financial_analysis_read_parquet_financial_analysis": {
+                "code_info": {
+                  "code": "{'name': 'read_source_financial_analysis', 'description': 'Reads financial analysis source data', 'conditionals': [], 'connectionName': 'read_parquet_financial_analysis', '$': 'au.com.demolabs.ddep.metadata.v2.process.stage.ReadSourceStage'}",
+                  "lineno": 1,
+                  "file_path": "read_source_financial_analysis",
+                  "end_lineno": 1
+                },
+                "operation": "read",
+                "source_columns": [
+                  "application_id",
+                  "customer_id",
+                  "debt_to_asset_ratio",
+                  "debt_service_coverage_ratio",
+                  "current_ratio",
+                  "monthly_free_cash_flow",
+                  "estimated_monthly_payment",
+                  "payment_to_income_ratio",
+                  "payment_to_free_cash_flow_ratio",
+                  "repayment_capacity",
+                  "ddep_year",
+                  "ddep_month",
+                  "ddep_day"
+                ],
+                "source_entity": "18d109fb",
+                "target_columns": [
+                  "application_id",
+                  "customer_id",
+                  "debt_to_asset_ratio",
+                  "debt_service_coverage_ratio",
+                  "current_ratio",
+                  "monthly_free_cash_flow",
+                  "estimated_monthly_payment",
+                  "payment_to_income_ratio",
+                  "payment_to_free_cash_flow_ratio",
+                  "repayment_capacity",
+                  "ddep_year",
+                  "ddep_month",
+                  "ddep_day"
+                ],
+                "target_entity": "93bc1a33",
+                "operation_description": "Copy data from Parquet file to DataFrame",
+                "source_entity_name": "ddep-storage://au.com.demolabs.ddep.abc025/abc025/abc025_financial_analysis",
+                "target_entity_name": "read_parquet_financial_analysis"
+              }
+            }
+          },
+          "repartition_financial_analysis": {
+            "dataframe": {
+              "read_parquet_financial_analysis": {
+                "id": "4e29be9b",
+                "name": "read_parquet_financial_analysis",
+                "columns": {
+                  "application_id": "string",
+                  "customer_id": "string",
+                  "debt_to_asset_ratio": "decimal(10,4)",
+                  "debt_service_coverage_ratio": "decimal(10,4)",
+                  "current_ratio": "decimal(10,4)",
+                  "monthly_free_cash_flow": "decimal(15,2)",
+                  "estimated_monthly_payment": "decimal(15,2)",
+                  "payment_to_income_ratio": "decimal(10,4)",
+                  "payment_to_free_cash_flow_ratio": "decimal(10,4)",
+                  "repayment_capacity": "string",
+                  "ddep_year": "int",
+                  "ddep_month": "int",
+                  "ddep_day": "int"
+                },
+                "entity_type": "dataframe",
+                "entity_value": "ddep-metadata://au.com.demolabs.ddep.abc025.transform/dataset/abc025_financial_analysis@latest",
+                "dropped_columns": []
+              },
+              "read_parquet_financial_analysis_1": {
+                "id": "5c8dfd50",
+                "name": "read_parquet_financial_analysis",
+                "columns": {
+                  "application_id": "string",
+                  "customer_id": "string",
+                  "debt_to_asset_ratio": "decimal(10,4)",
+                  "debt_service_coverage_ratio": "decimal(10,4)",
+                  "current_ratio": "decimal(10,4)",
+                  "monthly_free_cash_flow": "decimal(15,2)",
+                  "estimated_monthly_payment": "decimal(15,2)",
+                  "payment_to_income_ratio": "decimal(10,4)",
+                  "payment_to_free_cash_flow_ratio": "decimal(10,4)",
+                  "repayment_capacity": "string",
+                  "ddep_year": "int",
+                  "ddep_month": "int",
+                  "ddep_day": "int"
+                },
+                "entity_type": "dataframe",
+                "entity_value": "ddep-metadata://au.com.demolabs.ddep.abc025.transform/dataset/abc025_financial_analysis@latest",
+                "dropped_columns": []
+              }
+            },
+            "operation": {
+              "read_parquet_financial_analysis_read_parquet_financial_analysis": {
+                "code_info": {
+                  "code": "{'name': 'repartition_financial_analysis', 'description': 'Repartition financial analysis data for processing', 'conditionals': [], 'dataset': 'ddep-metadata://au.com.demolabs.ddep.abc025.transform/dataset/abc025_financial_analysis@latest', 'strategy': {'partitions': 10, '$': 'au.com.demolabs.ddep.metadata.v2.process.stage.LiteralRepartitionStrategy'}, 'columns': [], '$': 'au.com.demolabs.ddep.metadata.v2.process.stage.RepartitionDataframeStage'}",
+                  "lineno": 1,
+                  "file_path": "repartition_financial_analysis",
+                  "end_lineno": 1
+                },
+                "operation": "repartition",
+                "source_columns": [
+                  "application_id",
+                  "customer_id",
+                  "debt_to_asset_ratio",
+                  "debt_service_coverage_ratio",
+                  "current_ratio",
+                  "monthly_free_cash_flow",
+                  "estimated_monthly_payment",
+                  "payment_to_income_ratio",
+                  "payment_to_free_cash_flow_ratio",
+                  "repayment_capacity",
+                  "ddep_year",
+                  "ddep_month",
+                  "ddep_day"
+                ],
+                "source_entity": "4e29be9b",
+                "target_columns": [
+                  "application_id",
+                  "customer_id",
+                  "debt_to_asset_ratio",
+                  "debt_service_coverage_ratio",
+                  "current_ratio",
+                  "monthly_free_cash_flow",
+                  "estimated_monthly_payment",
+                  "payment_to_income_ratio",
+                  "payment_to_free_cash_flow_ratio",
+                  "repayment_capacity",
+                  "ddep_year",
+                  "ddep_month",
+                  "ddep_day"
+                ],
+                "target_entity": "5c8dfd50",
+                "operation_description": "Redistribute data across 10 partitions",
+                "source_entity_name": "read_parquet_financial_analysis",
+                "target_entity_name": "read_parquet_financial_analysis"
+              }
+            }
+          },
+          "loan_decision_stage": {
+            "dataframe": {
+              "sourceDatasets": {
+                "id": "65fa7386",
+                "name": "sourceDatasets",
+                "columns": {
+                  "0": "au.com.demolabs.ddep.metadata.v2.Dataset",
+                  "1": "au.com.demolabs.ddep.metadata.v2.Dataset"
+                },
+                "entity_type": "list",
+                "entity_value": "sourceDatasets",
+                "dropped_columns": []
+              },
+              "risk_df": {
+                "id": "8f87f3af",
+                "name": "risk_df",
+                "columns": {
+                  "customer_id": "string",
+                  "application_id": "string",
+                  "overall_risk_score": "int",
+                  "risk_category": "string",
+                  "credit_history_score": "decimal(5,2)",
+                  "payment_behavior_score": "decimal(5,2)",
+                  "debt_burden_score": "decimal(5,2)",
+                  "has_recent_defaults": "boolean",
+                  "ddep_year": "int",
+                  "ddep_month": "int",
+                  "ddep_day": "int"
+                },
+                "entity_type": "au.com.demolabs.ddep.metadata.v2.Dataset",
+                "entity_value": "ddep-metadata://au.com.demolabs.ddep.abc025.transform/dataset/abc025_risk_assessment@latest",
+                "dropped_columns": []
+              },
+              "financial_df": {
+                "id": "e734f468",
+                "name": "financial_df",
+                "columns": {
+                  "application_id": "string",
+                  "customer_id": "string",
+                  "debt_to_asset_ratio": "decimal(10,4)",
+                  "debt_service_coverage_ratio": "decimal(10,4)",
+                  "current_ratio": "decimal(10,4)",
+                  "monthly_free_cash_flow": "decimal(15,2)",
+                  "estimated_monthly_payment": "decimal(15,2)",
+                  "payment_to_income_ratio": "decimal(10,4)",
+                  "payment_to_free_cash_flow_ratio": "decimal(10,4)",
+                  "repayment_capacity": "string",
+                  "ddep_year": "int",
+                  "ddep_month": "int",
+                  "ddep_day": "int"
+                },
+                "entity_type": "DataFrame",
+                "entity_value": "abc025_financial_analysis",
+                "dropped_columns": []
+              },
+              "joined_df": {
+                "id": "c18ef67f",
+                "name": "joined_df",
+                "columns": {
+                  "customer_id": "string",
+                  "application_id": "string",
+                  "overall_risk_score": "int",
+                  "risk_category": "string",
+                  "credit_history_score": "decimal(5,2)",
+                  "payment_behavior_score": "decimal(5,2)",
+                  "debt_burden_score": "decimal(5,2)",
+                  "has_recent_defaults": "boolean",
+                  "ddep_year": "int",
+                  "ddep_month": "int",
+                  "ddep_day": "int",
+                  "debt_to_asset_ratio": "decimal(10,4)",
+                  "debt_service_coverage_ratio": "decimal(10,4)",
+                  "current_ratio": "decimal(10,4)",
+                  "monthly_free_cash_flow": "decimal(15,2)",
+                  "estimated_monthly_payment": "decimal(15,2)",
+                  "payment_to_income_ratio": "decimal(10,4)",
+                  "payment_to_free_cash_flow_ratio": "decimal(10,4)",
+                  "repayment_capacity": "string"
+                },
+                "entity_type": "DataFrame",
+                "entity_value": "Joined risk and financial data",
+                "dropped_columns": []
+              },
+              "with_rates": {
+                "id": "bc00ccf6",
+                "name": "with_rates",
+                "columns": {
+                  "customer_id": "string",
+                  "application_id": "string",
+                  "overall_risk_score": "int",
+                  "risk_category": "string",
+                  "credit_history_score": "decimal(5,2)",
+                  "payment_behavior_score": "decimal(5,2)",
+                  "debt_burden_score": "decimal(5,2)",
+                  "has_recent_defaults": "boolean",
+                  "ddep_year": "int",
+                  "ddep_month": "int",
+                  "ddep_day": "int",
+                  "debt_to_asset_ratio": "decimal(10,4)",
+                  "debt_service_coverage_ratio": "decimal(10,4)",
+                  "current_ratio": "decimal(10,4)",
+                  "monthly_free_cash_flow": "decimal(15,2)",
+                  "estimated_monthly_payment": "decimal(15,2)",
+                  "payment_to_income_ratio": "decimal(10,4)",
+                  "payment_to_free_cash_flow_ratio": "decimal(10,4)",
+                  "repayment_capacity": "string",
+                  "interest_rate": "decimal(5,2)"
+                },
+                "entity_type": "DataFrame",
+                "entity_value": "Joined risk and financial data with interest rates",
+                "dropped_columns": []
+              },
+              "with_decisions": {
+                "id": "4b941dd6",
+                "name": "with_decisions",
+                "columns": {
+                  "customer_id": "string",
+                  "application_id": "string",
+                  "overall_risk_score": "int",
+                  "risk_category": "string",
+                  "credit_history_score": "decimal(5,2)",
+                  "payment_behavior_score": "decimal(5,2)",
+                  "debt_burden_score": "decimal(5,2)",
+                  "has_recent_defaults": "boolean",
+                  "ddep_year": "int",
+                  "ddep_month": "int",
+                  "ddep_day": "int",
+                  "debt_to_asset_ratio": "decimal(10,4)",
+                  "debt_service_coverage_ratio": "decimal(10,4)",
+                  "current_ratio": "decimal(10,4)",
+                  "monthly_free_cash_flow": "decimal(15,2)",
+                  "estimated_monthly_payment": "decimal(15,2)",
+                  "payment_to_income_ratio": "decimal(10,4)",
+                  "payment_to_free_cash_flow_ratio": "decimal(10,4)",
+                  "repayment_capacity": "string",
+                  "interest_rate": "decimal(5,2)",
+                  "decision_status": "string",
+                  "approved_amount": "decimal(15,2)"
+                },
+                "entity_type": "DataFrame",
+                "entity_value": "Loan decisions with approved amounts",
+                "dropped_columns": []
+              },
+              "final_df": {
+                "id": "0fb38026",
+                "name": "final_df",
+                "columns": {
+                  "customer_id": "string",
+                  "application_id": "string",
+                  "overall_risk_score": "int",
+                  "risk_category": "string",
+                  "credit_history_score": "decimal(5,2)",
+                  "payment_behavior_score": "decimal(5,2)",
+                  "debt_burden_score": "decimal(5,2)",
+                  "has_recent_defaults": "boolean",
+                  "ddep_year": "int",
+                  "ddep_month": "int",
+                  "ddep_day": "int",
+                  "debt_to_asset_ratio": "decimal(10,4)",
+                  "debt_service_coverage_ratio": "decimal(10,4)",
+                  "current_ratio": "decimal(10,4)",
+                  "monthly_free_cash_flow": "decimal(15,2)",
+                  "estimated_monthly_payment": "decimal(15,2)",
+                  "payment_to_income_ratio": "decimal(10,4)",
+                  "payment_to_free_cash_flow_ratio": "decimal(10,4)",
+                  "repayment_capacity": "string",
+                  "interest_rate": "decimal(5,2)",
+                  "decision_status": "string",
+                  "approved_amount": "decimal(15,2)"
+                },
+                "entity_type": "DataFrame",
+                "entity_value": "Loan decisions with approved amounts and processing date",
+                "dropped_columns": []
+              },
+              "decision_stats": {
+                "id": "94bd86d1",
+                "name": "decision_stats",
+                "columns": {
+                  "0": "Row"
+                },
+                "entity_type": "list",
+                "entity_value": [
+                  "List of decision status counts"
+                ],
+                "dropped_columns": []
+              },
+              "targetDatasets_0": {
+                "id": "dbba155d",
+                "name": "targetDatasets_0",
+                "columns": {
+                  "customer_id": "string",
+                  "application_id": "string",
+                  "overall_risk_score": "int",
+                  "risk_category": "string",
+                  "credit_history_score": "decimal(5,2)",
+                  "payment_behavior_score": "decimal(5,2)",
+                  "debt_burden_score": "decimal(5,2)",
+                  "has_recent_defaults": "boolean",
+                  "ddep_year": "int",
+                  "ddep_month": "int",
+                  "ddep_day": "int",
+                  "debt_to_asset_ratio": "decimal(10,4)",
+                  "debt_service_coverage_ratio": "decimal(10,4)",
+                  "current_ratio": "decimal(10,4)",
+                  "monthly_free_cash_flow": "decimal(15,2)",
+                  "estimated_monthly_payment": "decimal(15,2)",
+                  "payment_to_income_ratio": "decimal(10,4)",
+                  "payment_to_free_cash_flow_ratio": "decimal(10,4)",
+                  "repayment_capacity": "string",
+                  "interest_rate": "decimal(5,2)",
+                  "decision_status": "string",
+                  "approved_amount": "decimal(15,2)"
+                },
+                "entity_type": "DataFrame",
+                "entity_value": "Loan decisions with approved amounts and processing date",
+                "dropped_columns": []
+              }
+            },
+            "operation": {
+              "sourceDatasets_risk_df": {
+                "code_info": {
+                  "code": "risk_df = context.dataframes[stage.sourceDatasets[0]]",
+                  "lineno": "116",
+                  "file_path": "ddep-product://./src/abc025_loan_decision.py",
+                  "end_lineno": "116"
+                },
+                "operation": "Copy",
+                "source_columns": [
+                  "0"
+                ],
+                "source_entity": "65fa7386",
+                "target_columns": [
+                  "customer_id",
+                  "application_id",
+                  "overall_risk_score",
+                  "risk_category",
+                  "credit_history_score",
+                  "payment_behavior_score",
+                  "debt_burden_score",
+                  "has_recent_defaults",
+                  "ddep_year",
+                  "ddep_month",
+                  "ddep_day"
+                ],
+                "target_entity": "8f87f3af",
+                "operation_description": "Copy column without modification",
+                "source_entity_name": "sourceDatasets",
+                "target_entity_name": "risk_df"
+              },
+              "sourceDatasets_financial_df": {
+                "code_info": {
+                  "code": "financial_df = context.dataframes[stage.sourceDatasets[1]]",
+                  "lineno": "117",
+                  "file_path": "ddep-product://./src/abc025_loan_decision.py",
+                  "end_lineno": "117"
+                },
+                "operation": "Copy",
+                "source_columns": [
+                  "1"
+                ],
+                "source_entity": "65fa7386",
+                "target_columns": [
+                  "application_id",
+                  "customer_id",
+                  "debt_to_asset_ratio",
+                  "debt_service_coverage_ratio",
+                  "current_ratio",
+                  "monthly_free_cash_flow",
+                  "estimated_monthly_payment",
+                  "payment_to_income_ratio",
+                  "payment_to_free_cash_flow_ratio",
+                  "repayment_capacity",
+                  "ddep_year",
+                  "ddep_month",
+                  "ddep_day"
+                ],
+                "target_entity": "e734f468",
+                "operation_description": "Copy column without modification",
+                "source_entity_name": "sourceDatasets",
+                "target_entity_name": "financial_df"
+              },
+              "risk_df_joined_df": {
+                "code_info": {
+                  "code": "joined_df = risk_df.join(financial_df, [\"customer_id\", \"application_id\"], \"inner\")",
+                  "lineno": "123",
+                  "file_path": "ddep-product://./src/abc025_loan_decision.py",
+                  "end_lineno": "127"
+                },
+                "operation": "Join",
+                "source_columns": [
+                  "customer_id",
+                  "application_id",
+                  "overall_risk_score",
+                  "risk_category",
+                  "credit_history_score",
+                  "payment_behavior_score",
+                  "debt_burden_score",
+                  "has_recent_defaults",
+                  "ddep_year",
+                  "ddep_month",
+                  "ddep_day"
+                ],
+                "source_entity": "8f87f3af",
+                "target_columns": [
+                  "customer_id",
+                  "application_id",
+                  "overall_risk_score",
+                  "risk_category",
+                  "credit_history_score",
+                  "payment_behavior_score",
+                  "debt_burden_score",
+                  "has_recent_defaults",
+                  "ddep_year",
+                  "ddep_month",
+                  "ddep_day"
+                ],
+                "target_entity": "c18ef67f",
+                "operation_description": "Join risk_df and financial_df by customer_id and application_id",
+                "source_entity_name": "risk_df",
+                "target_entity_name": "joined_df"
+              },
+              "financial_df_joined_df": {
+                "code_info": {
+                  "code": "joined_df = risk_df.join(financial_df, [\"customer_id\", \"application_id\"], \"inner\")",
+                  "lineno": "134",
+                  "file_path": "ddep-product://./src/abc025_loan_decision.py",
+                  "end_lineno": "138"
+                },
+                "operation": "Join",
+                "source_columns": [
+                  "customer_id",
+                  "application_id",
+                  "debt_to_asset_ratio",
+                  "debt_service_coverage_ratio",
+                  "current_ratio",
+                  "monthly_free_cash_flow",
+                  "estimated_monthly_payment",
+                  "payment_to_income_ratio",
+                  "payment_to_free_cash_flow_ratio",
+                  "repayment_capacity"
+                ],
+                "source_entity": "e734f468",
+                "target_columns": [
+                  "customer_id",
+                  "application_id",
+                  "debt_to_asset_ratio",
+                  "debt_service_coverage_ratio",
+                  "current_ratio",
+                  "monthly_free_cash_flow",
+                  "estimated_monthly_payment",
+                  "payment_to_income_ratio",
+                  "payment_to_free_cash_flow_ratio",
+                  "repayment_capacity"
+                ],
+                "target_entity": "c18ef67f",
+                "operation_description": "Join risk_df and financial_df by customer_id and application_id",
+                "source_entity_name": "financial_df",
+                "target_entity_name": "joined_df"
+              },
+              "joined_df_with_rates": {
+                "code_info": {
+                  "code": "with_rates = joined_df.withColumn(\"interest_rate\", when(col(\"risk_category\") == \"LOW\", 5.99).when(col(\"risk_category\") == \"MEDIUM\", 8.99).when(col(\"risk_category\") == \"HIGH\", 12.99).otherwise(15.99))",
+                  "lineno": "37",
+                  "file_path": "ddep-product://./src/abc025_loan_decision.py",
+                  "end_lineno": "43"
+                },
+                "operation": "Create New Column",
+                "source_columns": [
+                  "risk_category"
+                ],
+                "source_entity": "c18ef67f",
+                "target_columns": [
+                  "interest_rate"
+                ],
+                "target_entity": "bc00ccf6",
+                "operation_description": "Map risk category to interest rate",
+                "source_entity_name": "joined_df",
+                "target_entity_name": "with_rates"
+              },
+              "joined_df_with_rates_1": {
+                "code_info": {
+                  "code": "with_rates = joined_df.withColumn(\"interest_rate\", when(col(\"risk_category\") == \"LOW\", 5.99).when(col(\"risk_category\") == \"MEDIUM\", 8.99).when(col(\"risk_category\") == \"HIGH\", 12.99).otherwise(15.99))",
+                  "lineno": "37",
+                  "file_path": "ddep-product://./src/abc025_loan_decision.py",
+                  "end_lineno": "43"
+                },
+                "operation": "Copy",
+                "source_columns": [
+                  "customer_id",
+                  "application_id",
+                  "overall_risk_score",
+                  "risk_category",
+                  "credit_history_score",
+                  "payment_behavior_score",
+                  "debt_burden_score",
+                  "has_recent_defaults",
+                  "ddep_year",
+                  "ddep_month",
+                  "ddep_day",
+                  "debt_to_asset_ratio",
+                  "debt_service_coverage_ratio",
+                  "current_ratio",
+                  "monthly_free_cash_flow",
+                  "estimated_monthly_payment",
+                  "payment_to_income_ratio",
+                  "payment_to_free_cash_flow_ratio",
+                  "repayment_capacity"
+                ],
+                "source_entity": "c18ef67f",
+                "target_columns": [
+                  "customer_id",
+                  "application_id",
+                  "overall_risk_score",
+                  "risk_category",
+                  "credit_history_score",
+                  "payment_behavior_score",
+                  "debt_burden_score",
+                  "has_recent_defaults",
+                  "ddep_year",
+                  "ddep_month",
+                  "ddep_day",
+                  "debt_to_asset_ratio",
+                  "debt_service_coverage_ratio",
+                  "current_ratio",
+                  "monthly_free_cash_flow",
+                  "estimated_monthly_payment",
+                  "payment_to_income_ratio",
+                  "payment_to_free_cash_flow_ratio",
+                  "repayment_capacity"
+                ],
+                "target_entity": "bc00ccf6",
+                "operation_description": "Copy column without modification",
+                "source_entity_name": "joined_df",
+                "target_entity_name": "with_rates"
+              },
+              "with_rates_with_decisions": {
+                "code_info": {
+                  "code": "with_decisions = with_rates.withColumn(\"decision_status\", when((col(\"risk_category\").isin(\"LOW\", \"MEDIUM\")) & (col(\"repayment_capacity\") == \"STRONG\") & (col(\"debt_to_income_ratio\") < 0.5) & (col(\"debt_service_coverage_ratio\") > 1.2) & (col(\"monthly_free_cash_flow\") > 0), \"APPROVED\").when((col(\"risk_category\") == \"HIGH\") & (col(\"repayment_capacity\") == \"ADEQUATE\") & (col(\"debt_to_income_ratio\") < 0.4) & (col(\"debt_service_coverage_ratio\") > 1.1) & (col(\"monthly_free_cash_flow\") > 0), \"CONDITIONALLY_APPROVED\").otherwise(\"REJECTED\")).withColumn(\"approved_amount\", when(col(\"decision_status\").isin(\"APPROVED\", \"CONDITIONALLY_APPROVED\"), col(\"loan_amount\")).otherwise(None))",
+                  "lineno": "55",
+                  "file_path": "ddep-product://./src/abc025_loan_decision.py",
+                  "end_lineno": "79"
+                },
+                "operation": "Build Composite Column",
+                "source_columns": [
+                  "risk_category",
+                  "repayment_capacity",
+                  "debt_to_income_ratio",
+                  "debt_service_coverage_ratio",
+                  "monthly_free_cash_flow",
+                  "loan_amount"
+                ],
+                "source_entity": "bc00ccf6",
+                "target_columns": [
+                  "decision_status",
+                  "approved_amount"
+                ],
+                "target_entity": "4b941dd6",
+                "operation_description": "Evaluate decision status based on risk category, repayment capacity, debt to income ratio, debt service coverage ratio, and monthly free cash flow",
+                "source_entity_name": "with_rates",
+                "target_entity_name": "with_decisions"
+              },
+              "with_decisions_with_decisions": {
+                "code_info": {
+                  "code": "with_decisions = with_rates.withColumn(\"decision_status\", when((col(\"risk_category\").isin(\"LOW\", \"MEDIUM\")) & (col(\"repayment_capacity\") == \"STRONG\") & (col(\"debt_to_income_ratio\") < 0.5) & (col(\"debt_service_coverage_ratio\") > 1.2) & (col(\"monthly_free_cash_flow\") > 0), \"APPROVED\").when((col(\"risk_category\") == \"HIGH\") & (col(\"repayment_capacity\") == \"ADEQUATE\") & (col(\"debt_to_income_ratio\") < 0.4) & (col(\"debt_service_coverage_ratio\") > 1.1) & (col(\"monthly_free_cash_flow\") > 0), \"CONDITIONALLY_APPROVED\").otherwise(\"REJECTED\")).withColumn(\"approved_amount\", when(col(\"decision_status\").isin(\"APPROVED\", \"CONDITIONALLY_APPROVED\"), col(\"loan_amount\")).otherwise(None))",
+                  "lineno": "62",
+                  "file_path": "ddep-product://./src/abc025_loan_decision.py",
+                  "end_lineno": ""
+                },
+                "operation": "Build Composite Column",
+                "source_columns": [
+                  "decision_status",
+                  "loan_amount"
+                ],
+                "source_entity": "4b941dd6",
+                "target_columns": [
+                  "approved_amount"
+                ],
+                "target_entity": "4b941dd6",
+                "operation_description": "Evaluate approved amount based on decision status and loan amount",
+                "source_entity_name": "with_decisions",
+                "target_entity_name": "with_decisions"
+              },
+              "with_rates_with_decisions_1": {
+                "code_info": {
+                  "code": "with_decisions = with_rates.withColumn(\"decision_status\", when((col(\"risk_category\").isin(\"LOW\", \"MEDIUM\")) & (col(\"repayment_capacity\") == \"STRONG\") & (col(\"debt_to_income_ratio\") < 0.5) & (col(\"debt_service_coverage_ratio\") > 1.2) & (col(\"monthly_free_cash_flow\") > 0), \"APPROVED\").when((col(\"risk_category\") == \"HIGH\") & (col(\"repayment_capacity\") == \"ADEQUATE\") & (col(\"debt_to_income_ratio\") < 0.4) & (col(\"debt_service_coverage_ratio\") > 1.1) & (col(\"monthly_free_cash_flow\") > 0), \"CONDITIONALLY_APPROVED\").otherwise(\"REJECTED\")).withColumn(\"approved_amount\", when(col(\"decision_status\").isin(\"APPROVED\", \"CONDITIONALLY_APPROVED\"), col(\"loan_amount\")).otherwise(None))",
+                  "lineno": "55",
+                  "file_path": "ddep-product://./src/abc025_loan_decision.py",
+                  "end_lineno": "79"
+                },
+                "operation": "Copy",
+                "source_columns": [
+                  "customer_id",
+                  "application_id",
+                  "overall_risk_score",
+                  "risk_category",
+                  "credit_history_score",
+                  "payment_behavior_score",
+                  "debt_burden_score",
+                  "has_recent_defaults",
+                  "ddep_year",
+                  "ddep_month",
+                  "ddep_day",
+                  "debt_to_asset_ratio",
+                  "debt_service_coverage_ratio",
+                  "current_ratio",
+                  "monthly_free_cash_flow",
+                  "estimated_monthly_payment",
+                  "payment_to_income_ratio",
+                  "payment_to_free_cash_flow_ratio",
+                  "repayment_capacity",
+                  "interest_rate"
+                ],
+                "source_entity": "bc00ccf6",
+                "target_columns": [
+                  "customer_id",
+                  "application_id",
+                  "overall_risk_score",
+                  "risk_category",
+                  "credit_history_score",
+                  "payment_behavior_score",
+                  "debt_burden_score",
+                  "has_recent_defaults",
+                  "ddep_year",
+                  "ddep_month",
+                  "ddep_day",
+                  "debt_to_asset_ratio",
+                  "debt_service_coverage_ratio",
+                  "current_ratio",
+                  "monthly_free_cash_flow",
+                  "estimated_monthly_payment",
+                  "payment_to_income_ratio",
+                  "payment_to_free_cash_flow_ratio",
+                  "repayment_capacity",
+                  "interest_rate"
+                ],
+                "target_entity": "4b941dd6",
+                "operation_description": "Copy without modification",
+                "source_entity_name": "with_rates",
+                "target_entity_name": "with_decisions"
+              },
+              "with_decisions_final_df": {
+                "code_info": {
+                  "code": "final_df = with_decisions.withColumn(\"ddep_year\", lit(processing_date.year)).withColumn(\"ddep_month\", lit(processing_date.month)).withColumn(\"ddep_day\", lit(processing_date.day))",
+                  "lineno": "90",
+                  "file_path": "ddep-product://./src/abc025_loan_decision.py",
+                  "end_lineno": "99"
+                },
+                "operation": "Copy",
+                "source_columns": [
+                  "customer_id",
+                  "application_id",
+                  "overall_risk_score",
+                  "risk_category",
+                  "credit_history_score",
+                  "payment_behavior_score",
+                  "debt_burden_score",
+                  "has_recent_defaults",
+                  "debt_to_asset_ratio",
+                  "debt_service_coverage_ratio",
+                  "current_ratio",
+                  "monthly_free_cash_flow",
+                  "estimated_monthly_payment",
+                  "payment_to_income_ratio",
+                  "payment_to_free_cash_flow_ratio",
+                  "repayment_capacity",
+                  "interest_rate",
+                  "decision_status",
+                  "approved_amount"
+                ],
+                "source_entity": "4b941dd6",
+                "target_columns": [
+                  "customer_id",
+                  "application_id",
+                  "overall_risk_score",
+                  "risk_category",
+                  "credit_history_score",
+                  "payment_behavior_score",
+                  "debt_burden_score",
+                  "has_recent_defaults",
+                  "debt_to_asset_ratio",
+                  "debt_service_coverage_ratio",
+                  "current_ratio",
+                  "monthly_free_cash_flow",
+                  "estimated_monthly_payment",
+                  "payment_to_income_ratio",
+                  "payment_to_free_cash_flow_ratio",
+                  "repayment_capacity",
+                  "interest_rate",
+                  "decision_status",
+                  "approved_amount"
+                ],
+                "target_entity": "0fb38026",
+                "operation_description": "Copy column without modification",
+                "source_entity_name": "with_decisions",
+                "target_entity_name": "final_df"
+              },
+              "final_df_final_df": {
+                "code_info": {
+                  "code": "final_df = with_decisions.withColumn(\"ddep_year\", lit(processing_date.year)).withColumn(\"ddep_month\", lit(processing_date.month)).withColumn(\"ddep_day\", lit(processing_date.day))",
+                  "lineno": "90",
+                  "file_path": "ddep-product://./src/abc025_loan_decision.py",
+                  "end_lineno": "99"
+                },
+                "operation": "Add Partition/Ingestion Column",
+                "source_columns": [
+                  "ddep_year",
+                  "ddep_month",
+                  "ddep_day"
+                ],
+                "source_entity": "0fb38026",
+                "target_columns": [
+                  "ddep_year",
+                  "ddep_month",
+                  "ddep_day"
+                ],
+                "target_entity": "0fb38026",
+                "operation_description": "Add Partition Column",
+                "source_entity_name": "final_df",
+                "target_entity_name": "final_df"
+              },
+              "final_df_targetDatasets_0": {
+                "code_info": {
+                  "code": "targetDatasets_0 = final_df",
+                  "lineno": "157",
+                  "file_path": "ddep-product://./src/abc025_loan_decision.py",
+                  "end_lineno": ""
+                },
+                "operation": "Copy",
+                "source_columns": [
+                  "customer_id",
+                  "application_id",
+                  "overall_risk_score",
+                  "risk_category",
+                  "credit_history_score",
+                  "payment_behavior_score",
+                  "debt_burden_score",
+                  "has_recent_defaults",
+                  "ddep_year",
+                  "ddep_month",
+                  "ddep_day",
+                  "debt_to_asset_ratio",
+                  "debt_service_coverage_ratio",
+                  "current_ratio",
+                  "monthly_free_cash_flow",
+                  "estimated_monthly_payment",
+                  "payment_to_income_ratio",
+                  "payment_to_free_cash_flow_ratio",
+                  "repayment_capacity",
+                  "interest_rate",
+                  "decision_status",
+                  "approved_amount"
+                ],
+                "source_entity": "0fb38026",
+                "target_columns": [
+                  "customer_id",
+                  "application_id",
+                  "overall_risk_score",
+                  "risk_category",
+                  "credit_history_score",
+                  "payment_behavior_score",
+                  "debt_burden_score",
+                  "has_recent_defaults",
+                  "ddep_year",
+                  "ddep_month",
+                  "ddep_day",
+                  "debt_to_asset_ratio",
+                  "debt_service_coverage_ratio",
+                  "current_ratio",
+                  "monthly_free_cash_flow",
+                  "estimated_monthly_payment",
+                  "payment_to_income_ratio",
+                  "payment_to_free_cash_flow_ratio",
+                  "repayment_capacity",
+                  "interest_rate",
+                  "decision_status",
+                  "approved_amount"
+                ],
+                "target_entity": "dbba155d",
+                "operation_description": "Copy column without modification",
+                "source_entity_name": "final_df",
+                "target_entity_name": "targetDatasets_0"
+              }
+            }
+          },
+          "repartition_loan_decision": {
+            "dataframe": {
+              "abc025_loan_decision": {
+                "id": "2f25d1f8",
+                "name": "abc025_loan_decision",
+                "columns": {
+                  "customer_id": "string",
+                  "application_id": "string",
+                  "overall_risk_score": "int",
+                  "risk_category": "string",
+                  "credit_history_score": "decimal(5,2)",
+                  "payment_behavior_score": "decimal(5,2)",
+                  "debt_burden_score": "decimal(5,2)",
+                  "has_recent_defaults": "boolean",
+                  "ddep_year": "int",
+                  "ddep_month": "int",
+                  "ddep_day": "int",
+                  "debt_to_asset_ratio": "decimal(10,4)",
+                  "debt_service_coverage_ratio": "decimal(10,4)",
+                  "current_ratio": "decimal(10,4)",
+                  "monthly_free_cash_flow": "decimal(15,2)",
+                  "estimated_monthly_payment": "decimal(15,2)",
+                  "payment_to_income_ratio": "decimal(10,4)",
+                  "payment_to_free_cash_flow_ratio": "decimal(10,4)",
+                  "repayment_capacity": "string",
+                  "interest_rate": "decimal(5,2)",
+                  "decision_status": "string",
+                  "approved_amount": "decimal(15,2)"
+                },
+                "entity_type": "dataframe",
+                "entity_value": "ddep-metadata://au.com.demolabs.ddep.abc025.transform/dataset/abc025_loan_decision@latest",
+                "dropped_columns": []
+              },
+              "abc025_loan_decision_1": {
+                "id": "c2b9d7a5",
+                "name": "abc025_loan_decision",
+                "columns": {
+                  "customer_id": "string",
+                  "application_id": "string",
+                  "overall_risk_score": "int",
+                  "risk_category": "string",
+                  "credit_history_score": "decimal(5,2)",
+                  "payment_behavior_score": "decimal(5,2)",
+                  "debt_burden_score": "decimal(5,2)",
+                  "has_recent_defaults": "boolean",
+                  "ddep_year": "int",
+                  "ddep_month": "int",
+                  "ddep_day": "int",
+                  "debt_to_asset_ratio": "decimal(10,4)",
+                  "debt_service_coverage_ratio": "decimal(10,4)",
+                  "current_ratio": "decimal(10,4)",
+                  "monthly_free_cash_flow": "decimal(15,2)",
+                  "estimated_monthly_payment": "decimal(15,2)",
+                  "payment_to_income_ratio": "decimal(10,4)",
+                  "payment_to_free_cash_flow_ratio": "decimal(10,4)",
+                  "repayment_capacity": "string",
+                  "interest_rate": "decimal(5,2)",
+                  "decision_status": "string",
+                  "approved_amount": "decimal(15,2)"
+                },
+                "entity_type": "dataframe",
+                "entity_value": "ddep-metadata://au.com.demolabs.ddep.abc025.transform/dataset/abc025_loan_decision@latest",
+                "dropped_columns": []
+              }
+            },
+            "operation": {
+              "abc025_loan_decision_abc025_loan_decision": {
+                "code_info": {
+                  "code": "{'name': 'repartition_loan_decision', 'description': 'Repartition loan decision data before final export', 'conditionals': [], 'dataset': 'ddep-metadata://au.com.demolabs.ddep.abc025.transform/dataset/abc025_loan_decision@latest', 'strategy': {'partitions': 10, '$': 'au.com.demolabs.ddep.metadata.v2.process.stage.LiteralRepartitionStrategy'}, 'columns': [], '$': 'au.com.demolabs.ddep.metadata.v2.process.stage.RepartitionDataframeStage'}",
+                  "lineno": 1,
+                  "file_path": "repartition_loan_decision",
+                  "end_lineno": 1
+                },
+                "operation": "repartition",
+                "source_columns": [
+                  "customer_id",
+                  "application_id",
+                  "overall_risk_score",
+                  "risk_category",
+                  "credit_history_score",
+                  "payment_behavior_score",
+                  "debt_burden_score",
+                  "has_recent_defaults",
+                  "ddep_year",
+                  "ddep_month",
+                  "ddep_day",
+                  "debt_to_asset_ratio",
+                  "debt_service_coverage_ratio",
+                  "current_ratio",
+                  "monthly_free_cash_flow",
+                  "estimated_monthly_payment",
+                  "payment_to_income_ratio",
+                  "payment_to_free_cash_flow_ratio",
+                  "repayment_capacity",
+                  "interest_rate",
+                  "decision_status",
+                  "approved_amount"
+                ],
+                "source_entity": "2f25d1f8",
+                "target_columns": [
+                  "customer_id",
+                  "application_id",
+                  "overall_risk_score",
+                  "risk_category",
+                  "credit_history_score",
+                  "payment_behavior_score",
+                  "debt_burden_score",
+                  "has_recent_defaults",
+                  "ddep_year",
+                  "ddep_month",
+                  "ddep_day",
+                  "debt_to_asset_ratio",
+                  "debt_service_coverage_ratio",
+                  "current_ratio",
+                  "monthly_free_cash_flow",
+                  "estimated_monthly_payment",
+                  "payment_to_income_ratio",
+                  "payment_to_free_cash_flow_ratio",
+                  "repayment_capacity",
+                  "interest_rate",
+                  "decision_status",
+                  "approved_amount"
+                ],
+                "target_entity": "c2b9d7a5",
+                "operation_description": "Redistribute data across 10 partitions",
+                "source_entity_name": "abc025_loan_decision",
+                "target_entity_name": "abc025_loan_decision"
+              }
+            }
+          },
+          "final_export_stage": {
+            "dataframe": {
+              "abc025_risk_assessment": {
+                "id": "02cf84bd",
+                "name": "abc025_risk_assessment",
+                "columns": {
+                  "customer_id": "string",
+                  "application_id": "string",
+                  "overall_risk_score": "int",
+                  "risk_category": "string",
+                  "credit_history_score": "decimal(5,2)",
+                  "payment_behavior_score": "decimal(5,2)",
+                  "debt_burden_score": "decimal(5,2)",
+                  "has_recent_defaults": "boolean",
+                  "ddep_year": "int",
+                  "ddep_month": "int",
+                  "ddep_day": "int"
+                },
+                "entity_type": "au.com.demolabs.ddep.metadata.v2.Dataset",
+                "entity_value": "ddep-metadata://au.com.demolabs.ddep.abc025.transform/dataset/abc025_risk_assessment@latest",
+                "dropped_columns": []
+              },
+              "loan_decision_summary": {
+                "id": "48671404",
+                "name": "loan_decision_summary",
+                "columns": {
+                  "application_id": "string",
+                  "customer_id": "string",
+                  "risk_category": "string",
+                  "decision_status": "string",
+                  "approved_amount": "decimal(15,2)",
+                  "interest_rate": "decimal(5,2)",
+                  "decision_date": "date",
+                  "loan_term_months": "int",
+                  "ddep_year": "int",
+                  "ddep_month": "int",
+                  "ddep_day": "int"
+                },
+                "entity_type": "table",
+                "entity_value": "Loan decision summary view",
+                "dropped_columns": []
+              },
+              "abc025_final_export": {
+                "id": "8f91f0e1",
+                "name": "abc025_final_export",
+                "columns": {
+                  "application_id": "string",
+                  "customer_id": "string",
+                  "risk_category": "string",
+                  "decision_status": "string",
+                  "approved_amount": "decimal(15,2)",
+                  "interest_rate": "decimal(5,2)",
+                  "decision_date": "date",
+                  "ddep_year": "int",
+                  "ddep_month": "int",
+                  "ddep_day": "int"
+                },
+                "entity_type": "table",
+                "entity_value": "Loan decision summary export",
+                "dropped_columns": []
+              },
+              "abc025_loan_decision": {
+                "id": "8f9123e1",
+                "name": "abc025_loan_decision",
+                "columns": {
+                  "customer_id": "string",
+                  "application_id": "string",
+                  "overall_risk_score": "int",
+                  "risk_category": "string",
+                  "credit_history_score": "decimal(5,2)",
+                  "payment_behavior_score": "decimal(5,2)",
+                  "debt_burden_score": "decimal(5,2)",
+                  "has_recent_defaults": "boolean",
+                  "ddep_year": "int",
+                  "ddep_month": "int",
+                  "ddep_day": "int",
+                  "debt_to_asset_ratio": "decimal(10,4)",
+                  "debt_service_coverage_ratio": "decimal(10,4)",
+                  "current_ratio": "decimal(10,4)",
+                  "monthly_free_cash_flow": "decimal(15,2)",
+                  "estimated_monthly_payment": "decimal(15,2)",
+                  "payment_to_income_ratio": "decimal(10,4)",
+                  "payment_to_free_cash_flow_ratio": "decimal(10,4)",
+                  "repayment_capacity": "string",
+                  "interest_rate": "decimal(5,2)",
+                  "decision_status": "string",
+                  "approved_amount": "decimal(15,2)"
+                },
+                "entity_type": "table",
+                "entity_value": "ddep-metadata://au.com.demolabs.ddep.abc025.transform/dataset/abc025_loan_decision@latest",
+                "dropped_columns": []
+              }
+            },
+            "operation": {
+              "abc025_risk_assessment_loan_decision_summary": {
+                "code_info": {
+                  "code": "spark.sql(\"CREATE OR REPLACE TEMPORARY VIEW loan_decision_summary AS SELECT d.application_id, d.customer_id, r.risk_category, d.decision_status, d.approved_amount, d.interest_rate, CAST(CURRENT_DATE() AS DATE) AS decision_date, d.loan_term_months, CAST(YEAR(CURRENT_DATE()) AS INT) AS ddep_year, CAST(MONTH(CURRENT_DATE()) AS INT) AS ddep_month, CAST(DAY(CURRENT_DATE()) AS INT) AS ddep_day FROM abc025_loan_decision d JOIN abc025_risk_assessment r ON d.application_id = r.application_id AND d.customer_id = r.customer_id\")",
+                  "lineno": "5",
+                  "file_path": "ddep-product://./sql/abc025_final_export.sql",
+                  "end_lineno": "23"
+                },
+                "operation": "Join",
+                "source_columns": [
+                  "risk_category"
+                ],
+                "source_entity": "02cf84bd",
+                "target_columns": [
+                  "risk_category"
+                ],
+                "target_entity": "48671404",
+                "operation_description": "Join abc025_loan_decision and abc025_risk_assessment by application_id and customer_id",
+                "source_entity_name": "abc025_risk_assessment",
+                "target_entity_name": "loan_decision_summary"
+              },
+              "abc025_loan_decision_loan_decision_summary": {
+                "code_info": {
+                  "code": "spark.sql(\"CREATE OR REPLACE TEMPORARY VIEW loan_decision_summary AS SELECT d.application_id, d.customer_id, r.risk_category, d.decision_status, d.approved_amount, d.interest_rate, CAST(CURRENT_DATE() AS DATE) AS decision_date, d.loan_term_months, CAST(YEAR(CURRENT_DATE()) AS INT) AS ddep_year, CAST(MONTH(CURRENT_DATE()) AS INT) AS ddep_month, CAST(DAY(CURRENT_DATE()) AS INT) AS ddep_day FROM abc025_loan_decision d JOIN abc025_risk_assessment r ON d.application_id = r.application_id AND d.customer_id = r.customer_id\")",
+                  "lineno": "5",
+                  "file_path": "ddep-product://./sql/abc025_final_export.sql",
+                  "end_lineno": "23"
+                },
+                "operation": "Join",
+                "source_columns": [
+                  "application_id",
+                  "customer_id",
+                  "decision_status",
+                  "approved_amount",
+                  "interest_rate",
+                  "loan_term_months"
+                ],
+                "source_entity": "8f9123e1",
+                "target_columns": [
+                  "application_id",
+                  "customer_id",
+                  "decision_status",
+                  "approved_amount",
+                  "interest_rate",
+                  "loan_term_months"
+                ],
+                "target_entity": "48671404",
+                "operation_description": "Join abc025_loan_decision and abc025_risk_assessment by application_id and customer_id",
+                "source_entity_name": "abc025_loan_decision",
+                "target_entity_name": "loan_decision_summary"
+              },
+              "loan_decision_summary_loan_decision_summary": {
+                "code_info": {
+                  "code": "spark.sql(\"CREATE OR REPLACE TEMPORARY VIEW loan_decision_summary AS SELECT d.application_id, d.customer_id, r.risk_category, d.decision_status, d.approved_amount, d.interest_rate, CAST(CURRENT_DATE() AS DATE) AS decision_date, d.loan_term_months, CAST(YEAR(CURRENT_DATE()) AS INT) AS ddep_year, CAST(MONTH(CURRENT_DATE()) AS INT) AS ddep_month, CAST(DAY(CURRENT_DATE()) AS INT) AS ddep_day FROM abc025_loan_decision d JOIN abc025_risk_assessment r ON d.application_id = r.application_id AND d.customer_id = r.customer_id\")",
+                  "lineno": "5",
+                  "file_path": "ddep-product://./sql/abc025_final_export.sql",
+                  "end_lineno": "23"
+                },
+                "operation": "Add Partition/Ingestion Column",
+                "source_columns": [
+                  "decision_date",
+                  "ddep_year",
+                  "ddep_month",
+                  "ddep_day"
+                ],
+                "source_entity": "48671404",
+                "target_columns": [
+                  "decision_date",
+                  "ddep_year",
+                  "ddep_month",
+                  "ddep_day"
+                ],
+                "target_entity": "48671404",
+                "operation_description": "Add Partition/Ingestion Column",
+                "source_entity_name": "loan_decision_summary",
+                "target_entity_name": "loan_decision_summary"
+              },
+              "loan_decision_summary_abc025_final_export": {
+                "code_info": {
+                  "code": "spark.sql(\"INSERT OVERWRITE TABLE abc025_final_export SELECT application_id, customer_id, risk_category, decision_status, approved_amount, interest_rate, decision_date, ddep_year, ddep_month, ddep_day FROM loan_decision_summary ORDER BY application_id\")",
+                  "lineno": "26",
+                  "file_path": "ddep-product://./sql/abc025_final_export.sql",
+                  "end_lineno": "39"
+                },
+                "operation": "Copy",
+                "source_columns": [
+                  "application_id",
+                  "customer_id",
+                  "risk_category",
+                  "decision_status",
+                  "approved_amount",
+                  "interest_rate",
+                  "decision_date",
+                  "ddep_year",
+                  "ddep_month",
+                  "ddep_day"
+                ],
+                "source_entity": "48671404",
+                "target_columns": [
+                  "application_id",
+                  "customer_id",
+                  "risk_category",
+                  "decision_status",
+                  "approved_amount",
+                  "interest_rate",
+                  "decision_date",
+                  "ddep_year",
+                  "ddep_month",
+                  "ddep_day"
+                ],
+                "target_entity": "8f91f0e1",
+                "operation_description": "Copy application_id column from loan_decision_summary to abc025_final_export",
+                "source_entity_name": "loan_decision_summary",
+                "target_entity_name": "abc025_final_export"
+              }
+            }
+          },
+          "calculate_additional_metrics_columnTransforms_0": {
+            "dataframe": {
+              "abc025_final_export": {
+                "id": "2f9334ab",
+                "name": "abc025_final_export",
+                "entity_type": "Pipeline task intermediate Dataset",
+                "entity_value": "ddep-metadata://au.com.demolabs.ddep.abc025.transform/dataset/abc025_final_export@latest",
+                "columns": {
+                  "application_id": "string",
+                  "customer_id": "string",
+                  "risk_category": "string",
+                  "decision_status": "string",
+                  "approved_amount": "decimal(15,2)",
+                  "interest_rate": "decimal(5,2)",
+                  "decision_date": "date",
+                  "ddep_year": "int",
+                  "ddep_month": "int",
+                  "ddep_day": "int"
                 }
               },
-              "operation": {
-                "ddep-storage://au.com.demolabs.ddep.abc025/abc025/abc025_risk_assessment_read_parquet_risk_assessment": {
-                  "code_info": {
-                    "code": "{'name': 'read_source_risk_assessment', 'description': 'Reads risk assessment source data', 'conditionals': [], 'connectionName': 'read_parquet_risk_assessment', '$': 'au.com.demolabs.ddep.metadata.v2.process.stage.ReadSourceStage'}",
-                    "lineno": 1,
-                    "file_path": "read_source_risk_assessment",
-                    "end_lineno": 1
-                  },
-                  "operation": "read",
-                  "source_columns": [
-                    "customer_id",
-                    "application_id",
-                    "overall_risk_score",
-                    "risk_category",
-                    "credit_history_score",
-                    "payment_behavior_score",
-                    "debt_burden_score",
-                    "has_recent_defaults",
-                    "ddep_year",
-                    "ddep_month",
-                    "ddep_day"
-                  ],
-                  "source_entity": "388325b1",
-                  "target_columns": [
-                    "customer_id",
-                    "application_id",
-                    "overall_risk_score",
-                    "risk_category",
-                    "credit_history_score",
-                    "payment_behavior_score",
-                    "debt_burden_score",
-                    "has_recent_defaults",
-                    "ddep_year",
-                    "ddep_month",
-                    "ddep_day"
-                  ],
-                  "target_entity": "0cc96a2e",
-                  "operation_description": "Copy data from Parquet file to DataFrame",
-                  "source_entity_name": "ddep-storage://au.com.demolabs.ddep.abc025/abc025/abc025_risk_assessment",
-                  "target_entity_name": "read_parquet_risk_assessment"
+              "tmp_abc025_final_export": {
+                "id": "1c37c1f1",
+                "name": "tmp_abc025_final_export",
+                "entity_type": "Pipeline task intermediate Dataset",
+                "entity_value": "Temporary table for abc025_final_export with calculated monthly payment",
+                "columns": {
+                  "application_id": "string",
+                  "customer_id": "string",
+                  "risk_category": "string",
+                  "decision_status": "string",
+                  "approved_amount": "decimal(15,2)",
+                  "interest_rate": "decimal(5,2)",
+                  "decision_date": "date",
+                  "ddep_year": "int",
+                  "ddep_month": "int",
+                  "ddep_day": "int",
+                  "monthly_payment": "decimal(15,2)"
+                }
+              },
+              "abc025_final_export_1": {
+                "id": "05ad3aa9",
+                "name": "abc025_final_export",
+                "entity_type": "Pipeline task final Dataset",
+                "entity_value": "Final table for abc025_final_export with calculated monthly payment",
+                "columns": {
+                  "application_id": "string",
+                  "customer_id": "string",
+                  "risk_category": "string",
+                  "decision_status": "string",
+                  "approved_amount": "decimal(15,2)",
+                  "interest_rate": "decimal(5,2)",
+                  "decision_date": "date",
+                  "ddep_year": "int",
+                  "ddep_month": "int",
+                  "ddep_day": "int",
+                  "monthly_payment": "decimal(15,2)"
                 }
               }
             },
-            "repartition_risk_assessment": {
-              "dataframe": {
-                "read_parquet_risk_assessment": {
-                  "id": "f40c9244",
-                  "name": "read_parquet_risk_assessment",
-                  "columns": {
-                    "customer_id": "string",
-                    "application_id": "string",
-                    "overall_risk_score": "int",
-                    "risk_category": "string",
-                    "credit_history_score": "decimal(5,2)",
-                    "payment_behavior_score": "decimal(5,2)",
-                    "debt_burden_score": "decimal(5,2)",
-                    "has_recent_defaults": "boolean",
-                    "ddep_year": "int",
-                    "ddep_month": "int",
-                    "ddep_day": "int"
-                  },
-                  "entity_type": "dataframe",
-                  "entity_value": "ddep-metadata://au.com.demolabs.ddep.abc025.transform/dataset/abc025_risk_assessment@latest",
-                  "dropped_columns": []
+            "operation": {
+              "abc025_final_export_tmp_abc025_final_export": {
+                "code_info": {
+                  "lineno": "3",
+                  "end_lineno": "",
+                  "file_path": "DDEP_ABC025_ING_004_calculate_additional_metrics_columnTransforms_0_inline_sql.sql",
+                  "code": "spark.sql(\"CREATE TEMPORARY TABLE tmp_abc025_final_export AS SELECT *, CAST((approved_amount * (interest_rate/1200) * POWER(1 + interest_rate/1200, 360)) / (POWER(1 + interest_rate/1200, 360) - 1) AS DECIMAL(15, 2)) AS monthly_payment FROM abc025_final_export\")"
                 },
-                "repartition_risk_assessment": {
-                  "id": "0d6be52d",
-                  "name": "repartition_risk_assessment",
-                  "columns": {
-                    "customer_id": "string",
-                    "application_id": "string",
-                    "overall_risk_score": "int",
-                    "risk_category": "string",
-                    "credit_history_score": "decimal(5,2)",
-                    "payment_behavior_score": "decimal(5,2)",
-                    "debt_burden_score": "decimal(5,2)",
-                    "has_recent_defaults": "boolean",
-                    "ddep_year": "int",
-                    "ddep_month": "int",
-                    "ddep_day": "int"
-                  },
-                  "entity_type": "dataframe",
-                  "entity_value": "ddep-metadata://au.com.demolabs.ddep.abc025.transform/dataset/abc025_risk_assessment@latest",
-                  "dropped_columns": []
+                "operation": "Copy",
+                "source_columns": [
+                  "application_id",
+                  "customer_id",
+                  "risk_category",
+                  "decision_status",
+                  "approved_amount",
+                  "interest_rate",
+                  "decision_date",
+                  "ddep_year",
+                  "ddep_month",
+                  "ddep_day"
+                ],
+                "source_entity": "2f9334ab",
+                "target_columns": [
+                  "application_id",
+                  "customer_id",
+                  "risk_category",
+                  "decision_status",
+                  "approved_amount",
+                  "interest_rate",
+                  "decision_date",
+                  "ddep_year",
+                  "ddep_month",
+                  "ddep_day"
+                ],
+                "target_entity": "1c37c1f1",
+                "operation_description": "Copy application_id from source table",
+                "source_entity_name": "abc025_final_export",
+                "target_entity_name": "tmp_abc025_final_export"
+              },
+              "abc025_final_export_tmp_abc025_final_export_1": {
+                "code_info": {
+                  "lineno": "3",
+                  "end_lineno": "",
+                  "file_path": "DDEP_ABC025_ING_004_calculate_additional_metrics_columnTransforms_0_inline_sql.sql",
+                  "code": "spark.sql(\"CREATE TEMPORARY TABLE tmp_abc025_final_export AS SELECT *, CAST((approved_amount * (interest_rate/1200) * POWER(1 + interest_rate/1200, 360)) / (POWER(1 + interest_rate/1200, 360) - 1) AS DECIMAL(15, 2)) AS monthly_payment FROM abc025_final_export\")"
+                },
+                "operation": "Build Composite Column",
+                "source_columns": [
+                  "approved_amount",
+                  "interest_rate"
+                ],
+                "source_entity": "2f9334ab",
+                "target_columns": [
+                  "monthly_payment"
+                ],
+                "target_entity": "1c37c1f1",
+                "operation_description": "Calculate monthly payment as approved_amount times interest_rate divided by 1200 times power of 1 plus interest_rate divided by 1200 to the power of 360 divided by power of 1 plus interest_rate divided by 1200 to the power of 360 minus 1",
+                "source_entity_name": "abc025_final_export",
+                "target_entity_name": "tmp_abc025_final_export"
+              },
+              "tmp_abc025_final_export_abc025_final_export": {
+                "code_info": {
+                  "lineno": "5",
+                  "end_lineno": "",
+                  "file_path": "DDEP_ABC025_ING_004_calculate_additional_metrics_columnTransforms_0_inline_sql.sql",
+                  "code": "spark.sql(\"REPLACE INTO abc025_final_export SELECT * FROM tmp_abc025_final_export\")"
+                },
+                "operation": "Copy",
+                "source_columns": [
+                  "application_id",
+                  "customer_id",
+                  "risk_category",
+                  "decision_status",
+                  "approved_amount",
+                  "interest_rate",
+                  "decision_date",
+                  "ddep_year",
+                  "ddep_month",
+                  "ddep_day",
+                  "monthly_payment"
+                ],
+                "source_entity": "1c37c1f1",
+                "target_columns": [
+                  "application_id",
+                  "customer_id",
+                  "risk_category",
+                  "decision_status",
+                  "approved_amount",
+                  "interest_rate",
+                  "decision_date",
+                  "ddep_year",
+                  "ddep_month",
+                  "ddep_day",
+                  "monthly_payment"
+                ],
+                "target_entity": "05ad3aa9",
+                "operation_description": "Copy column application_id",
+                "source_entity_name": "tmp_abc025_final_export",
+                "target_entity_name": "abc025_final_export"
+              }
+            }
+          },
+          "calculate_additional_metrics_columnTransforms_1": {
+            "dataframe": {
+              "abc025_final_export": {
+                "id": "d595df4f",
+                "name": "abc025_final_export",
+                "entity_type": "Pipeline task intermediate Dataset",
+                "entity_value": "ddep-metadata://au.com.demolabs.ddep.abc025.transform/dataset/abc025_final_export@latest",
+                "columns": {
+                  "application_id": "string",
+                  "customer_id": "string",
+                  "risk_category": "string",
+                  "decision_status": "string",
+                  "approved_amount": "decimal(15,2)",
+                  "interest_rate": "decimal(5,2)",
+                  "decision_date": "date",
+                  "ddep_year": "int",
+                  "ddep_month": "int",
+                  "ddep_day": "int",
+                  "monthly_payment": "decimal(15,2)"
                 }
               },
-              "operation": {
-                "read_parquet_risk_assessment_repartition_risk_assessment": {
-                  "code_info": {
-                    "code": "{'name': 'repartition_risk_assessment', 'description': 'Repartition risk assessment data for processing', 'conditionals': [], 'dataset': 'ddep-metadata://au.com.demolabs.ddep.abc025.transform/dataset/abc025_risk_assessment@latest', 'strategy': {'partitions': 10, '$': 'au.com.demolabs.ddep.metadata.v2.process.stage.LiteralRepartitionStrategy'}, 'columns': [], '$': 'au.com.demolabs.ddep.metadata.v2.process.stage.RepartitionDataframeStage'}",
-                    "lineno": 1,
-                    "file_path": "repartition_risk_assessment",
-                    "end_lineno": 1
-                  },
-                  "operation": "repartition",
-                  "source_columns": [
-                    "customer_id",
-                    "application_id",
-                    "overall_risk_score",
-                    "risk_category",
-                    "credit_history_score",
-                    "payment_behavior_score",
-                    "debt_burden_score",
-                    "has_recent_defaults",
-                    "ddep_year",
-                    "ddep_month",
-                    "ddep_day"
-                  ],
-                  "source_entity": "f40c9244",
-                  "target_columns": [
-                    "customer_id",
-                    "application_id",
-                    "overall_risk_score",
-                    "risk_category",
-                    "credit_history_score",
-                    "payment_behavior_score",
-                    "debt_burden_score",
-                    "has_recent_defaults",
-                    "ddep_year",
-                    "ddep_month",
-                    "ddep_day"
-                  ],
-                  "target_entity": "0d6be52d",
-                  "operation_description": "Redistribute data across 10 partitions",
-                  "source_entity_name": "read_parquet_risk_assessment",
-                  "target_entity_name": "repartition_risk_assessment"
+              "tmp_abc025_final_export": {
+                "id": "76761af8",
+                "name": "tmp_abc025_final_export",
+                "entity_type": "DataFrame",
+                "entity_value": "Temporary table with total interest",
+                "columns": {
+                  "application_id": "string",
+                  "customer_id": "string",
+                  "risk_category": "string",
+                  "decision_status": "string",
+                  "approved_amount": "decimal(15,2)",
+                  "interest_rate": "decimal(5,2)",
+                  "decision_date": "date",
+                  "ddep_year": "int",
+                  "ddep_month": "int",
+                  "ddep_day": "int",
+                  "monthly_payment": "decimal(15,2)",
+                  "total_interest": "decimal(15,2)"
+                }
+              },
+              "abc025_final_export_1": {
+                "id": "efbec741",
+                "name": "abc025_final_export",
+                "entity_type": "DataFrame",
+                "entity_value": "Final export table with total interest",
+                "columns": {
+                  "application_id": "string",
+                  "customer_id": "string",
+                  "risk_category": "string",
+                  "decision_status": "string",
+                  "approved_amount": "decimal(15,2)",
+                  "interest_rate": "decimal(5,2)",
+                  "decision_date": "date",
+                  "ddep_year": "int",
+                  "ddep_month": "int",
+                  "ddep_day": "int",
+                  "monthly_payment": "decimal(15,2)",
+                  "total_interest": "decimal(15,2)"
                 }
               }
             },
-            "read_source_financial_analysis": {
-              "dataframe": {
-                "ddep-storage://au.com.demolabs.ddep.abc025/abc025/abc025_financial_analysis": {
-                  "id": "18d109fb",
-                  "name": "ddep-storage://au.com.demolabs.ddep.abc025/abc025/abc025_financial_analysis",
-                  "columns": {
-                    "application_id": "string",
-                    "customer_id": "string",
-                    "debt_to_asset_ratio": "decimal(10,4)",
-                    "debt_service_coverage_ratio": "decimal(10,4)",
-                    "current_ratio": "decimal(10,4)",
-                    "monthly_free_cash_flow": "decimal(15,2)",
-                    "estimated_monthly_payment": "decimal(15,2)",
-                    "payment_to_income_ratio": "decimal(10,4)",
-                    "payment_to_free_cash_flow_ratio": "decimal(10,4)",
-                    "repayment_capacity": "string",
-                    "ddep_year": "int",
-                    "ddep_month": "int",
-                    "ddep_day": "int"
-                  },
-                  "entity_type": "au.com.demolabs.ddep.metadata.v2.process.connection.ProcessConnectionParquetFileSource",
-                  "entity_value": "ddep-metadata://au.com.demolabs.ddep.abc025.transform/dataset/abc025_financial_analysis@latest",
-                  "dropped_columns": []
+            "operation": {
+              "abc025_final_export_tmp_abc025_final_export": {
+                "code_info": {
+                  "lineno": "3",
+                  "end_lineno": "",
+                  "file_path": "DDEP_ABC025_ING_004_calculate_additional_metrics_columnTransforms_1_inline_sql.sql",
+                  "code": "spark.sql(\"CREATE TEMPORARY TABLE tmp_abc025_final_export AS SELECT *, CAST((monthly_payment * 360 - approved_amount) AS DECIMAL(15, 2)) AS total_interest FROM abc025_final_export\")"
                 },
-                "read_parquet_financial_analysis": {
-                  "id": "93bc1a33",
-                  "name": "read_parquet_financial_analysis",
-                  "columns": {
-                    "application_id": "string",
-                    "customer_id": "string",
-                    "debt_to_asset_ratio": "decimal(10,4)",
-                    "debt_service_coverage_ratio": "decimal(10,4)",
-                    "current_ratio": "decimal(10,4)",
-                    "monthly_free_cash_flow": "decimal(15,2)",
-                    "estimated_monthly_payment": "decimal(15,2)",
-                    "payment_to_income_ratio": "decimal(10,4)",
-                    "payment_to_free_cash_flow_ratio": "decimal(10,4)",
-                    "repayment_capacity": "string",
-                    "ddep_year": "int",
-                    "ddep_month": "int",
-                    "ddep_day": "int"
-                  },
-                  "entity_type": "dataframe",
-                  "entity_value": "ddep-metadata://au.com.demolabs.ddep.abc025.transform/dataset/abc025_financial_analysis@latest",
-                  "dropped_columns": []
-                }
+                "operation": "Copy",
+                "source_columns": [
+                  "application_id",
+                  "customer_id",
+                  "risk_category",
+                  "decision_status",
+                  "approved_amount",
+                  "interest_rate",
+                  "decision_date",
+                  "ddep_year",
+                  "ddep_month",
+                  "ddep_day",
+                  "monthly_payment"
+                ],
+                "source_entity": "d595df4f",
+                "target_columns": [
+                  "application_id",
+                  "customer_id",
+                  "risk_category",
+                  "decision_status",
+                  "approved_amount",
+                  "interest_rate",
+                  "decision_date",
+                  "ddep_year",
+                  "ddep_month",
+                  "ddep_day",
+                  "monthly_payment"
+                ],
+                "target_entity": "76761af8",
+                "operation_description": "Copy column without modification",
+                "source_entity_name": "abc025_final_export",
+                "target_entity_name": "tmp_abc025_final_export"
               },
-              "operation": {
-                "ddep-storage://au.com.demolabs.ddep.abc025/abc025/abc025_financial_analysis_read_parquet_financial_analysis": {
-                  "code_info": {
-                    "code": "{'name': 'read_source_financial_analysis', 'description': 'Reads financial analysis source data', 'conditionals': [], 'connectionName': 'read_parquet_financial_analysis', '$': 'au.com.demolabs.ddep.metadata.v2.process.stage.ReadSourceStage'}",
-                    "lineno": 1,
-                    "file_path": "read_source_financial_analysis",
-                    "end_lineno": 1
-                  },
-                  "operation": "read",
-                  "source_columns": [
-                    "application_id",
-                    "customer_id",
-                    "debt_to_asset_ratio",
-                    "debt_service_coverage_ratio",
-                    "current_ratio",
-                    "monthly_free_cash_flow",
-                    "estimated_monthly_payment",
-                    "payment_to_income_ratio",
-                    "payment_to_free_cash_flow_ratio",
-                    "repayment_capacity",
-                    "ddep_year",
-                    "ddep_month",
-                    "ddep_day"
-                  ],
-                  "source_entity": "18d109fb",
-                  "target_columns": [
-                    "application_id",
-                    "customer_id",
-                    "debt_to_asset_ratio",
-                    "debt_service_coverage_ratio",
-                    "current_ratio",
-                    "monthly_free_cash_flow",
-                    "estimated_monthly_payment",
-                    "payment_to_income_ratio",
-                    "payment_to_free_cash_flow_ratio",
-                    "repayment_capacity",
-                    "ddep_year",
-                    "ddep_month",
-                    "ddep_day"
-                  ],
-                  "target_entity": "93bc1a33",
-                  "operation_description": "Copy data from Parquet file to DataFrame",
-                  "source_entity_name": "ddep-storage://au.com.demolabs.ddep.abc025/abc025/abc025_financial_analysis",
-                  "target_entity_name": "read_parquet_financial_analysis"
-                }
+              "abc025_final_export_tmp_abc025_final_export_1": {
+                "code_info": {
+                  "lineno": "3",
+                  "end_lineno": "",
+                  "file_path": "DDEP_ABC025_ING_004_calculate_additional_metrics_columnTransforms_1_inline_sql.sql",
+                  "code": "spark.sql(\"CREATE TEMPORARY TABLE tmp_abc025_final_export AS SELECT *, CAST((monthly_payment * 360 - approved_amount) AS DECIMAL(15, 2)) AS total_interest FROM abc025_final_export\")"
+                },
+                "operation": "Build Composite Column",
+                "source_columns": [
+                  "monthly_payment",
+                  "approved_amount"
+                ],
+                "source_entity": "d595df4f",
+                "target_columns": [
+                  "total_interest"
+                ],
+                "target_entity": "76761af8",
+                "operation_description": "Calculate total interest as (monthly_payment * 360 - approved_amount)",
+                "source_entity_name": "abc025_final_export",
+                "target_entity_name": "tmp_abc025_final_export"
+              },
+              "tmp_abc025_final_export_abc025_final_export": {
+                "code_info": {
+                  "lineno": "5",
+                  "end_lineno": "",
+                  "file_path": "DDEP_ABC025_ING_004_calculate_additional_metrics_columnTransforms_1_inline_sql.sql",
+                  "code": "spark.sql(\"REPLACE INTO abc025_final_export SELECT * FROM tmp_abc025_final_export\")"
+                },
+                "operation": "Copy",
+                "source_columns": [
+                  "application_id",
+                  "customer_id",
+                  "risk_category",
+                  "decision_status",
+                  "approved_amount",
+                  "interest_rate",
+                  "decision_date",
+                  "ddep_year",
+                  "ddep_month",
+                  "ddep_day",
+                  "monthly_payment",
+                  "total_interest"
+                ],
+                "source_entity": "76761af8",
+                "target_columns": [
+                  "application_id",
+                  "customer_id",
+                  "risk_category",
+                  "decision_status",
+                  "approved_amount",
+                  "interest_rate",
+                  "decision_date",
+                  "ddep_year",
+                  "ddep_month",
+                  "ddep_day",
+                  "monthly_payment",
+                  "total_interest"
+                ],
+                "target_entity": "efbec741",
+                "operation_description": "Copy application_id from tmp_abc025_final_export",
+                "source_entity_name": "tmp_abc025_final_export",
+                "target_entity_name": "abc025_final_export"
+              }
+            }
+          },
+          "repartition_final_export": {
+            "dataframe": {
+              "abc025_final_export": {
+                "id": "62a7f0ac",
+                "name": "abc025_final_export",
+                "columns": {
+                  "application_id": "string",
+                  "customer_id": "string",
+                  "risk_category": "string",
+                  "decision_status": "string",
+                  "approved_amount": "decimal(15,2)",
+                  "interest_rate": "decimal(5,2)",
+                  "decision_date": "date",
+                  "ddep_year": "int",
+                  "ddep_month": "int",
+                  "ddep_day": "int",
+                  "monthly_payment": "decimal(15,2)",
+                  "total_interest": "decimal(15,2)"
+                },
+                "entity_type": "dataframe",
+                "entity_value": "ddep-metadata://au.com.demolabs.ddep.abc025.transform/dataset/abc025_final_export@latest",
+                "dropped_columns": []
+              },
+              "abc025_final_export_1": {
+                "id": "94d06cf9",
+                "name": "abc025_final_export",
+                "columns": {
+                  "application_id": "string",
+                  "customer_id": "string",
+                  "risk_category": "string",
+                  "decision_status": "string",
+                  "approved_amount": "decimal(15,2)",
+                  "interest_rate": "decimal(5,2)",
+                  "decision_date": "date",
+                  "ddep_year": "int",
+                  "ddep_month": "int",
+                  "ddep_day": "int",
+                  "monthly_payment": "decimal(15,2)",
+                  "total_interest": "decimal(15,2)"
+                },
+                "entity_type": "parquet",
+                "entity_value": "ddep-metadata://au.com.demolabs.ddep.abc025.transform/dataset/abc025_final_export@latest",
+                "dropped_columns": []
               }
             },
-            "repartition_financial_analysis": {
-              "dataframe": {
-                "read_parquet_financial_analysis": {
-                  "id": "4e29be9b",
-                  "name": "read_parquet_financial_analysis",
-                  "columns": {
-                    "application_id": "string",
-                    "customer_id": "string",
-                    "debt_to_asset_ratio": "decimal(10,4)",
-                    "debt_service_coverage_ratio": "decimal(10,4)",
-                    "current_ratio": "decimal(10,4)",
-                    "monthly_free_cash_flow": "decimal(15,2)",
-                    "estimated_monthly_payment": "decimal(15,2)",
-                    "payment_to_income_ratio": "decimal(10,4)",
-                    "payment_to_free_cash_flow_ratio": "decimal(10,4)",
-                    "repayment_capacity": "string",
-                    "ddep_year": "int",
-                    "ddep_month": "int",
-                    "ddep_day": "int"
-                  },
-                  "entity_type": "dataframe",
-                  "entity_value": "ddep-metadata://au.com.demolabs.ddep.abc025.transform/dataset/abc025_financial_analysis@latest",
-                  "dropped_columns": []
+            "operation": {
+              "abc025_final_export_abc025_final_export": {
+                "code_info": {
+                  "code": "{'name': 'repartition_final_export', 'description': 'Repartition final export data for writing', 'conditionals': [], 'dataset': 'ddep-metadata://au.com.demolabs.ddep.abc025.transform/dataset/abc025_final_export@latest', 'strategy': {'partitions': 10, '$': 'au.com.demolabs.ddep.metadata.v2.process.stage.LiteralRepartitionStrategy'}, 'columns': [], '$': 'au.com.demolabs.ddep.metadata.v2.process.stage.RepartitionDataframeStage'}",
+                  "lineno": 1,
+                  "file_path": "repartition_final_export",
+                  "end_lineno": 1
                 },
-                "read_parquet_financial_analysis_1": {
-                  "id": "5c8dfd50",
-                  "name": "read_parquet_financial_analysis",
-                  "columns": {
-                    "application_id": "string",
-                    "customer_id": "string",
-                    "debt_to_asset_ratio": "decimal(10,4)",
-                    "debt_service_coverage_ratio": "decimal(10,4)",
-                    "current_ratio": "decimal(10,4)",
-                    "monthly_free_cash_flow": "decimal(15,2)",
-                    "estimated_monthly_payment": "decimal(15,2)",
-                    "payment_to_income_ratio": "decimal(10,4)",
-                    "payment_to_free_cash_flow_ratio": "decimal(10,4)",
-                    "repayment_capacity": "string",
-                    "ddep_year": "int",
-                    "ddep_month": "int",
-                    "ddep_day": "int"
-                  },
-                  "entity_type": "dataframe",
-                  "entity_value": "ddep-metadata://au.com.demolabs.ddep.abc025.transform/dataset/abc025_financial_analysis@latest",
-                  "dropped_columns": []
-                }
+                "operation": "repartition",
+                "source_columns": [
+                  "application_id",
+                  "customer_id",
+                  "risk_category",
+                  "decision_status",
+                  "approved_amount",
+                  "interest_rate",
+                  "decision_date",
+                  "ddep_year",
+                  "ddep_month",
+                  "ddep_day",
+                  "monthly_payment",
+                  "total_interest"
+                ],
+                "source_entity": "94d06cf9",
+                "target_columns": [
+                  "application_id",
+                  "customer_id",
+                  "risk_category",
+                  "decision_status",
+                  "approved_amount",
+                  "interest_rate",
+                  "decision_date",
+                  "ddep_year",
+                  "ddep_month",
+                  "ddep_day",
+                  "monthly_payment",
+                  "total_interest"
+                ],
+                "target_entity": "62a7f0ac",
+                "operation_description": "Redistribute data across 10 partitions",
+                "source_entity_name": "abc025_final_export",
+                "target_entity_name": "abc025_final_export"
+              }
+            }
+          },
+          "write_target_abc025_final_export_parquet_target_connector": {
+            "dataframe": {
+              "abc025_final_export_parquet_target_connector": {
+                "id": "642cda29",
+                "name": "abc025_final_export_parquet_target_connector",
+                "columns": {
+                  "application_id": "string",
+                  "customer_id": "string",
+                  "risk_category": "string",
+                  "decision_status": "string",
+                  "approved_amount": "decimal(15,2)",
+                  "interest_rate": "decimal(5,2)",
+                  "decision_date": "date",
+                  "ddep_year": "int",
+                  "ddep_month": "int",
+                  "ddep_day": "int",
+                  "monthly_payment": "decimal(15,2)",
+                  "total_interest": "decimal(15,2)"
+                },
+                "entity_type": "dataframe",
+                "entity_value": "ddep-metadata://au.com.demolabs.ddep.abc025.transform/dataset/abc025_final_export@latest",
+                "dropped_columns": []
               },
-              "operation": {
-                "read_parquet_financial_analysis_read_parquet_financial_analysis": {
-                  "code_info": {
-                    "code": "{'name': 'repartition_financial_analysis', 'description': 'Repartition financial analysis data for processing', 'conditionals': [], 'dataset': 'ddep-metadata://au.com.demolabs.ddep.abc025.transform/dataset/abc025_financial_analysis@latest', 'strategy': {'partitions': 10, '$': 'au.com.demolabs.ddep.metadata.v2.process.stage.LiteralRepartitionStrategy'}, 'columns': [], '$': 'au.com.demolabs.ddep.metadata.v2.process.stage.RepartitionDataframeStage'}",
-                    "lineno": 1,
-                    "file_path": "repartition_financial_analysis",
-                    "end_lineno": 1
-                  },
-                  "operation": "repartition",
-                  "source_columns": [
-                    "application_id",
-                    "customer_id",
-                    "debt_to_asset_ratio",
-                    "debt_service_coverage_ratio",
-                    "current_ratio",
-                    "monthly_free_cash_flow",
-                    "estimated_monthly_payment",
-                    "payment_to_income_ratio",
-                    "payment_to_free_cash_flow_ratio",
-                    "repayment_capacity",
-                    "ddep_year",
-                    "ddep_month",
-                    "ddep_day"
-                  ],
-                  "source_entity": "4e29be9b",
-                  "target_columns": [
-                    "application_id",
-                    "customer_id",
-                    "debt_to_asset_ratio",
-                    "debt_service_coverage_ratio",
-                    "current_ratio",
-                    "monthly_free_cash_flow",
-                    "estimated_monthly_payment",
-                    "payment_to_income_ratio",
-                    "payment_to_free_cash_flow_ratio",
-                    "repayment_capacity",
-                    "ddep_year",
-                    "ddep_month",
-                    "ddep_day"
-                  ],
-                  "target_entity": "5c8dfd50",
-                  "operation_description": "Redistribute data across 10 partitions",
-                  "source_entity_name": "read_parquet_financial_analysis",
-                  "target_entity_name": "read_parquet_financial_analysis"
-                }
+              "ddep-storage://au.com.demolabs.ddep.abc025/abc025/abc025_final_export": {
+                "id": "d132b01b",
+                "name": "ddep-storage://au.com.demolabs.ddep.abc025/abc025/abc025_final_export",
+                "columns": {
+                  "application_id": "string",
+                  "customer_id": "string",
+                  "risk_category": "string",
+                  "decision_status": "string",
+                  "approved_amount": "decimal(15,2)",
+                  "interest_rate": "decimal(5,2)",
+                  "decision_date": "date",
+                  "ddep_year": "int",
+                  "ddep_month": "int",
+                  "ddep_day": "int",
+                  "monthly_payment": "decimal(15,2)",
+                  "total_interest": "decimal(15,2)"
+                },
+                "entity_type": "au.com.demolabs.ddep.metadata.v2.process.connection.ProcessConnectionParquetFileTarget",
+                "entity_value": "ddep-metadata://au.com.demolabs.ddep.abc025.transform/dataset/abc025_final_export@latest",
+                "dropped_columns": []
               }
             },
-            "loan_decision_stage": {
-              "dataframe": {
-                "sourceDatasets": {
-                  "id": "65fa7386",
-                  "name": "sourceDatasets",
-                  "columns": {
-                    "0": "au.com.demolabs.ddep.metadata.v2.Dataset",
-                    "1": "au.com.demolabs.ddep.metadata.v2.Dataset"
-                  },
-                  "entity_type": "list",
-                  "entity_value": "sourceDatasets",
-                  "dropped_columns": []
+            "operation": {
+              "abc025_final_export_parquet_target_connector_ddep-storage://au.com.demolabs.ddep.abc025/abc025/abc025_final_export": {
+                "code_info": {
+                  "code": "{'name': 'write_target_abc025_final_export_parquet_target_connector', 'description': 'Write final export data to parquet storage', 'conditionals': [], 'connectionName': 'abc025_final_export_parquet_target_connector', '$': 'au.com.demolabs.ddep.metadata.v2.process.stage.WriteTargetStage'}",
+                  "lineno": 1,
+                  "file_path": "write_target_abc025_final_export_parquet_target_connector",
+                  "end_lineno": 1
                 },
-                "risk_df": {
-                  "id": "8f87f3af",
-                  "name": "risk_df",
-                  "columns": {
-                    "customer_id": "string",
-                    "application_id": "string",
-                    "overall_risk_score": "int",
-                    "risk_category": "string",
-                    "credit_history_score": "decimal(5,2)",
-                    "payment_behavior_score": "decimal(5,2)",
-                    "debt_burden_score": "decimal(5,2)",
-                    "has_recent_defaults": "boolean",
-                    "ddep_year": "int",
-                    "ddep_month": "int",
-                    "ddep_day": "int"
-                  },
-                  "entity_type": "au.com.demolabs.ddep.metadata.v2.Dataset",
-                  "entity_value": "ddep-metadata://au.com.demolabs.ddep.abc025.transform/dataset/abc025_risk_assessment@latest",
-                  "dropped_columns": []
+                "operation": "write",
+                "source_columns": [
+                  "application_id",
+                  "customer_id",
+                  "risk_category",
+                  "decision_status",
+                  "approved_amount",
+                  "interest_rate",
+                  "decision_date",
+                  "ddep_year",
+                  "ddep_month",
+                  "ddep_day",
+                  "monthly_payment",
+                  "total_interest"
+                ],
+                "source_entity": "642cda29",
+                "target_columns": [
+                  "application_id",
+                  "customer_id",
+                  "risk_category",
+                  "decision_status",
+                  "approved_amount",
+                  "interest_rate",
+                  "decision_date",
+                  "ddep_year",
+                  "ddep_month",
+                  "ddep_day",
+                  "monthly_payment",
+                  "total_interest"
+                ],
+                "target_entity": "d132b01b",
+                "operation_description": "Copy data from DataFrame to Parquet file",
+                "source_entity_name": "abc025_final_export_parquet_target_connector",
+                "target_entity_name": "ddep-storage://au.com.demolabs.ddep.abc025/abc025/abc025_final_export"
+              }
+            }
+          },
+          "write_target_abc025_final_export_spark_metastore_target_connector": {
+            "dataframe": {
+              "abc025_final_export_spark_metastore_target_connector": {
+                "id": "b27a1053",
+                "name": "abc025_final_export_spark_metastore_target_connector",
+                "columns": {
+                  "application_id": "string",
+                  "customer_id": "string",
+                  "risk_category": "string",
+                  "decision_status": "string",
+                  "approved_amount": "decimal(15,2)",
+                  "interest_rate": "decimal(5,2)",
+                  "decision_date": "date",
+                  "ddep_year": "int",
+                  "ddep_month": "int",
+                  "ddep_day": "int",
+                  "monthly_payment": "decimal(15,2)",
+                  "total_interest": "decimal(15,2)"
                 },
-                "financial_df": {
-                  "id": "e734f468",
-                  "name": "financial_df",
-                  "columns": {
-                    "application_id": "string",
-                    "customer_id": "string",
-                    "debt_to_asset_ratio": "decimal(10,4)",
-                    "debt_service_coverage_ratio": "decimal(10,4)",
-                    "current_ratio": "decimal(10,4)",
-                    "monthly_free_cash_flow": "decimal(15,2)",
-                    "estimated_monthly_payment": "decimal(15,2)",
-                    "payment_to_income_ratio": "decimal(10,4)",
-                    "payment_to_free_cash_flow_ratio": "decimal(10,4)",
-                    "repayment_capacity": "string",
-                    "ddep_year": "int",
-                    "ddep_month": "int",
-                    "ddep_day": "int"
-                  },
-                  "entity_type": "DataFrame",
-                  "entity_value": "abc025_financial_analysis",
-                  "dropped_columns": []
-                },
-                "joined_df": {
-                  "id": "c18ef67f",
-                  "name": "joined_df",
-                  "columns": {
-                    "customer_id": "string",
-                    "application_id": "string",
-                    "overall_risk_score": "int",
-                    "risk_category": "string",
-                    "credit_history_score": "decimal(5,2)",
-                    "payment_behavior_score": "decimal(5,2)",
-                    "debt_burden_score": "decimal(5,2)",
-                    "has_recent_defaults": "boolean",
-                    "ddep_year": "int",
-                    "ddep_month": "int",
-                    "ddep_day": "int",
-                    "debt_to_asset_ratio": "decimal(10,4)",
-                    "debt_service_coverage_ratio": "decimal(10,4)",
-                    "current_ratio": "decimal(10,4)",
-                    "monthly_free_cash_flow": "decimal(15,2)",
-                    "estimated_monthly_payment": "decimal(15,2)",
-                    "payment_to_income_ratio": "decimal(10,4)",
-                    "payment_to_free_cash_flow_ratio": "decimal(10,4)",
-                    "repayment_capacity": "string"
-                  },
-                  "entity_type": "DataFrame",
-                  "entity_value": "Joined risk and financial data",
-                  "dropped_columns": []
-                },
-                "with_rates": {
-                  "id": "bc00ccf6",
-                  "name": "with_rates",
-                  "columns": {
-                    "customer_id": "string",
-                    "application_id": "string",
-                    "overall_risk_score": "int",
-                    "risk_category": "string",
-                    "credit_history_score": "decimal(5,2)",
-                    "payment_behavior_score": "decimal(5,2)",
-                    "debt_burden_score": "decimal(5,2)",
-                    "has_recent_defaults": "boolean",
-                    "ddep_year": "int",
-                    "ddep_month": "int",
-                    "ddep_day": "int",
-                    "debt_to_asset_ratio": "decimal(10,4)",
-                    "debt_service_coverage_ratio": "decimal(10,4)",
-                    "current_ratio": "decimal(10,4)",
-                    "monthly_free_cash_flow": "decimal(15,2)",
-                    "estimated_monthly_payment": "decimal(15,2)",
-                    "payment_to_income_ratio": "decimal(10,4)",
-                    "payment_to_free_cash_flow_ratio": "decimal(10,4)",
-                    "repayment_capacity": "string",
-                    "interest_rate": "decimal(5,2)"
-                  },
-                  "entity_type": "DataFrame",
-                  "entity_value": "Joined risk and financial data with interest rates",
-                  "dropped_columns": []
-                },
-                "with_decisions": {
-                  "id": "4b941dd6",
-                  "name": "with_decisions",
-                  "columns": {
-                    "customer_id": "string",
-                    "application_id": "string",
-                    "overall_risk_score": "int",
-                    "risk_category": "string",
-                    "credit_history_score": "decimal(5,2)",
-                    "payment_behavior_score": "decimal(5,2)",
-                    "debt_burden_score": "decimal(5,2)",
-                    "has_recent_defaults": "boolean",
-                    "ddep_year": "int",
-                    "ddep_month": "int",
-                    "ddep_day": "int",
-                    "debt_to_asset_ratio": "decimal(10,4)",
-                    "debt_service_coverage_ratio": "decimal(10,4)",
-                    "current_ratio": "decimal(10,4)",
-                    "monthly_free_cash_flow": "decimal(15,2)",
-                    "estimated_monthly_payment": "decimal(15,2)",
-                    "payment_to_income_ratio": "decimal(10,4)",
-                    "payment_to_free_cash_flow_ratio": "decimal(10,4)",
-                    "repayment_capacity": "string",
-                    "interest_rate": "decimal(5,2)",
-                    "decision_status": "string",
-                    "approved_amount": "decimal(15,2)"
-                  },
-                  "entity_type": "DataFrame",
-                  "entity_value": "Loan decisions with approved amounts",
-                  "dropped_columns": []
-                },
-                "final_df": {
-                  "id": "0fb38026",
-                  "name": "final_df",
-                  "columns": {
-                    "customer_id": "string",
-                    "application_id": "string",
-                    "overall_risk_score": "int",
-                    "risk_category": "string",
-                    "credit_history_score": "decimal(5,2)",
-                    "payment_behavior_score": "decimal(5,2)",
-                    "debt_burden_score": "decimal(5,2)",
-                    "has_recent_defaults": "boolean",
-                    "ddep_year": "int",
-                    "ddep_month": "int",
-                    "ddep_day": "int",
-                    "debt_to_asset_ratio": "decimal(10,4)",
-                    "debt_service_coverage_ratio": "decimal(10,4)",
-                    "current_ratio": "decimal(10,4)",
-                    "monthly_free_cash_flow": "decimal(15,2)",
-                    "estimated_monthly_payment": "decimal(15,2)",
-                    "payment_to_income_ratio": "decimal(10,4)",
-                    "payment_to_free_cash_flow_ratio": "decimal(10,4)",
-                    "repayment_capacity": "string",
-                    "interest_rate": "decimal(5,2)",
-                    "decision_status": "string",
-                    "approved_amount": "decimal(15,2)"
-                  },
-                  "entity_type": "DataFrame",
-                  "entity_value": "Loan decisions with approved amounts and processing date",
-                  "dropped_columns": []
-                },
-                "decision_stats": {
-                  "id": "94bd86d1",
-                  "name": "decision_stats",
-                  "columns": {
-                    "0": "Row"
-                  },
-                  "entity_type": "list",
-                  "entity_value": [
-                    "List of decision status counts"
-                  ],
-                  "dropped_columns": []
-                },
-                "targetDatasets_0": {
-                  "id": "dbba155d",
-                  "name": "targetDatasets_0",
-                  "columns": {
-                    "customer_id": "string",
-                    "application_id": "string",
-                    "overall_risk_score": "int",
-                    "risk_category": "string",
-                    "credit_history_score": "decimal(5,2)",
-                    "payment_behavior_score": "decimal(5,2)",
-                    "debt_burden_score": "decimal(5,2)",
-                    "has_recent_defaults": "boolean",
-                    "ddep_year": "int",
-                    "ddep_month": "int",
-                    "ddep_day": "int",
-                    "debt_to_asset_ratio": "decimal(10,4)",
-                    "debt_service_coverage_ratio": "decimal(10,4)",
-                    "current_ratio": "decimal(10,4)",
-                    "monthly_free_cash_flow": "decimal(15,2)",
-                    "estimated_monthly_payment": "decimal(15,2)",
-                    "payment_to_income_ratio": "decimal(10,4)",
-                    "payment_to_free_cash_flow_ratio": "decimal(10,4)",
-                    "repayment_capacity": "string",
-                    "interest_rate": "decimal(5,2)",
-                    "decision_status": "string",
-                    "approved_amount": "decimal(15,2)"
-                  },
-                  "entity_type": "DataFrame",
-                  "entity_value": "Loan decisions with approved amounts and processing date",
-                  "dropped_columns": []
-                }
+                "entity_type": "dataframe",
+                "entity_value": "ddep-metadata://au.com.demolabs.ddep.abc025.transform/dataset/abc025_final_export@latest",
+                "dropped_columns": []
               },
-              "operation": {
-                "sourceDatasets_risk_df": {
-                  "code_info": {
-                    "code": "risk_df = context.dataframes[stage.sourceDatasets[0]]",
-                    "lineno": "116",
-                    "file_path": "ddep-product://./src/abc025_loan_decision.py",
-                    "end_lineno": "116"
-                  },
-                  "operation": "Copy",
-                  "source_columns": [
-                    "0"
-                  ],
-                  "source_entity": "65fa7386",
-                  "target_columns": [
-                    "customer_id",
-                    "application_id",
-                    "overall_risk_score",
-                    "risk_category",
-                    "credit_history_score",
-                    "payment_behavior_score",
-                    "debt_burden_score",
-                    "has_recent_defaults",
-                    "ddep_year",
-                    "ddep_month",
-                    "ddep_day"
-                  ],
-                  "target_entity": "8f87f3af",
-                  "operation_description": "Copy column without modification",
-                  "source_entity_name": "sourceDatasets",
-                  "target_entity_name": "risk_df"
+              "ddep-storage://au.com.demolabs.ddep.abc025/abc025/abc025_final_export": {
+                "id": "daec777d",
+                "name": "ddep-storage://au.com.demolabs.ddep.abc025/abc025/abc025_final_export",
+                "columns": {
+                  "application_id": "string",
+                  "customer_id": "string",
+                  "risk_category": "string",
+                  "decision_status": "string",
+                  "approved_amount": "decimal(15,2)",
+                  "interest_rate": "decimal(5,2)",
+                  "decision_date": "date",
+                  "ddep_year": "int",
+                  "ddep_month": "int",
+                  "ddep_day": "int",
+                  "monthly_payment": "decimal(15,2)",
+                  "total_interest": "decimal(15,2)"
                 },
-                "sourceDatasets_financial_df": {
-                  "code_info": {
-                    "code": "financial_df = context.dataframes[stage.sourceDatasets[1]]",
-                    "lineno": "117",
-                    "file_path": "ddep-product://./src/abc025_loan_decision.py",
-                    "end_lineno": "117"
-                  },
-                  "operation": "Copy",
-                  "source_columns": [
-                    "1"
-                  ],
-                  "source_entity": "65fa7386",
-                  "target_columns": [
-                    "application_id",
-                    "customer_id",
-                    "debt_to_asset_ratio",
-                    "debt_service_coverage_ratio",
-                    "current_ratio",
-                    "monthly_free_cash_flow",
-                    "estimated_monthly_payment",
-                    "payment_to_income_ratio",
-                    "payment_to_free_cash_flow_ratio",
-                    "repayment_capacity",
-                    "ddep_year",
-                    "ddep_month",
-                    "ddep_day"
-                  ],
-                  "target_entity": "e734f468",
-                  "operation_description": "Copy column without modification",
-                  "source_entity_name": "sourceDatasets",
-                  "target_entity_name": "financial_df"
-                },
-                "risk_df_joined_df": {
-                  "code_info": {
-                    "code": "joined_df = risk_df.join(financial_df, [\"customer_id\", \"application_id\"], \"inner\")",
-                    "lineno": "134",
-                    "file_path": "ddep-product://./src/abc025_loan_decision.py",
-                    "end_lineno": "138"
-                  },
-                  "operation": "Join",
-                  "source_columns": [
-                    "customer_id",
-                    "application_id",
-                    "overall_risk_score",
-                    "risk_category",
-                    "credit_history_score",
-                    "payment_behavior_score",
-                    "debt_burden_score",
-                    "has_recent_defaults",
-                    "ddep_year",
-                    "ddep_month",
-                    "ddep_day"
-                  ],
-                  "source_entity": "8f87f3af",
-                  "target_columns": [
-                    "customer_id",
-                    "application_id",
-                    "overall_risk_score",
-                    "risk_category",
-                    "credit_history_score",
-                    "payment_behavior_score",
-                    "debt_burden_score",
-                    "has_recent_defaults",
-                    "ddep_year",
-                    "ddep_month",
-                    "ddep_day"
-                  ],
-                  "target_entity": "c18ef67f",
-                  "operation_description": "Join risk_df and financial_df by customer_id and application_id",
-                  "source_entity_name": "risk_df",
-                  "target_entity_name": "joined_df"
-                },
-                "financial_df_joined_df": {
-                  "code_info": {
-                    "code": "joined_df = risk_df.join(financial_df, [\"customer_id\", \"application_id\"], \"inner\")",
-                    "lineno": "134",
-                    "file_path": "ddep-product://./src/abc025_loan_decision.py",
-                    "end_lineno": "138"
-                  },
-                  "operation": "Join",
-                  "source_columns": [
-                    "customer_id",
-                    "application_id",
-                    "debt_to_asset_ratio",
-                    "debt_service_coverage_ratio",
-                    "current_ratio",
-                    "monthly_free_cash_flow",
-                    "estimated_monthly_payment",
-                    "payment_to_income_ratio",
-                    "payment_to_free_cash_flow_ratio",
-                    "repayment_capacity"
-                  ],
-                  "source_entity": "e734f468",
-                  "target_columns": [
-                    "customer_id",
-                    "application_id",
-                    "debt_to_asset_ratio",
-                    "debt_service_coverage_ratio",
-                    "current_ratio",
-                    "monthly_free_cash_flow",
-                    "estimated_monthly_payment",
-                    "payment_to_income_ratio",
-                    "payment_to_free_cash_flow_ratio",
-                    "repayment_capacity"
-                  ],
-                  "target_entity": "c18ef67f",
-                  "operation_description": "Join risk_df and financial_df by customer_id and application_id",
-                  "source_entity_name": "financial_df",
-                  "target_entity_name": "joined_df"
-                },
-                "joined_df_with_rates": {
-                  "code_info": {
-                    "code": "with_rates = joined_df.withColumn(\"interest_rate\", when(col(\"risk_category\") == \"LOW\", 5.99).when(col(\"risk_category\") == \"MEDIUM\", 8.99).when(col(\"risk_category\") == \"HIGH\", 12.99).otherwise(15.99))",
-                    "lineno": "41",
-                    "file_path": "ddep-product://./src/abc025_loan_decision.py",
-                    "end_lineno": ""
-                  },
-                  "operation": "Create New Column",
-                  "source_columns": [
-                    "risk_category"
-                  ],
-                  "source_entity": "c18ef67f",
-                  "target_columns": [
-                    "interest_rate"
-                  ],
-                  "target_entity": "bc00ccf6",
-                  "operation_description": "Map risk category to interest rate",
-                  "source_entity_name": "joined_df",
-                  "target_entity_name": "with_rates"
-                },
-                "joined_df_with_rates_1": {
-                  "code_info": {
-                    "code": "with_rates = joined_df.withColumn(\"interest_rate\", when(col(\"risk_category\") == \"LOW\", 5.99).when(col(\"risk_category\") == \"MEDIUM\", 8.99).when(col(\"risk_category\") == \"HIGH\", 12.99).otherwise(15.99))",
-                    "lineno": "41",
-                    "file_path": "ddep-product://./src/abc025_loan_decision.py",
-                    "end_lineno": ""
-                  },
-                  "operation": "Copy",
-                  "source_columns": [
-                    "customer_id",
-                    "application_id",
-                    "overall_risk_score",
-                    "risk_category",
-                    "credit_history_score",
-                    "payment_behavior_score",
-                    "debt_burden_score",
-                    "has_recent_defaults",
-                    "ddep_year",
-                    "ddep_month",
-                    "ddep_day",
-                    "debt_to_asset_ratio",
-                    "debt_service_coverage_ratio",
-                    "current_ratio",
-                    "monthly_free_cash_flow",
-                    "estimated_monthly_payment",
-                    "payment_to_income_ratio",
-                    "payment_to_free_cash_flow_ratio",
-                    "repayment_capacity"
-                  ],
-                  "source_entity": "c18ef67f",
-                  "target_columns": [
-                    "customer_id",
-                    "application_id",
-                    "overall_risk_score",
-                    "risk_category",
-                    "credit_history_score",
-                    "payment_behavior_score",
-                    "debt_burden_score",
-                    "has_recent_defaults",
-                    "ddep_year",
-                    "ddep_month",
-                    "ddep_day",
-                    "debt_to_asset_ratio",
-                    "debt_service_coverage_ratio",
-                    "current_ratio",
-                    "monthly_free_cash_flow",
-                    "estimated_monthly_payment",
-                    "payment_to_income_ratio",
-                    "payment_to_free_cash_flow_ratio",
-                    "repayment_capacity"
-                  ],
-                  "target_entity": "bc00ccf6",
-                  "operation_description": "Copy column without modification",
-                  "source_entity_name": "joined_df",
-                  "target_entity_name": "with_rates"
-                },
-                "with_rates_with_decisions": {
-                  "code_info": {
-                    "code": "with_decisions = with_rates.withColumn(\"decision_status\", when((col(\"risk_category\").isin(\"LOW\", \"MEDIUM\")) & (col(\"repayment_capacity\") == \"STRONG\") & (col(\"debt_to_income_ratio\") < 0.5) & (col(\"debt_service_coverage_ratio\") > 1.2) & (col(\"monthly_free_cash_flow\") > 0), \"APPROVED\").when((col(\"risk_category\") == \"HIGH\") & (col(\"repayment_capacity\") == \"ADEQUATE\") & (col(\"debt_to_income_ratio\") < 0.4) & (col(\"debt_service_coverage_ratio\") > 1.1) & (col(\"monthly_free_cash_flow\") > 0), \"CONDITIONALLY_APPROVED\").otherwise(\"REJECTED\")).withColumn(\"approved_amount\", when(col(\"decision_status\").isin(\"APPROVED\", \"CONDITIONALLY_APPROVED\"), col(\"loan_amount\")).otherwise(None))",
-                    "lineno": "62",
-                    "file_path": "ddep-product://./src/abc025_loan_decision.py",
-                    "end_lineno": ""
-                  },
-                  "operation": "Build Composite Column",
-                  "source_columns": [
-                    "risk_category",
-                    "repayment_capacity",
-                    "debt_to_income_ratio",
-                    "debt_service_coverage_ratio",
-                    "monthly_free_cash_flow",
-                    "loan_amount"
-                  ],
-                  "source_entity": "bc00ccf6",
-                  "target_columns": [
-                    "decision_status",
-                    "approved_amount"
-                  ],
-                  "target_entity": "4b941dd6",
-                  "operation_description": "Evaluate decision status based on risk category, repayment capacity, debt to income ratio, debt service coverage ratio, and monthly free cash flow",
-                  "source_entity_name": "with_rates",
-                  "target_entity_name": "with_decisions"
-                },
-                "with_decisions_with_decisions": {
-                  "code_info": {
-                    "code": "with_decisions = with_rates.withColumn(\"decision_status\", when((col(\"risk_category\").isin(\"LOW\", \"MEDIUM\")) & (col(\"repayment_capacity\") == \"STRONG\") & (col(\"debt_to_income_ratio\") < 0.5) & (col(\"debt_service_coverage_ratio\") > 1.2) & (col(\"monthly_free_cash_flow\") > 0), \"APPROVED\").when((col(\"risk_category\") == \"HIGH\") & (col(\"repayment_capacity\") == \"ADEQUATE\") & (col(\"debt_to_income_ratio\") < 0.4) & (col(\"debt_service_coverage_ratio\") > 1.1) & (col(\"monthly_free_cash_flow\") > 0), \"CONDITIONALLY_APPROVED\").otherwise(\"REJECTED\")).withColumn(\"approved_amount\", when(col(\"decision_status\").isin(\"APPROVED\", \"CONDITIONALLY_APPROVED\"), col(\"loan_amount\")).otherwise(None))",
-                    "lineno": "62",
-                    "file_path": "ddep-product://./src/abc025_loan_decision.py",
-                    "end_lineno": ""
-                  },
-                  "operation": "Build Composite Column",
-                  "source_columns": [
-                    "decision_status",
-                    "loan_amount"
-                  ],
-                  "source_entity": "4b941dd6",
-                  "target_columns": [
-                    "approved_amount"
-                  ],
-                  "target_entity": "4b941dd6",
-                  "operation_description": "Evaluate approved amount based on decision status and loan amount",
-                  "source_entity_name": "with_decisions",
-                  "target_entity_name": "with_decisions"
-                },
-                "with_rates_with_decisions_1": {
-                  "code_info": {
-                    "code": "with_decisions = with_rates.withColumn(\"decision_status\", when((col(\"risk_category\").isin(\"LOW\", \"MEDIUM\")) & (col(\"repayment_capacity\") == \"STRONG\") & (col(\"debt_to_income_ratio\") < 0.5) & (col(\"debt_service_coverage_ratio\") > 1.2) & (col(\"monthly_free_cash_flow\") > 0), \"APPROVED\").when((col(\"risk_category\") == \"HIGH\") & (col(\"repayment_capacity\") == \"ADEQUATE\") & (col(\"debt_to_income_ratio\") < 0.4) & (col(\"debt_service_coverage_ratio\") > 1.1) & (col(\"monthly_free_cash_flow\") > 0), \"CONDITIONALLY_APPROVED\").otherwise(\"REJECTED\")).withColumn(\"approved_amount\", when(col(\"decision_status\").isin(\"APPROVED\", \"CONDITIONALLY_APPROVED\"), col(\"loan_amount\")).otherwise(None))",
-                    "lineno": "62",
-                    "file_path": "ddep-product://./src/abc025_loan_decision.py",
-                    "end_lineno": ""
-                  },
-                  "operation": "Copy",
-                  "source_columns": [
-                    "customer_id",
-                    "application_id",
-                    "overall_risk_score",
-                    "risk_category",
-                    "credit_history_score",
-                    "payment_behavior_score",
-                    "debt_burden_score",
-                    "has_recent_defaults",
-                    "ddep_year",
-                    "ddep_month",
-                    "ddep_day",
-                    "debt_to_asset_ratio",
-                    "debt_service_coverage_ratio",
-                    "current_ratio",
-                    "monthly_free_cash_flow",
-                    "estimated_monthly_payment",
-                    "payment_to_income_ratio",
-                    "payment_to_free_cash_flow_ratio",
-                    "repayment_capacity",
-                    "interest_rate"
-                  ],
-                  "source_entity": "bc00ccf6",
-                  "target_columns": [
-                    "customer_id",
-                    "application_id",
-                    "overall_risk_score",
-                    "risk_category",
-                    "credit_history_score",
-                    "payment_behavior_score",
-                    "debt_burden_score",
-                    "has_recent_defaults",
-                    "ddep_year",
-                    "ddep_month",
-                    "ddep_day",
-                    "debt_to_asset_ratio",
-                    "debt_service_coverage_ratio",
-                    "current_ratio",
-                    "monthly_free_cash_flow",
-                    "estimated_monthly_payment",
-                    "payment_to_income_ratio",
-                    "payment_to_free_cash_flow_ratio",
-                    "repayment_capacity",
-                    "interest_rate"
-                  ],
-                  "target_entity": "4b941dd6",
-                  "operation_description": "Copy without modification",
-                  "source_entity_name": "with_rates",
-                  "target_entity_name": "with_decisions"
-                },
-                "with_decisions_final_df": {
-                  "code_info": {
-                    "code": "final_df = with_decisions.withColumn(\"ddep_year\", lit(processing_date.year)).withColumn(\"ddep_month\", lit(processing_date.month)).withColumn(\"ddep_day\", lit(processing_date.day))",
-                    "lineno": "100",
-                    "file_path": "ddep-product://./src/abc025_loan_decision.py",
-                    "end_lineno": ""
-                  },
-                  "operation": "Copy",
-                  "source_columns": [
-                    "customer_id",
-                    "application_id",
-                    "overall_risk_score",
-                    "risk_category",
-                    "credit_history_score",
-                    "payment_behavior_score",
-                    "debt_burden_score",
-                    "has_recent_defaults",
-                    "debt_to_asset_ratio",
-                    "debt_service_coverage_ratio",
-                    "current_ratio",
-                    "monthly_free_cash_flow",
-                    "estimated_monthly_payment",
-                    "payment_to_income_ratio",
-                    "payment_to_free_cash_flow_ratio",
-                    "repayment_capacity",
-                    "interest_rate",
-                    "decision_status",
-                    "approved_amount"
-                  ],
-                  "source_entity": "4b941dd6",
-                  "target_columns": [
-                    "customer_id",
-                    "application_id",
-                    "overall_risk_score",
-                    "risk_category",
-                    "credit_history_score",
-                    "payment_behavior_score",
-                    "debt_burden_score",
-                    "has_recent_defaults",
-                    "debt_to_asset_ratio",
-                    "debt_service_coverage_ratio",
-                    "current_ratio",
-                    "monthly_free_cash_flow",
-                    "estimated_monthly_payment",
-                    "payment_to_income_ratio",
-                    "payment_to_free_cash_flow_ratio",
-                    "repayment_capacity",
-                    "interest_rate",
-                    "decision_status",
-                    "approved_amount"
-                  ],
-                  "target_entity": "0fb38026",
-                  "operation_description": "Copy column without modification",
-                  "source_entity_name": "with_decisions",
-                  "target_entity_name": "final_df"
-                },
-                "processing_date_final_df": {
-                  "code_info": {
-                    "code": "final_df = with_decisions.withColumn(\"ddep_year\", lit(processing_date.year)).withColumn(\"ddep_month\", lit(processing_date.month)).withColumn(\"ddep_day\", lit(processing_date.day))",
-                    "lineno": "100",
-                    "file_path": "ddep-product://./src/abc025_loan_decision.py",
-                    "end_lineno": ""
-                  },
-                  "operation": "Add Partition/Ingestion Column",
-                  "source_columns": [
-                    "year",
-                    "month",
-                    "day"
-                  ],
-                  "source_entity": "d09910a2",
-                  "target_columns": [
-                    "ddep_year",
-                    "ddep_month",
-                    "ddep_day"
-                  ],
-                  "target_entity": "0fb38026",
-                  "operation_description": "Add processing date year",
-                  "source_entity_name": "processing_date",
-                  "target_entity_name": "final_df"
-                },
-                "final_df_targetDatasets_0": {
-                  "code_info": {
-                    "code": "targetDatasets_0 = final_df",
-                    "lineno": "157",
-                    "file_path": "ddep-product://./src/abc025_loan_decision.py",
-                    "end_lineno": ""
-                  },
-                  "operation": "Copy",
-                  "source_columns": [
-                    "customer_id",
-                    "application_id",
-                    "overall_risk_score",
-                    "risk_category",
-                    "credit_history_score",
-                    "payment_behavior_score",
-                    "debt_burden_score",
-                    "has_recent_defaults",
-                    "ddep_year",
-                    "ddep_month",
-                    "ddep_day",
-                    "debt_to_asset_ratio",
-                    "debt_service_coverage_ratio",
-                    "current_ratio",
-                    "monthly_free_cash_flow",
-                    "estimated_monthly_payment",
-                    "payment_to_income_ratio",
-                    "payment_to_free_cash_flow_ratio",
-                    "repayment_capacity",
-                    "interest_rate",
-                    "decision_status",
-                    "approved_amount"
-                  ],
-                  "source_entity": "0fb38026",
-                  "target_columns": [
-                    "customer_id",
-                    "application_id",
-                    "overall_risk_score",
-                    "risk_category",
-                    "credit_history_score",
-                    "payment_behavior_score",
-                    "debt_burden_score",
-                    "has_recent_defaults",
-                    "ddep_year",
-                    "ddep_month",
-                    "ddep_day",
-                    "debt_to_asset_ratio",
-                    "debt_service_coverage_ratio",
-                    "current_ratio",
-                    "monthly_free_cash_flow",
-                    "estimated_monthly_payment",
-                    "payment_to_income_ratio",
-                    "payment_to_free_cash_flow_ratio",
-                    "repayment_capacity",
-                    "interest_rate",
-                    "decision_status",
-                    "approved_amount"
-                  ],
-                  "target_entity": "dbba155d",
-                  "operation_description": "Copy column without modification",
-                  "source_entity_name": "final_df",
-                  "target_entity_name": "targetDatasets_0"
-                }
+                "entity_type": "au.com.demolabs.ddep.metadata.v2.process.connection.ProcessConnectionSparkMetastoreExternalTableTarget",
+                "entity_value": "ddep-metadata://au.com.demolabs.ddep.abc025.transform/dataset/abc025_final_export@latest",
+                "dropped_columns": []
               }
             },
-            "repartition_loan_decision": {
-              "dataframe": {
-                "abc025_loan_decision": {
-                  "id": "2f25d1f8",
-                  "name": "abc025_loan_decision",
-                  "columns": {
-                    "customer_id": "string",
-                    "application_id": "string",
-                    "overall_risk_score": "int",
-                    "risk_category": "string",
-                    "credit_history_score": "decimal(5,2)",
-                    "payment_behavior_score": "decimal(5,2)",
-                    "debt_burden_score": "decimal(5,2)",
-                    "has_recent_defaults": "boolean",
-                    "ddep_year": "int",
-                    "ddep_month": "int",
-                    "ddep_day": "int",
-                    "debt_to_asset_ratio": "decimal(10,4)",
-                    "debt_service_coverage_ratio": "decimal(10,4)",
-                    "current_ratio": "decimal(10,4)",
-                    "monthly_free_cash_flow": "decimal(15,2)",
-                    "estimated_monthly_payment": "decimal(15,2)",
-                    "payment_to_income_ratio": "decimal(10,4)",
-                    "payment_to_free_cash_flow_ratio": "decimal(10,4)",
-                    "repayment_capacity": "string",
-                    "interest_rate": "decimal(5,2)",
-                    "decision_status": "string",
-                    "approved_amount": "decimal(15,2)"
-                  },
-                  "entity_type": "dataframe",
-                  "entity_value": "ddep-metadata://au.com.demolabs.ddep.abc025.transform/dataset/abc025_loan_decision@latest",
-                  "dropped_columns": []
+            "operation": {
+              "abc025_final_export_spark_metastore_target_connector_ddep-storage://au.com.demolabs.ddep.abc025/abc025/abc025_final_export": {
+                "code_info": {
+                  "code": "{'name': 'write_target_abc025_final_export_spark_metastore_target_connector', 'description': 'Update Spark metastore with final export data', 'conditionals': [], 'connectionName': 'abc025_final_export_spark_metastore_target_connector', '$': 'au.com.demolabs.ddep.metadata.v2.process.stage.WriteTargetStage'}",
+                  "lineno": 1,
+                  "file_path": "write_target_abc025_final_export_spark_metastore_target_connector",
+                  "end_lineno": 1
                 },
-                "repartition_loan_decision": {
-                  "id": "c2b9d7a5",
-                  "name": "repartition_loan_decision",
-                  "columns": {
-                    "customer_id": "string",
-                    "application_id": "string",
-                    "overall_risk_score": "int",
-                    "risk_category": "string",
-                    "credit_history_score": "decimal(5,2)",
-                    "payment_behavior_score": "decimal(5,2)",
-                    "debt_burden_score": "decimal(5,2)",
-                    "has_recent_defaults": "boolean",
-                    "ddep_year": "int",
-                    "ddep_month": "int",
-                    "ddep_day": "int",
-                    "debt_to_asset_ratio": "decimal(10,4)",
-                    "debt_service_coverage_ratio": "decimal(10,4)",
-                    "current_ratio": "decimal(10,4)",
-                    "monthly_free_cash_flow": "decimal(15,2)",
-                    "estimated_monthly_payment": "decimal(15,2)",
-                    "payment_to_income_ratio": "decimal(10,4)",
-                    "payment_to_free_cash_flow_ratio": "decimal(10,4)",
-                    "repayment_capacity": "string",
-                    "interest_rate": "decimal(5,2)",
-                    "decision_status": "string",
-                    "approved_amount": "decimal(15,2)"
-                  },
-                  "entity_type": "dataframe",
-                  "entity_value": "ddep-metadata://au.com.demolabs.ddep.abc025.transform/dataset/abc025_loan_decision@latest",
-                  "dropped_columns": []
-                }
-              },
-              "operation": {
-                "abc025_loan_decision_repartition_loan_decision": {
-                  "code_info": {
-                    "code": "{'name': 'repartition_loan_decision', 'description': 'Repartition loan decision data before final export', 'conditionals': [], 'dataset': 'ddep-metadata://au.com.demolabs.ddep.abc025.transform/dataset/abc025_loan_decision@latest', 'strategy': {'partitions': 10, '$': 'au.com.demolabs.ddep.metadata.v2.process.stage.LiteralRepartitionStrategy'}, 'columns': [], '$': 'au.com.demolabs.ddep.metadata.v2.process.stage.RepartitionDataframeStage'}",
-                    "lineno": 1,
-                    "file_path": "repartition_loan_decision",
-                    "end_lineno": 1
-                  },
-                  "operation": "repartition",
-                  "source_columns": [
-                    "customer_id",
-                    "application_id",
-                    "overall_risk_score",
-                    "risk_category",
-                    "credit_history_score",
-                    "payment_behavior_score",
-                    "debt_burden_score",
-                    "has_recent_defaults",
-                    "ddep_year",
-                    "ddep_month",
-                    "ddep_day",
-                    "debt_to_asset_ratio",
-                    "debt_service_coverage_ratio",
-                    "current_ratio",
-                    "monthly_free_cash_flow",
-                    "estimated_monthly_payment",
-                    "payment_to_income_ratio",
-                    "payment_to_free_cash_flow_ratio",
-                    "repayment_capacity",
-                    "interest_rate",
-                    "decision_status",
-                    "approved_amount"
-                  ],
-                  "source_entity": "2f25d1f8",
-                  "target_columns": [
-                    "customer_id",
-                    "application_id",
-                    "overall_risk_score",
-                    "risk_category",
-                    "credit_history_score",
-                    "payment_behavior_score",
-                    "debt_burden_score",
-                    "has_recent_defaults",
-                    "ddep_year",
-                    "ddep_month",
-                    "ddep_day",
-                    "debt_to_asset_ratio",
-                    "debt_service_coverage_ratio",
-                    "current_ratio",
-                    "monthly_free_cash_flow",
-                    "estimated_monthly_payment",
-                    "payment_to_income_ratio",
-                    "payment_to_free_cash_flow_ratio",
-                    "repayment_capacity",
-                    "interest_rate",
-                    "decision_status",
-                    "approved_amount"
-                  ],
-                  "target_entity": "c2b9d7a5",
-                  "operation_description": "Redistribute data across 10 partitions",
-                  "source_entity_name": "abc025_loan_decision",
-                  "target_entity_name": "repartition_loan_decision"
-                }
-              }
-            },
-            "final_export_stage": {
-              "dataframe": {
-                "abc025_risk_assessment": {
-                  "id": "02cf84bd",
-                  "name": "abc025_risk_assessment",
-                  "columns": {
-                    "customer_id": "string",
-                    "application_id": "string",
-                    "overall_risk_score": "int",
-                    "risk_category": "string",
-                    "credit_history_score": "decimal(5,2)",
-                    "payment_behavior_score": "decimal(5,2)",
-                    "debt_burden_score": "decimal(5,2)",
-                    "has_recent_defaults": "boolean",
-                    "ddep_year": "int",
-                    "ddep_month": "int",
-                    "ddep_day": "int"
-                  },
-                  "entity_type": "au.com.demolabs.ddep.metadata.v2.Dataset",
-                  "entity_value": "ddep-metadata://au.com.demolabs.ddep.abc025.transform/dataset/abc025_risk_assessment@latest",
-                  "dropped_columns": []
-                },
-                "loan_decision_summary": {
-                  "id": "48671404",
-                  "name": "loan_decision_summary",
-                  "columns": {
-                    "application_id": "string",
-                    "customer_id": "string",
-                    "risk_category": "string",
-                    "decision_status": "string",
-                    "approved_amount": "decimal(15,2)",
-                    "interest_rate": "decimal(5,2)",
-                    "decision_date": "date",
-                    "loan_term_months": "int",
-                    "ddep_year": "int",
-                    "ddep_month": "int",
-                    "ddep_day": "int"
-                  },
-                  "entity_type": "table",
-                  "entity_value": "Loan decision summary view",
-                  "dropped_columns": []
-                },
-                "abc025_final_export": {
-                  "id": "8f91f0e1",
-                  "name": "abc025_final_export",
-                  "columns": {
-                    "application_id": "string",
-                    "customer_id": "string",
-                    "risk_category": "string",
-                    "decision_status": "string",
-                    "approved_amount": "decimal(15,2)",
-                    "interest_rate": "decimal(5,2)",
-                    "decision_date": "date",
-                    "ddep_year": "int",
-                    "ddep_month": "int",
-                    "ddep_day": "int"
-                  },
-                  "entity_type": "table",
-                  "entity_value": "Loan decision summary export",
-                  "dropped_columns": []
-                },
-                "abc025_loan_decision": {
-                  "id": "8f9123e1",
-                  "name": "abc025_loan_decision",
-                  "columns": {
-                    "customer_id": "string",
-                    "application_id": "string",
-                    "overall_risk_score": "int",
-                    "risk_category": "string",
-                    "credit_history_score": "decimal(5,2)",
-                    "payment_behavior_score": "decimal(5,2)",
-                    "debt_burden_score": "decimal(5,2)",
-                    "has_recent_defaults": "boolean",
-                    "ddep_year": "int",
-                    "ddep_month": "int",
-                    "ddep_day": "int",
-                    "debt_to_asset_ratio": "decimal(10,4)",
-                    "debt_service_coverage_ratio": "decimal(10,4)",
-                    "current_ratio": "decimal(10,4)",
-                    "monthly_free_cash_flow": "decimal(15,2)",
-                    "estimated_monthly_payment": "decimal(15,2)",
-                    "payment_to_income_ratio": "decimal(10,4)",
-                    "payment_to_free_cash_flow_ratio": "decimal(10,4)",
-                    "repayment_capacity": "string",
-                    "interest_rate": "decimal(5,2)",
-                    "decision_status": "string",
-                    "approved_amount": "decimal(15,2)"
-                  },
-                  "entity_type": "table",
-                  "entity_value": "ddep-metadata://au.com.demolabs.ddep.abc025.transform/dataset/abc025_loan_decision@latest",
-                  "dropped_columns": []
-                }
-              },
-              "operation": {
-                "abc025_risk_assessment_loan_decision_summary": {
-                  "code_info": {
-                    "code": "spark.sql(\"CREATE OR REPLACE TEMPORARY VIEW loan_decision_summary AS SELECT d.application_id, d.customer_id, r.risk_category, d.decision_status, d.approved_amount, d.interest_rate, CAST(CURRENT_DATE() AS DATE) AS decision_date, d.loan_term_months, CAST(YEAR(CURRENT_DATE()) AS INT) AS ddep_year, CAST(MONTH(CURRENT_DATE()) AS INT) AS ddep_month, CAST(DAY(CURRENT_DATE()) AS INT) AS ddep_day FROM abc025_loan_decision d JOIN abc025_risk_assessment r ON d.application_id = r.application_id AND d.customer_id = r.customer_id\")",
-                    "lineno": "3",
-                    "file_path": "ddep-product://./sql/abc025_final_export.sql",
-                    "end_lineno": ""
-                  },
-                  "operation": "Join",
-                  "source_columns": [
-                    "risk_category"
-                  ],
-                  "source_entity": "02cf84bd",
-                  "target_columns": [
-                    "risk_category"
-                  ],
-                  "target_entity": "48671404",
-                  "operation_description": "Join abc025_loan_decision and abc025_risk_assessment by application_id and customer_id",
-                  "source_entity_name": "abc025_risk_assessment",
-                  "target_entity_name": "loan_decision_summary"
-                },
-                "abc025_loan_decision_loan_decision_summary": {
-                  "code_info": {
-                    "code": "spark.sql(\"CREATE OR REPLACE TEMPORARY VIEW loan_decision_summary AS SELECT d.application_id, d.customer_id, r.risk_category, d.decision_status, d.approved_amount, d.interest_rate, CAST(CURRENT_DATE() AS DATE) AS decision_date, d.loan_term_months, CAST(YEAR(CURRENT_DATE()) AS INT) AS ddep_year, CAST(MONTH(CURRENT_DATE()) AS INT) AS ddep_month, CAST(DAY(CURRENT_DATE()) AS INT) AS ddep_day FROM abc025_loan_decision d JOIN abc025_risk_assessment r ON d.application_id = r.application_id AND d.customer_id = r.customer_id\")",
-                    "lineno": "3",
-                    "file_path": "ddep-product://./sql/abc025_final_export.sql",
-                    "end_lineno": ""
-                  },
-                  "operation": "Join",
-                  "source_columns": [
-                    "application_id",
-                    "customer_id",
-                    "decision_status",
-                    "approved_amount",
-                    "interest_rate",
-                    "loan_term_months"
-                  ],
-                  "source_entity": "8f9123e1",
-                  "target_columns": [
-                    "application_id",
-                    "customer_id",
-                    "decision_status",
-                    "approved_amount",
-                    "interest_rate",
-                    "loan_term_months"
-                  ],
-                  "target_entity": "48671404",
-                  "operation_description": "Join abc025_loan_decision and abc025_risk_assessment by application_id and customer_id",
-                  "source_entity_name": "abc025_loan_decision",
-                  "target_entity_name": "loan_decision_summary"
-                },
-                "loan_decision_summary_loan_decision_summary": {
-                  "code_info": {
-                    "code": "spark.sql(\"CREATE OR REPLACE TEMPORARY VIEW loan_decision_summary AS SELECT d.application_id, d.customer_id, r.risk_category, d.decision_status, d.approved_amount, d.interest_rate, CAST(CURRENT_DATE() AS DATE) AS decision_date, d.loan_term_months, CAST(YEAR(CURRENT_DATE()) AS INT) AS ddep_year, CAST(MONTH(CURRENT_DATE()) AS INT) AS ddep_month, CAST(DAY(CURRENT_DATE()) AS INT) AS ddep_day FROM abc025_loan_decision d JOIN abc025_risk_assessment r ON d.application_id = r.application_id AND d.customer_id = r.customer_id\")",
-                    "lineno": "3",
-                    "file_path": "ddep-product://./sql/abc025_final_export.sql",
-                    "end_lineno": ""
-                  },
-                  "operation": "Add Partition/Ingestion Column",
-                  "source_columns": [
-                    "decision_date",
-                    "ddep_year",
-                    "ddep_month",
-                    "ddep_day"
-                  ],
-                  "source_entity": "48671404",
-                  "target_columns": [
-                    "decision_date",
-                    "ddep_year",
-                    "ddep_month",
-                    "ddep_day"
-                  ],
-                  "target_entity": "48671404",
-                  "operation_description": "Add Partition/Ingestion Column",
-                  "source_entity_name": "loan_decision_summary",
-                  "target_entity_name": "loan_decision_summary"
-                },
-                "loan_decision_summary_abc025_final_export": {
-                  "code_info": {
-                    "code": "spark.sql(\"INSERT OVERWRITE TABLE abc025_final_export SELECT application_id, customer_id, risk_category, decision_status, approved_amount, interest_rate, decision_date, ddep_year, ddep_month, ddep_day FROM loan_decision_summary ORDER BY application_id\")",
-                    "lineno": "5",
-                    "file_path": "ddep-product://./sql/abc025_final_export.sql",
-                    "end_lineno": ""
-                  },
-                  "operation": "Copy",
-                  "source_columns": [
-                    "application_id",
-                    "customer_id",
-                    "risk_category",
-                    "decision_status",
-                    "approved_amount",
-                    "interest_rate",
-                    "decision_date",
-                    "ddep_year",
-                    "ddep_month",
-                    "ddep_day"
-                  ],
-                  "source_entity": "48671404",
-                  "target_columns": [
-                    "application_id",
-                    "customer_id",
-                    "risk_category",
-                    "decision_status",
-                    "approved_amount",
-                    "interest_rate",
-                    "decision_date",
-                    "ddep_year",
-                    "ddep_month",
-                    "ddep_day"
-                  ],
-                  "target_entity": "8f91f0e1",
-                  "operation_description": "Copy application_id column from loan_decision_summary to abc025_final_export",
-                  "source_entity_name": "loan_decision_summary",
-                  "target_entity_name": "abc025_final_export"
-                }
-              }
-            },
-            "calculate_additional_metrics_columnTransforms_0": {
-              "dataframe": {
-                "abc025_final_export": {
-                  "id": "c4a0c79c",
-                  "name": "abc025_final_export",
-                  "columns": {
-                    "application_id": "string",
-                    "customer_id": "string",
-                    "risk_category": "string",
-                    "decision_status": "string",
-                    "approved_amount": "decimal(15,2)",
-                    "interest_rate": "decimal(5,2)",
-                    "decision_date": "date",
-                    "ddep_year": "int",
-                    "ddep_month": "int",
-                    "ddep_day": "int"
-                  },
-                  "entity_type": "table",
-                  "entity_value": "abc025_final_export table with updated monthly_payment column",
-                  "dropped_columns": []
-                },
-                "abc025_final_export_1": {
-                  "id": "5fe7e714",
-                  "name": "abc025_final_export",
-                  "columns": {
-                    "application_id": "string",
-                    "customer_id": "string",
-                    "risk_category": "string",
-                    "decision_status": "string",
-                    "approved_amount": "decimal(15,2)",
-                    "interest_rate": "decimal(5,2)",
-                    "decision_date": "date",
-                    "ddep_year": "int",
-                    "ddep_month": "int",
-                    "ddep_day": "int",
-                    "monthly_payment": "DECIMAL(15, 2)"
-                  },
-                  "entity_type": "table",
-                  "entity_value": "abc025_final_export table with added column",
-                  "dropped_columns": []
-                }
-              },
-              "operation": {
-                "abc025_final_export_abc025_final_export": {
-                  "code_info": {
-                    "code": "spark.sql(\"UPDATE abc025_final_export SET monthly_payment = CAST((approved_amount * (interest_rate/1200) * POWER(1 + interest_rate/1200, 360)) / (POWER(1 + interest_rate/1200, 360) - 1) AS DECIMAL(15, 2))\")",
-                    "lineno": "5",
-                    "file_path": "DDEP_ABC025_ING_004_calculate_additional_metrics_columnTransforms_0_inline_sql.sql",
-                    "end_lineno": ""
-                  },
-                  "operation": "Build Composite Column",
-                  "source_columns": [
-                    "approved_amount",
-                    "interest_rate"
-                  ],
-                  "source_entity": "5fe7e714",
-                  "target_columns": [
-                    "monthly_payment"
-                  ],
-                  "target_entity": "c4a0c79c",
-                  "operation_description": "Calculate monthly_payment as approved_amount times interest_rate formula",
-                  "source_entity_name": "abc025_final_export",
-                  "target_entity_name": "abc025_final_export"
-                }
-              }
-            },
-            "calculate_additional_metrics_columnTransforms_1": {
-              "dataframe": {
-                "abc025_final_export": {
-                  "id": "f1ad65ca",
-                  "name": "abc025_final_export",
-                  "columns": {
-                    "application_id": "string",
-                    "customer_id": "string",
-                    "risk_category": "string",
-                    "decision_status": "string",
-                    "approved_amount": "decimal(15,2)",
-                    "interest_rate": "decimal(5,2)",
-                    "decision_date": "date",
-                    "ddep_year": "int",
-                    "ddep_month": "int",
-                    "ddep_day": "int",
-                    "monthly_payment": "DECIMAL(15, 2)"
-                  },
-                  "entity_type": "table",
-                  "entity_value": "abc025_final_export table with updated total_interest column",
-                  "dropped_columns": []
-                },
-                "abc025_final_export_1": {
-                  "id": "c357e2db",
-                  "name": "abc025_final_export",
-                  "columns": {
-                    "application_id": "string",
-                    "customer_id": "string",
-                    "risk_category": "string",
-                    "decision_status": "string",
-                    "approved_amount": "decimal(15,2)",
-                    "interest_rate": "decimal(5,2)",
-                    "decision_date": "date",
-                    "ddep_year": "int",
-                    "ddep_month": "int",
-                    "ddep_day": "int",
-                    "monthly_payment": "DECIMAL(15, 2)",
-                    "total_interest": "DECIMAL(15, 2)"
-                  },
-                  "entity_type": "table",
-                  "entity_value": "abc025_final_export table with added column",
-                  "dropped_columns": []
-                }
-              },
-              "operation": {
-                "abc025_final_export_abc025_final_export": {
-                  "code_info": {
-                    "code": "spark.sql(\"UPDATE abc025_final_export SET total_interest = CAST((monthly_payment * 360 - approved_amount) AS DECIMAL(15, 2))\")",
-                    "lineno": "5",
-                    "file_path": "DDEP_ABC025_ING_004_calculate_additional_metrics_columnTransforms_1_inline_sql.sql",
-                    "end_lineno": ""
-                  },
-                  "operation": "Build Composite Column",
-                  "source_columns": [
-                    "monthly_payment",
-                    "approved_amount"
-                  ],
-                  "source_entity": "c357e2db",
-                  "target_columns": [
-                    "total_interest",
-                    "total_interest"
-                  ],
-                  "target_entity": "f1ad65ca",
-                  "operation_description": "Calculate total_interest as (monthly_payment * 360) - approved_amount",
-                  "source_entity_name": "abc025_final_export",
-                  "target_entity_name": "abc025_final_export"
-                }
-              }
-            },
-            "repartition_final_export": {
-              "dataframe": {
-                "abc025_final_export": {
-                  "id": "62a7f0ac",
-                  "name": "abc025_final_export",
-                  "columns": {
-                    "application_id": "string",
-                    "customer_id": "string",
-                    "risk_category": "string",
-                    "decision_status": "string",
-                    "approved_amount": "decimal(15,2)",
-                    "interest_rate": "decimal(5,2)",
-                    "decision_date": "date",
-                    "ddep_year": "int",
-                    "ddep_month": "int",
-                    "ddep_day": "int",
-                    "monthly_payment": "DECIMAL(15, 2)",
-                    "total_interest": "DECIMAL(15, 2)"
-                  },
-                  "entity_type": "dataframe",
-                  "entity_value": "ddep-metadata://au.com.demolabs.ddep.abc025.transform/dataset/abc025_final_export@latest",
-                  "dropped_columns": []
-                },
-                "abc025_final_export_parquet_target_connector": {
-                  "id": "94d06cf9",
-                  "name": "abc025_final_export_parquet_target_connector",
-                  "columns": {
-                    "application_id": "string",
-                    "customer_id": "string",
-                    "risk_category": "string",
-                    "decision_status": "string",
-                    "approved_amount": "decimal(15,2)",
-                    "interest_rate": "decimal(5,2)",
-                    "decision_date": "date",
-                    "ddep_year": "int",
-                    "ddep_month": "int",
-                    "ddep_day": "int",
-                    "monthly_payment": "DECIMAL(15, 2)",
-                    "total_interest": "DECIMAL(15, 2)"
-                  },
-                  "entity_type": "parquet",
-                  "entity_value": "ddep-metadata://au.com.demolabs.ddep.abc025.transform/dataset/abc025_final_export@latest",
-                  "dropped_columns": []
-                }
-              },
-              "operation": {
-                "abc025_final_export_parquet_target_connector_abc025_final_export": {
-                  "code_info": {
-                    "code": "{\n          \"name\": \"repartition_final_export\",\n          \"description\": \"Repartition final export data for writing\",\n          \"conditionals\": [],\n          \"dataset\": \"ddep-metadata://au.com.demolabs.ddep.abc025.transform/dataset/abc025_final_export@latest\",\n          \"strategy\": {\n            \"partitions\": 10,\n            \"$\": \"au.com.demolabs.ddep.metadata.v2.process.stage.LiteralRepartitionStrategy\"\n          },\n          \"columns\": [],\n          \"$\": \"au.com.demolabs.ddep.metadata.v2.process.stage.RepartitionDataframeStage\"\n        }",
-                    "lineno": 1,
-                    "file_path": "repartition_final_export",
-                    "end_lineno": 1
-                  },
-                  "operation": "repartition",
-                  "source_columns": [
-                    "application_id",
-                    "customer_id",
-                    "risk_category",
-                    "decision_status",
-                    "approved_amount",
-                    "interest_rate",
-                    "decision_date",
-                    "ddep_year",
-                    "ddep_month",
-                    "ddep_day",
-                    "monthly_payment",
-                    "total_interest"
-                  ],
-                  "source_entity": "94d06cf9",
-                  "target_columns": [
-                    "application_id",
-                    "customer_id",
-                    "risk_category",
-                    "decision_status",
-                    "approved_amount",
-                    "interest_rate",
-                    "decision_date",
-                    "ddep_year",
-                    "ddep_month",
-                    "ddep_day",
-                    "monthly_payment",
-                    "total_interest"
-                  ],
-                  "target_entity": "62a7f0ac",
-                  "operation_description": "Redistribute data across 10 partitions",
-                  "source_entity_name": "abc025_final_export_parquet_target_connector",
-                  "target_entity_name": "abc025_final_export"
-                }
-              }
-            },
-            "write_target_abc025_final_export_parquet_target_connector": {
-              "dataframe": {
-                "abc025_final_export_parquet_target_connector": {
-                  "id": "642cda29",
-                  "name": "abc025_final_export_parquet_target_connector",
-                  "columns": {
-                    "application_id": "string",
-                    "customer_id": "string",
-                    "risk_category": "string",
-                    "decision_status": "string",
-                    "approved_amount": "decimal(15,2)",
-                    "interest_rate": "decimal(5,2)",
-                    "decision_date": "date",
-                    "ddep_year": "int",
-                    "ddep_month": "int",
-                    "ddep_day": "int",
-                    "monthly_payment": "DECIMAL(15, 2)",
-                    "total_interest": "DECIMAL(15, 2)"
-                  },
-                  "entity_type": "dataframe",
-                  "entity_value": "ddep-metadata://au.com.demolabs.ddep.abc025.transform/dataset/abc025_final_export@latest",
-                  "dropped_columns": []
-                },
-                "ddep-storage://au.com.demolabs.ddep.abc025/abc025/abc025_final_export": {
-                  "id": "d132b01b",
-                  "name": "ddep-storage://au.com.demolabs.ddep.abc025/abc025/abc025_final_export",
-                  "columns": {
-                    "application_id": "string",
-                    "customer_id": "string",
-                    "risk_category": "string",
-                    "decision_status": "string",
-                    "approved_amount": "decimal(15,2)",
-                    "interest_rate": "decimal(5,2)",
-                    "decision_date": "date",
-                    "ddep_year": "int",
-                    "ddep_month": "int",
-                    "ddep_day": "int",
-                    "monthly_payment": "DECIMAL(15, 2)",
-                    "total_interest": "DECIMAL(15, 2)"
-                  },
-                  "entity_type": "au.com.demolabs.ddep.metadata.v2.process.connection.ProcessConnectionParquetFileTarget",
-                  "entity_value": "ddep-metadata://au.com.demolabs.ddep.abc025.transform/dataset/abc025_final_export@latest",
-                  "dropped_columns": []
-                }
-              },
-              "operation": {
-                "abc025_final_export_parquet_target_connector_ddep-storage://au.com.demolabs.ddep.abc025/abc025/abc025_final_export": {
-                  "code_info": {
-                    "code": "{'name': 'write_target_abc025_final_export_parquet_target_connector', 'description': 'Write final export data to parquet storage', 'conditionals': [], 'connectionName': 'abc025_final_export_parquet_target_connector', '$': 'au.com.demolabs.ddep.metadata.v2.process.stage.WriteTargetStage'}",
-                    "lineno": 1,
-                    "file_path": "write_target_abc025_final_export_parquet_target_connector",
-                    "end_lineno": 1
-                  },
-                  "operation": "write",
-                  "source_columns": [
-                    "application_id",
-                    "customer_id",
-                    "risk_category",
-                    "decision_status",
-                    "approved_amount",
-                    "interest_rate",
-                    "decision_date",
-                    "ddep_year",
-                    "ddep_month",
-                    "ddep_day",
-                    "monthly_payment",
-                    "total_interest"
-                  ],
-                  "source_entity": "642cda29",
-                  "target_columns": [
-                    "application_id",
-                    "customer_id",
-                    "risk_category",
-                    "decision_status",
-                    "approved_amount",
-                    "interest_rate",
-                    "decision_date",
-                    "ddep_year",
-                    "ddep_month",
-                    "ddep_day",
-                    "monthly_payment",
-                    "total_interest"
-                  ],
-                  "target_entity": "d132b01b",
-                  "operation_description": "Copy data from DataFrame to Parquet file",
-                  "source_entity_name": "abc025_final_export_parquet_target_connector",
-                  "target_entity_name": "ddep-storage://au.com.demolabs.ddep.abc025/abc025/abc025_final_export"
-                }
-              }
-            },
-            "write_target_abc025_final_export_spark_metastore_target_connector": {
-              "dataframe": {
-                "abc025_final_export_spark_metastore_target_connector": {
-                  "id": "b27a1053",
-                  "name": "abc025_final_export_spark_metastore_target_connector",
-                  "columns": {
-                    "application_id": "string",
-                    "customer_id": "string",
-                    "risk_category": "string",
-                    "decision_status": "string",
-                    "approved_amount": "decimal(15,2)",
-                    "interest_rate": "decimal(5,2)",
-                    "decision_date": "date",
-                    "ddep_year": "int",
-                    "ddep_month": "int",
-                    "ddep_day": "int",
-                    "monthly_payment": "DECIMAL(15, 2)",
-                    "total_interest": "DECIMAL(15, 2)"
-                  },
-                  "entity_type": "dataframe",
-                  "entity_value": "ddep-metadata://au.com.demolabs.ddep.abc025.transform/dataset/abc025_final_export@latest",
-                  "dropped_columns": []
-                },
-                "ddep-storage://au.com.demolabs.ddep.abc025/abc025/abc025_final_export": {
-                  "id": "daec777d",
-                  "name": "ddep-storage://au.com.demolabs.ddep.abc025/abc025/abc025_final_export",
-                  "columns": {
-                    "application_id": "string",
-                    "customer_id": "string",
-                    "risk_category": "string",
-                    "decision_status": "string",
-                    "approved_amount": "decimal(15,2)",
-                    "interest_rate": "decimal(5,2)",
-                    "decision_date": "date",
-                    "ddep_year": "int",
-                    "ddep_month": "int",
-                    "ddep_day": "int",
-                    "monthly_payment": "DECIMAL(15, 2)",
-                    "total_interest": "DECIMAL(15, 2)"
-                  },
-                  "entity_type": "au.com.demolabs.ddep.metadata.v2.process.connection.ProcessConnectionSparkMetastoreExternalTableTarget",
-                  "entity_value": "ddep-metadata://au.com.demolabs.ddep.abc025.transform/dataset/abc025_final_export@latest",
-                  "dropped_columns": []
-                }
-              },
-              "operation": {
-                "abc025_final_export_spark_metastore_target_connector_ddep-storage://au.com.demolabs.ddep.abc025/abc025/abc025_final_export": {
-                  "code_info": {
-                    "code": "{'name': 'write_target_abc025_final_export_spark_metastore_target_connector', 'description': 'Update Spark metastore with final export data', 'conditionals': [], 'connectionName': 'abc025_final_export_spark_metastore_target_connector', '$': 'au.com.demolabs.ddep.metadata.v2.process.stage.WriteTargetStage'}",
-                    "lineno": 1,
-                    "file_path": "write_target_abc025_final_export_spark_metastore_target_connector",
-                    "end_lineno": 1
-                  },
-                  "operation": "write",
-                  "source_columns": [
-                    "application_id",
-                    "customer_id",
-                    "risk_category",
-                    "decision_status",
-                    "approved_amount",
-                    "interest_rate",
-                    "decision_date",
-                    "ddep_year",
-                    "ddep_month",
-                    "ddep_day",
-                    "monthly_payment",
-                    "total_interest"
-                  ],
-                  "source_entity": "b27a1053",
-                  "target_columns": [
-                    "application_id",
-                    "customer_id",
-                    "risk_category",
-                    "decision_status",
-                    "approved_amount",
-                    "interest_rate",
-                    "decision_date",
-                    "ddep_year",
-                    "ddep_month",
-                    "ddep_day",
-                    "monthly_payment",
-                    "total_interest"
-                  ],
-                  "target_entity": "daec777d",
-                  "operation_description": "Copy data to Spark metastore",
-                  "source_entity_name": "abc025_final_export_spark_metastore_target_connector",
-                  "target_entity_name": "ddep-storage://au.com.demolabs.ddep.abc025/abc025/abc025_final_export"
-                }
+                "operation": "write",
+                "source_columns": [
+                  "application_id",
+                  "customer_id",
+                  "risk_category",
+                  "decision_status",
+                  "approved_amount",
+                  "interest_rate",
+                  "decision_date",
+                  "ddep_year",
+                  "ddep_month",
+                  "ddep_day",
+                  "monthly_payment",
+                  "total_interest"
+                ],
+                "source_entity": "b27a1053",
+                "target_columns": [
+                  "application_id",
+                  "customer_id",
+                  "risk_category",
+                  "decision_status",
+                  "approved_amount",
+                  "interest_rate",
+                  "decision_date",
+                  "ddep_year",
+                  "ddep_month",
+                  "ddep_day",
+                  "monthly_payment",
+                  "total_interest"
+                ],
+                "target_entity": "daec777d",
+                "operation_description": "Copy data to Spark metastore",
+                "source_entity_name": "abc025_final_export_spark_metastore_target_connector",
+                "target_entity_name": "ddep-storage://au.com.demolabs.ddep.abc025/abc025/abc025_final_export"
               }
             }
           }
@@ -1797,4 +1990,4 @@
       }
     }
   }
-  
+}
