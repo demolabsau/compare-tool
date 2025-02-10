@@ -1302,7 +1302,7 @@
             "operation": {
               "abc025_risk_assessment_loan_decision_summary": {
                 "code_info": {
-                  "code": "spark.sql(\"\"\"CREATE OR REPLACE TEMPORARY VIEW loan_decision_summary AS SELECT d.application_id, d.customer_id, r.risk_category, d.decision_status, d.approved_amount, d.interest_rate, CAST(CURRENT_DATE() AS DATE) AS decision_date, d.loan_term_months, CAST(YEAR(CURRENT_DATE()) AS INT) AS ddep_year, CAST(MONTH(CURRENT_DATE()) AS INT) AS ddep_month, CAST(DAY(CURRENT_DATE()) AS INT) AS ddep_day FROM abc025_loan_decision d JOIN abc025_risk_assessment r ON d.application_id = r.application_id AND d.customer_id = r.customer_id\"\"\")",
+                  "code": "spark.sql(\"\"\"CREATE OR REPLACE TEMPORARY VIEW loan_decision_summary AS SELECT d.application_id, d.customer_id, r.risk_category, d.decision_status, d.approved_amount, d.interest_rate, CAST(CURRENT_DATE() AS DATE) AS decision_date, d.loan_term_months, CAST(YEAR(CURRENT_DATE()) AS INT) AS ddep_year, CAST(MONTH(CURRENT_DATE()) AS INT) AS ddep_month, CAST(DAY(CURRENT_DATE()) AS INT) AS ddep_day FROM abc025_loan_decision d JOIN abc025_risk_assessment r ON d.application_id = r.application_id AND d.customer_id = r.customer_id;\"\"\")",
                   "lineno": "5",
                   "file_path": "ddep-product://./sql/abc025_final_export.sql",
                   "end_lineno": "23"
@@ -1322,7 +1322,7 @@
               },
               "abc025_loan_decision_loan_decision_summary": {
                 "code_info": {
-                  "code": "spark.sql(\"\"\"CREATE OR REPLACE TEMPORARY VIEW loan_decision_summary AS SELECT d.application_id, d.customer_id, r.risk_category, d.decision_status, d.approved_amount, d.interest_rate, CAST(CURRENT_DATE() AS DATE) AS decision_date, d.loan_term_months, CAST(YEAR(CURRENT_DATE()) AS INT) AS ddep_year, CAST(MONTH(CURRENT_DATE()) AS INT) AS ddep_month, CAST(DAY(CURRENT_DATE()) AS INT) AS ddep_day FROM abc025_loan_decision d JOIN abc025_risk_assessment r ON d.application_id = r.application_id AND d.customer_id = r.customer_id\"\"\")",
+                  "code": "spark.sql(\"\"\"CREATE OR REPLACE TEMPORARY VIEW loan_decision_summary AS SELECT d.application_id, d.customer_id, r.risk_category, d.decision_status, d.approved_amount, d.interest_rate, CAST(CURRENT_DATE() AS DATE) AS decision_date, d.loan_term_months, CAST(YEAR(CURRENT_DATE()) AS INT) AS ddep_year, CAST(MONTH(CURRENT_DATE()) AS INT) AS ddep_month, CAST(DAY(CURRENT_DATE()) AS INT) AS ddep_day FROM abc025_loan_decision d JOIN abc025_risk_assessment r ON d.application_id = r.application_id AND d.customer_id = r.customer_id;\"\"\")",
                   "lineno": "5",
                   "file_path": "ddep-product://./sql/abc025_final_export.sql",
                   "end_lineno": "23"
@@ -1352,7 +1352,7 @@
               },
               "loan_decision_summary_loan_decision_summary": {
                 "code_info": {
-                  "code": "spark.sql(\"\"\"CREATE OR REPLACE TEMPORARY VIEW loan_decision_summary AS SELECT d.application_id, d.customer_id, r.risk_category, d.decision_status, d.approved_amount, d.interest_rate, CAST(CURRENT_DATE() AS DATE) AS decision_date, d.loan_term_months, CAST(YEAR(CURRENT_DATE()) AS INT) AS ddep_year, CAST(MONTH(CURRENT_DATE()) AS INT) AS ddep_month, CAST(DAY(CURRENT_DATE()) AS INT) AS ddep_day FROM abc025_loan_decision d JOIN abc025_risk_assessment r ON d.application_id = r.application_id AND d.customer_id = r.customer_id\"\"\")",
+                  "code": "spark.sql(\"\"\"CREATE OR REPLACE TEMPORARY VIEW loan_decision_summary AS SELECT d.application_id, d.customer_id, r.risk_category, d.decision_status, d.approved_amount, d.interest_rate, CAST(CURRENT_DATE() AS DATE) AS decision_date, d.loan_term_months, CAST(YEAR(CURRENT_DATE()) AS INT) AS ddep_year, CAST(MONTH(CURRENT_DATE()) AS INT) AS ddep_month, CAST(DAY(CURRENT_DATE()) AS INT) AS ddep_day FROM abc025_loan_decision d JOIN abc025_risk_assessment r ON d.application_id = r.application_id AND d.customer_id = r.customer_id;\"\"\")",
                   "lineno": "5",
                   "file_path": "ddep-product://./sql/abc025_final_export.sql",
                   "end_lineno": "23"
@@ -1378,7 +1378,7 @@
               },
               "loan_decision_summary_abc025_final_export": {
                 "code_info": {
-                  "code": "spark.sql(\"\"\"INSERT OVERWRITE TABLE abc025_final_export SELECT application_id, customer_id, risk_category, decision_status, approved_amount, interest_rate, decision_date, ddep_year, ddep_month, ddep_day FROM loan_decision_summary ORDER BY application_id\"\"\")",
+                  "code": "spark.sql(\"\"\"INSERT OVERWRITE TABLE abc025_final_export SELECT application_id, customer_id, risk_category, decision_status, approved_amount, interest_rate, decision_date, ddep_year, ddep_month, ddep_day FROM loan_decision_summary ORDER BY application_id;\"\"\")",
                   "lineno": "26",
                   "file_path": "ddep-product://./sql/abc025_final_export.sql",
                   "end_lineno": "39"
