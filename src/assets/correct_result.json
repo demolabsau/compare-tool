@@ -1,33 +1,15 @@
 {
   "abc025_control_m.xml": {
     "job_4": {
-      "process_0": {
+      "process_1": {
         "stages": {
           "read_source_risk_assessment": {
             "dataframe": {
               "ddep-storage://au.com.demolabs.ddep.abc025/abc025/abc025_risk_assessment": {
-                "id": "388325b1",
+                "id": "be208685",
                 "name": "ddep-storage://au.com.demolabs.ddep.abc025/abc025/abc025_risk_assessment",
-                "columns": {
-                  "customer_id": "string",
-                  "application_id": "string",
-                  "overall_risk_score": "int",
-                  "risk_category": "string",
-                  "credit_history_score": "decimal(5,2)",
-                  "payment_behavior_score": "decimal(5,2)",
-                  "debt_burden_score": "decimal(5,2)",
-                  "has_recent_defaults": "boolean",
-                  "ddep_year": "int",
-                  "ddep_month": "int",
-                  "ddep_day": "int"
-                },
                 "entity_type": "au.com.demolabs.ddep.metadata.v2.process.connection.ProcessConnectionParquetFileSource",
                 "entity_value": "ddep-metadata://au.com.demolabs.ddep.abc025.transform/dataset/abc025_risk_assessment@latest",
-                "dropped_columns": []
-              },
-              "read_parquet_risk_assessment": {
-                "id": "0cc96a2e",
-                "name": "read_parquet_risk_assessment",
                 "columns": {
                   "customer_id": "string",
                   "application_id": "string",
@@ -40,19 +22,35 @@
                   "ddep_year": "int",
                   "ddep_month": "int",
                   "ddep_day": "int"
-                },
+                }
+              },
+              "read_parquet_risk_assessment": {
+                "id": "9a425614",
+                "name": "read_parquet_risk_assessment",
                 "entity_type": "dataframe",
                 "entity_value": "ddep-metadata://au.com.demolabs.ddep.abc025.transform/dataset/abc025_risk_assessment@latest",
-                "dropped_columns": []
+                "columns": {
+                  "customer_id": "string",
+                  "application_id": "string",
+                  "overall_risk_score": "int",
+                  "risk_category": "string",
+                  "credit_history_score": "decimal(5,2)",
+                  "payment_behavior_score": "decimal(5,2)",
+                  "debt_burden_score": "decimal(5,2)",
+                  "has_recent_defaults": "boolean",
+                  "ddep_year": "int",
+                  "ddep_month": "int",
+                  "ddep_day": "int"
+                }
               }
             },
             "operation": {
               "ddep-storage://au.com.demolabs.ddep.abc025/abc025/abc025_risk_assessment_read_parquet_risk_assessment": {
                 "code_info": {
                   "code": "{'name': 'read_source_risk_assessment', 'description': 'Reads risk assessment source data', 'conditionals': [], 'connectionName': 'read_parquet_risk_assessment', '$': 'au.com.demolabs.ddep.metadata.v2.process.stage.ReadSourceStage'}",
-                  "lineno": 1,
+                  "lineno": "1",
                   "file_path": "read_source_risk_assessment",
-                  "end_lineno": 1
+                  "end_lineno": "7"
                 },
                 "operation": "read",
                 "source_columns": [
@@ -68,7 +66,7 @@
                   "ddep_month",
                   "ddep_day"
                 ],
-                "source_entity": "388325b1",
+                "source_entity": "be208685",
                 "target_columns": [
                   "customer_id",
                   "application_id",
@@ -82,7 +80,7 @@
                   "ddep_month",
                   "ddep_day"
                 ],
-                "target_entity": "0cc96a2e",
+                "target_entity": "9a425614",
                 "operation_description": "Copy data from Parquet file to DataFrame",
                 "source_entity_name": "ddep-storage://au.com.demolabs.ddep.abc025/abc025/abc025_risk_assessment",
                 "target_entity_name": "read_parquet_risk_assessment"
@@ -92,8 +90,10 @@
           "repartition_risk_assessment": {
             "dataframe": {
               "read_parquet_risk_assessment": {
-                "id": "f40c9244",
+                "id": "5e9dbcfb",
                 "name": "read_parquet_risk_assessment",
+                "entity_type": "dataframe",
+                "entity_value": "ddep-metadata://au.com.demolabs.ddep.abc025.transform/dataset/abc025_risk_assessment@latest",
                 "columns": {
                   "customer_id": "string",
                   "application_id": "string",
@@ -106,14 +106,13 @@
                   "ddep_year": "int",
                   "ddep_month": "int",
                   "ddep_day": "int"
-                },
-                "entity_type": "dataframe",
-                "entity_value": "ddep-metadata://au.com.demolabs.ddep.abc025.transform/dataset/abc025_risk_assessment@latest",
-                "dropped_columns": []
+                }
               },
               "read_parquet_risk_assessment_1": {
-                "id": "0d6be52d",
+                "id": "e0f0232c",
                 "name": "read_parquet_risk_assessment",
+                "entity_type": "dataframe",
+                "entity_value": "ddep-metadata://au.com.demolabs.ddep.abc025.transform/dataset/abc025_risk_assessment@latest",
                 "columns": {
                   "customer_id": "string",
                   "application_id": "string",
@@ -126,19 +125,16 @@
                   "ddep_year": "int",
                   "ddep_month": "int",
                   "ddep_day": "int"
-                },
-                "entity_type": "dataframe",
-                "entity_value": "ddep-metadata://au.com.demolabs.ddep.abc025.transform/dataset/abc025_risk_assessment@latest",
-                "dropped_columns": []
+                }
               }
             },
             "operation": {
               "read_parquet_risk_assessment_read_parquet_risk_assessment": {
                 "code_info": {
                   "code": "{'name': 'repartition_risk_assessment', 'description': 'Repartition risk assessment data for processing', 'conditionals': [], 'dataset': 'ddep-metadata://au.com.demolabs.ddep.abc025.transform/dataset/abc025_risk_assessment@latest', 'strategy': {'partitions': 10, '$': 'au.com.demolabs.ddep.metadata.v2.process.stage.LiteralRepartitionStrategy'}, 'columns': [], '$': 'au.com.demolabs.ddep.metadata.v2.process.stage.RepartitionDataframeStage'}",
-                  "lineno": 1,
+                  "lineno": "1",
                   "file_path": "repartition_risk_assessment",
-                  "end_lineno": 1
+                  "end_lineno": "12"
                 },
                 "operation": "repartition",
                 "source_columns": [
@@ -154,7 +150,7 @@
                   "ddep_month",
                   "ddep_day"
                 ],
-                "source_entity": "f40c9244",
+                "source_entity": "5e9dbcfb",
                 "target_columns": [
                   "customer_id",
                   "application_id",
@@ -168,7 +164,7 @@
                   "ddep_month",
                   "ddep_day"
                 ],
-                "target_entity": "0d6be52d",
+                "target_entity": "e0f0232c",
                 "operation_description": "Redistribute data across 10 partitions",
                 "source_entity_name": "read_parquet_risk_assessment",
                 "target_entity_name": "read_parquet_risk_assessment"
@@ -178,30 +174,10 @@
           "read_source_financial_analysis": {
             "dataframe": {
               "ddep-storage://au.com.demolabs.ddep.abc025/abc025/abc025_financial_analysis": {
-                "id": "18d109fb",
+                "id": "eb6df5c4",
                 "name": "ddep-storage://au.com.demolabs.ddep.abc025/abc025/abc025_financial_analysis",
-                "columns": {
-                  "application_id": "string",
-                  "customer_id": "string",
-                  "debt_to_asset_ratio": "decimal(10,4)",
-                  "debt_service_coverage_ratio": "decimal(10,4)",
-                  "current_ratio": "decimal(10,4)",
-                  "monthly_free_cash_flow": "decimal(15,2)",
-                  "estimated_monthly_payment": "decimal(15,2)",
-                  "payment_to_income_ratio": "decimal(10,4)",
-                  "payment_to_free_cash_flow_ratio": "decimal(10,4)",
-                  "repayment_capacity": "string",
-                  "ddep_year": "int",
-                  "ddep_month": "int",
-                  "ddep_day": "int"
-                },
                 "entity_type": "au.com.demolabs.ddep.metadata.v2.process.connection.ProcessConnectionParquetFileSource",
                 "entity_value": "ddep-metadata://au.com.demolabs.ddep.abc025.transform/dataset/abc025_financial_analysis@latest",
-                "dropped_columns": []
-              },
-              "read_parquet_financial_analysis": {
-                "id": "93bc1a33",
-                "name": "read_parquet_financial_analysis",
                 "columns": {
                   "application_id": "string",
                   "customer_id": "string",
@@ -216,19 +192,37 @@
                   "ddep_year": "int",
                   "ddep_month": "int",
                   "ddep_day": "int"
-                },
+                }
+              },
+              "read_parquet_financial_analysis": {
+                "id": "ba3fbf3a",
+                "name": "read_parquet_financial_analysis",
                 "entity_type": "dataframe",
                 "entity_value": "ddep-metadata://au.com.demolabs.ddep.abc025.transform/dataset/abc025_financial_analysis@latest",
-                "dropped_columns": []
+                "columns": {
+                  "application_id": "string",
+                  "customer_id": "string",
+                  "debt_to_asset_ratio": "decimal(10,4)",
+                  "debt_service_coverage_ratio": "decimal(10,4)",
+                  "current_ratio": "decimal(10,4)",
+                  "monthly_free_cash_flow": "decimal(15,2)",
+                  "estimated_monthly_payment": "decimal(15,2)",
+                  "payment_to_income_ratio": "decimal(10,4)",
+                  "payment_to_free_cash_flow_ratio": "decimal(10,4)",
+                  "repayment_capacity": "string",
+                  "ddep_year": "int",
+                  "ddep_month": "int",
+                  "ddep_day": "int"
+                }
               }
             },
             "operation": {
               "ddep-storage://au.com.demolabs.ddep.abc025/abc025/abc025_financial_analysis_read_parquet_financial_analysis": {
                 "code_info": {
                   "code": "{'name': 'read_source_financial_analysis', 'description': 'Reads financial analysis source data', 'conditionals': [], 'connectionName': 'read_parquet_financial_analysis', '$': 'au.com.demolabs.ddep.metadata.v2.process.stage.ReadSourceStage'}",
-                  "lineno": 1,
+                  "lineno": "1",
                   "file_path": "read_source_financial_analysis",
-                  "end_lineno": 1
+                  "end_lineno": "7"
                 },
                 "operation": "read",
                 "source_columns": [
@@ -246,7 +240,7 @@
                   "ddep_month",
                   "ddep_day"
                 ],
-                "source_entity": "18d109fb",
+                "source_entity": "eb6df5c4",
                 "target_columns": [
                   "application_id",
                   "customer_id",
@@ -262,7 +256,7 @@
                   "ddep_month",
                   "ddep_day"
                 ],
-                "target_entity": "93bc1a33",
+                "target_entity": "ba3fbf3a",
                 "operation_description": "Copy data from Parquet file to DataFrame",
                 "source_entity_name": "ddep-storage://au.com.demolabs.ddep.abc025/abc025/abc025_financial_analysis",
                 "target_entity_name": "read_parquet_financial_analysis"
@@ -272,8 +266,10 @@
           "repartition_financial_analysis": {
             "dataframe": {
               "read_parquet_financial_analysis": {
-                "id": "4e29be9b",
+                "id": "3de29f72",
                 "name": "read_parquet_financial_analysis",
+                "entity_type": "dataframe",
+                "entity_value": "ddep-metadata://au.com.demolabs.ddep.abc025.transform/dataset/abc025_financial_analysis@latest",
                 "columns": {
                   "application_id": "string",
                   "customer_id": "string",
@@ -288,14 +284,13 @@
                   "ddep_year": "int",
                   "ddep_month": "int",
                   "ddep_day": "int"
-                },
-                "entity_type": "dataframe",
-                "entity_value": "ddep-metadata://au.com.demolabs.ddep.abc025.transform/dataset/abc025_financial_analysis@latest",
-                "dropped_columns": []
+                }
               },
               "read_parquet_financial_analysis_1": {
-                "id": "5c8dfd50",
+                "id": "fa03e45d",
                 "name": "read_parquet_financial_analysis",
+                "entity_type": "dataframe",
+                "entity_value": "ddep-metadata://au.com.demolabs.ddep.abc025.transform/dataset/abc025_financial_analysis@latest",
                 "columns": {
                   "application_id": "string",
                   "customer_id": "string",
@@ -310,19 +305,16 @@
                   "ddep_year": "int",
                   "ddep_month": "int",
                   "ddep_day": "int"
-                },
-                "entity_type": "dataframe",
-                "entity_value": "ddep-metadata://au.com.demolabs.ddep.abc025.transform/dataset/abc025_financial_analysis@latest",
-                "dropped_columns": []
+                }
               }
             },
             "operation": {
               "read_parquet_financial_analysis_read_parquet_financial_analysis": {
                 "code_info": {
                   "code": "{'name': 'repartition_financial_analysis', 'description': 'Repartition financial analysis data for processing', 'conditionals': [], 'dataset': 'ddep-metadata://au.com.demolabs.ddep.abc025.transform/dataset/abc025_financial_analysis@latest', 'strategy': {'partitions': 10, '$': 'au.com.demolabs.ddep.metadata.v2.process.stage.LiteralRepartitionStrategy'}, 'columns': [], '$': 'au.com.demolabs.ddep.metadata.v2.process.stage.RepartitionDataframeStage'}",
-                  "lineno": 1,
+                  "lineno": "1",
                   "file_path": "repartition_financial_analysis",
-                  "end_lineno": 1
+                  "end_lineno": "12"
                 },
                 "operation": "repartition",
                 "source_columns": [
@@ -340,7 +332,7 @@
                   "ddep_month",
                   "ddep_day"
                 ],
-                "source_entity": "4e29be9b",
+                "source_entity": "3de29f72",
                 "target_columns": [
                   "application_id",
                   "customer_id",
@@ -356,7 +348,7 @@
                   "ddep_month",
                   "ddep_day"
                 ],
-                "target_entity": "5c8dfd50",
+                "target_entity": "fa03e45d",
                 "operation_description": "Redistribute data across 10 partitions",
                 "source_entity_name": "read_parquet_financial_analysis",
                 "target_entity_name": "read_parquet_financial_analysis"
@@ -365,16 +357,45 @@
           },
           "loan_decision_stage": {
             "dataframe": {
-              "sourceDatasets": {
-                "id": "65fa7386",
-                "name": "sourceDatasets",
+              "sourceDatasets[0]": {
+                "id": "e235505f",
+                "name": "sourceDatasets[0]",
+                "entity_type": "au.com.demolabs.ddep.metadata.v2.Dataset",
+                "entity_value": "ddep-metadata://au.com.demolabs.ddep.abc025.transform/dataset/abc025_risk_assessment@latest",
                 "columns": {
-                  "0": "au.com.demolabs.ddep.metadata.v2.Dataset",
-                  "1": "au.com.demolabs.ddep.metadata.v2.Dataset"
-                },
-                "entity_type": "list",
-                "entity_value": "sourceDatasets",
-                "dropped_columns": []
+                  "customer_id": "string",
+                  "application_id": "string",
+                  "overall_risk_score": "int",
+                  "risk_category": "string",
+                  "credit_history_score": "decimal(5,2)",
+                  "payment_behavior_score": "decimal(5,2)",
+                  "debt_burden_score": "decimal(5,2)",
+                  "has_recent_defaults": "boolean",
+                  "ddep_year": "int",
+                  "ddep_month": "int",
+                  "ddep_day": "int"
+                }
+              },
+              "sourceDatasets[1]": {
+                "id": "0a932ef8",
+                "name": "sourceDatasets[1]",
+                "entity_type": "au.com.demolabs.ddep.metadata.v2.Dataset",
+                "entity_value": "ddep-metadata://au.com.demolabs.ddep.abc025.transform/dataset/abc025_financial_analysis@latest",
+                "columns": {
+                  "application_id": "string",
+                  "customer_id": "string",
+                  "debt_to_asset_ratio": "decimal(10,4)",
+                  "debt_service_coverage_ratio": "decimal(10,4)",
+                  "current_ratio": "decimal(10,4)",
+                  "monthly_free_cash_flow": "decimal(15,2)",
+                  "estimated_monthly_payment": "decimal(15,2)",
+                  "payment_to_income_ratio": "decimal(10,4)",
+                  "payment_to_free_cash_flow_ratio": "decimal(10,4)",
+                  "repayment_capacity": "string",
+                  "ddep_year": "int",
+                  "ddep_month": "int",
+                  "ddep_day": "int"
+                }
               },
               "risk_df": {
                 "id": "8f87f3af",
@@ -537,18 +558,6 @@
                 "entity_value": "Loan decisions with approved amounts and processing date",
                 "dropped_columns": []
               },
-              "decision_stats": {
-                "id": "94bd86d1",
-                "name": "decision_stats",
-                "columns": {
-                  "0": "Row"
-                },
-                "entity_type": "list",
-                "entity_value": [
-                  "List of decision status counts"
-                ],
-                "dropped_columns": []
-              },
               "targetDatasets_0": {
                 "id": "dbba155d",
                 "name": "targetDatasets_0",
@@ -582,7 +591,7 @@
               }
             },
             "operation": {
-              "sourceDatasets_risk_df": {
+              "sourceDatasets[0]_risk_df": {
                 "code_info": {
                   "code": "risk_df = context.dataframes[stage.sourceDatasets[0]]",
                   "lineno": "116",
@@ -591,7 +600,17 @@
                 },
                 "operation": "Copy",
                 "source_columns": [
-                  "0"
+                  "customer_id",
+                  "application_id",
+                  "overall_risk_score",
+                  "risk_category",
+                  "credit_history_score",
+                  "payment_behavior_score",
+                  "debt_burden_score",
+                  "has_recent_defaults",
+                  "ddep_year",
+                  "ddep_month",
+                  "ddep_day"
                 ],
                 "source_entity": "65fa7386",
                 "target_columns": [
@@ -609,10 +628,10 @@
                 ],
                 "target_entity": "8f87f3af",
                 "operation_description": "Copy column without modification",
-                "source_entity_name": "sourceDatasets",
+                "source_entity_name": "sourceDatasets[0]",
                 "target_entity_name": "risk_df"
               },
-              "sourceDatasets_financial_df": {
+              "sourceDatasets[1]_financial_df": {
                 "code_info": {
                   "code": "financial_df = context.dataframes[stage.sourceDatasets[1]]",
                   "lineno": "117",
@@ -621,7 +640,19 @@
                 },
                 "operation": "Copy",
                 "source_columns": [
-                  "1"
+                  "application_id",
+                  "customer_id",
+                  "debt_to_asset_ratio",
+                  "debt_service_coverage_ratio",
+                  "current_ratio",
+                  "monthly_free_cash_flow",
+                  "estimated_monthly_payment",
+                  "payment_to_income_ratio",
+                  "payment_to_free_cash_flow_ratio",
+                  "repayment_capacity",
+                  "ddep_year",
+                  "ddep_month",
+                  "ddep_day"
                 ],
                 "source_entity": "65fa7386",
                 "target_columns": [
@@ -641,7 +672,7 @@
                 ],
                 "target_entity": "e734f468",
                 "operation_description": "Copy column without modification",
-                "source_entity_name": "sourceDatasets",
+                "source_entity_name": "sourceDatasets[1]",
                 "target_entity_name": "financial_df"
               },
               "risk_df_joined_df": {
@@ -1050,8 +1081,10 @@
           "repartition_loan_decision": {
             "dataframe": {
               "abc025_loan_decision": {
-                "id": "2f25d1f8",
+                "id": "947ea376",
                 "name": "abc025_loan_decision",
+                "entity_type": "dataframe",
+                "entity_value": "ddep-metadata://au.com.demolabs.ddep.abc025.transform/dataset/abc025_loan_decision@latest",
                 "columns": {
                   "customer_id": "string",
                   "application_id": "string",
@@ -1075,14 +1108,13 @@
                   "interest_rate": "decimal(5,2)",
                   "decision_status": "string",
                   "approved_amount": "decimal(15,2)"
-                },
-                "entity_type": "dataframe",
-                "entity_value": "ddep-metadata://au.com.demolabs.ddep.abc025.transform/dataset/abc025_loan_decision@latest",
-                "dropped_columns": []
+                }
               },
               "abc025_loan_decision_1": {
-                "id": "c2b9d7a5",
+                "id": "6c95415a",
                 "name": "abc025_loan_decision",
+                "entity_type": "dataframe",
+                "entity_value": "ddep-metadata://au.com.demolabs.ddep.abc025.transform/dataset/abc025_loan_decision@latest",
                 "columns": {
                   "customer_id": "string",
                   "application_id": "string",
@@ -1106,19 +1138,16 @@
                   "interest_rate": "decimal(5,2)",
                   "decision_status": "string",
                   "approved_amount": "decimal(15,2)"
-                },
-                "entity_type": "dataframe",
-                "entity_value": "ddep-metadata://au.com.demolabs.ddep.abc025.transform/dataset/abc025_loan_decision@latest",
-                "dropped_columns": []
+                }
               }
             },
             "operation": {
               "abc025_loan_decision_abc025_loan_decision": {
                 "code_info": {
                   "code": "{'name': 'repartition_loan_decision', 'description': 'Repartition loan decision data before final export', 'conditionals': [], 'dataset': 'ddep-metadata://au.com.demolabs.ddep.abc025.transform/dataset/abc025_loan_decision@latest', 'strategy': {'partitions': 10, '$': 'au.com.demolabs.ddep.metadata.v2.process.stage.LiteralRepartitionStrategy'}, 'columns': [], '$': 'au.com.demolabs.ddep.metadata.v2.process.stage.RepartitionDataframeStage'}",
-                  "lineno": 1,
+                  "lineno": "1",
                   "file_path": "repartition_loan_decision",
-                  "end_lineno": 1
+                  "end_lineno": "12"
                 },
                 "operation": "repartition",
                 "source_columns": [
@@ -1145,7 +1174,7 @@
                   "decision_status",
                   "approved_amount"
                 ],
-                "source_entity": "2f25d1f8",
+                "source_entity": "947ea376",
                 "target_columns": [
                   "customer_id",
                   "application_id",
@@ -1170,7 +1199,7 @@
                   "decision_status",
                   "approved_amount"
                 ],
-                "target_entity": "c2b9d7a5",
+                "target_entity": "6c95415a",
                 "operation_description": "Redistribute data across 10 partitions",
                 "source_entity_name": "abc025_loan_decision",
                 "target_entity_name": "abc025_loan_decision"
@@ -1390,7 +1419,7 @@
           "calculate_additional_metrics_columnTransforms_0": {
             "dataframe": {
               "abc025_final_export": {
-                "id": "2f9334ab",
+                "id": "3fdb84e1",
                 "name": "abc025_final_export",
                 "entity_type": "Pipeline task intermediate Dataset",
                 "entity_value": "ddep-metadata://au.com.demolabs.ddep.abc025.transform/dataset/abc025_final_export@latest",
@@ -1408,10 +1437,10 @@
                 }
               },
               "tmp_abc025_final_export": {
-                "id": "1c37c1f1",
+                "id": "6b0f7935",
                 "name": "tmp_abc025_final_export",
                 "entity_type": "Pipeline task intermediate Dataset",
-                "entity_value": "Temporary table for abc025_final_export with calculated monthly payment",
+                "entity_value": "Temporary table with calculated monthly payment",
                 "columns": {
                   "application_id": "string",
                   "customer_id": "string",
@@ -1427,10 +1456,10 @@
                 }
               },
               "abc025_final_export_1": {
-                "id": "05ad3aa9",
+                "id": "d96f2481",
                 "name": "abc025_final_export",
                 "entity_type": "Pipeline task final Dataset",
-                "entity_value": "Final table for abc025_final_export with calculated monthly payment",
+                "entity_value": "Final table with calculated monthly payment",
                 "columns": {
                   "application_id": "string",
                   "customer_id": "string",
@@ -1449,10 +1478,10 @@
             "operation": {
               "abc025_final_export_tmp_abc025_final_export": {
                 "code_info": {
-                  "lineno": "3",
-                  "end_lineno": "",
-                  "file_path": "DDEP_ABC025_ING_004_calculate_additional_metrics_columnTransforms_0_inline_sql.sql",
-                  "code": "spark.sql(\"CREATE TEMPORARY TABLE tmp_abc025_final_export AS SELECT *, CAST((approved_amount * (interest_rate/1200) * POWER(1 + interest_rate/1200, 360)) / (POWER(1 + interest_rate/1200, 360) - 1) AS DECIMAL(15, 2)) AS monthly_payment FROM abc025_final_export\")"
+                  "code": "spark.sql(\"\"\"CREATE TEMPORARY TABLE tmp_abc025_final_export AS SELECT *, CAST((approved_amount * (interest_rate/1200) * POWER(1 + interest_rate/1200, 360)) / (POWER(1 + interest_rate/1200, 360) - 1) AS DECIMAL(15, 2)) AS monthly_payment FROM abc025_final_export;\"\"\")",
+                  "lineno": "1",
+                  "file_path": "DDEP_ABC025_ING_004_calculate_additional_metrics_columnTransforms_0_inline_sql",
+                  "end_lineno": "12"
                 },
                 "operation": "Copy",
                 "source_columns": [
@@ -1467,7 +1496,7 @@
                   "ddep_month",
                   "ddep_day"
                 ],
-                "source_entity": "2f9334ab",
+                "source_entity": "3fdb84e1",
                 "target_columns": [
                   "application_id",
                   "customer_id",
@@ -1480,38 +1509,38 @@
                   "ddep_month",
                   "ddep_day"
                 ],
-                "target_entity": "1c37c1f1",
-                "operation_description": "Copy application_id from source table",
+                "target_entity": "6b0f7935",
+                "operation_description": "Copy column without modification",
                 "source_entity_name": "abc025_final_export",
                 "target_entity_name": "tmp_abc025_final_export"
               },
               "abc025_final_export_tmp_abc025_final_export_1": {
                 "code_info": {
-                  "lineno": "3",
-                  "end_lineno": "",
-                  "file_path": "DDEP_ABC025_ING_004_calculate_additional_metrics_columnTransforms_0_inline_sql.sql",
-                  "code": "spark.sql(\"CREATE TEMPORARY TABLE tmp_abc025_final_export AS SELECT *, CAST((approved_amount * (interest_rate/1200) * POWER(1 + interest_rate/1200, 360)) / (POWER(1 + interest_rate/1200, 360) - 1) AS DECIMAL(15, 2)) AS monthly_payment FROM abc025_final_export\")"
+                  "code": "spark.sql(\"\"\"CREATE TEMPORARY TABLE tmp_abc025_final_export AS SELECT *, CAST((approved_amount * (interest_rate/1200) * POWER(1 + interest_rate/1200, 360)) / (POWER(1 + interest_rate/1200, 360) - 1) AS DECIMAL(15, 2)) AS monthly_payment FROM abc025_final_export;\"\"\")",
+                  "lineno": "1",
+                  "file_path": "DDEP_ABC025_ING_004_calculate_additional_metrics_columnTransforms_0_inline_sql",
+                  "end_lineno": "12"
                 },
                 "operation": "Build Composite Column",
                 "source_columns": [
                   "approved_amount",
                   "interest_rate"
                 ],
-                "source_entity": "2f9334ab",
+                "source_entity": "3fdb84e1",
                 "target_columns": [
                   "monthly_payment"
                 ],
-                "target_entity": "1c37c1f1",
-                "operation_description": "Calculate monthly payment as approved_amount times interest_rate divided by 1200 times power of 1 plus interest_rate divided by 1200 to the power of 360 divided by power of 1 plus interest_rate divided by 1200 to the power of 360 minus 1",
+                "target_entity": "6b0f7935",
+                "operation_description": "Calculate monthly payment as approved_amount times interest_rate over 360 months",
                 "source_entity_name": "abc025_final_export",
                 "target_entity_name": "tmp_abc025_final_export"
               },
               "tmp_abc025_final_export_abc025_final_export": {
                 "code_info": {
-                  "lineno": "5",
-                  "end_lineno": "",
-                  "file_path": "DDEP_ABC025_ING_004_calculate_additional_metrics_columnTransforms_0_inline_sql.sql",
-                  "code": "spark.sql(\"REPLACE INTO abc025_final_export SELECT * FROM tmp_abc025_final_export\")"
+                  "code": "spark.sql(\"\"\"REPLACE INTO abc025_final_export SELECT * FROM tmp_abc025_final_export\"\"\")",
+                  "lineno": "1",
+                  "file_path": "DDEP_ABC025_ING_004_calculate_additional_metrics_columnTransforms_0_inline_sql",
+                  "end_lineno": "12"
                 },
                 "operation": "Copy",
                 "source_columns": [
@@ -1527,7 +1556,7 @@
                   "ddep_day",
                   "monthly_payment"
                 ],
-                "source_entity": "1c37c1f1",
+                "source_entity": "6b0f7935",
                 "target_columns": [
                   "application_id",
                   "customer_id",
@@ -1541,8 +1570,8 @@
                   "ddep_day",
                   "monthly_payment"
                 ],
-                "target_entity": "05ad3aa9",
-                "operation_description": "Copy column application_id",
+                "target_entity": "d96f2481",
+                "operation_description": "Copy application_id from tmp_abc025_final_export to abc025_final_export",
                 "source_entity_name": "tmp_abc025_final_export",
                 "target_entity_name": "abc025_final_export"
               }
@@ -1551,7 +1580,7 @@
           "calculate_additional_metrics_columnTransforms_1": {
             "dataframe": {
               "abc025_final_export": {
-                "id": "d595df4f",
+                "id": "4eafff6e",
                 "name": "abc025_final_export",
                 "entity_type": "Pipeline task intermediate Dataset",
                 "entity_value": "ddep-metadata://au.com.demolabs.ddep.abc025.transform/dataset/abc025_final_export@latest",
@@ -1570,10 +1599,10 @@
                 }
               },
               "tmp_abc025_final_export": {
-                "id": "76761af8",
+                "id": "f45e8bfc",
                 "name": "tmp_abc025_final_export",
-                "entity_type": "DataFrame",
-                "entity_value": "Temporary table with total interest",
+                "entity_type": "Pipeline task intermediate Dataset",
+                "entity_value": "ddep-metadata://au.com.demolabs.ddep.abc025.transform/dataset/tmp_abc025_final_export@latest",
                 "columns": {
                   "application_id": "string",
                   "customer_id": "string",
@@ -1590,10 +1619,10 @@
                 }
               },
               "abc025_final_export_1": {
-                "id": "efbec741",
+                "id": "97aefcc6",
                 "name": "abc025_final_export",
-                "entity_type": "DataFrame",
-                "entity_value": "Final export table with total interest",
+                "entity_type": "Pipeline task intermediate Dataset",
+                "entity_value": "ddep-metadata://au.com.demolabs.ddep.abc025.transform/dataset/abc025_final_export@latest",
                 "columns": {
                   "application_id": "string",
                   "customer_id": "string",
@@ -1613,10 +1642,10 @@
             "operation": {
               "abc025_final_export_tmp_abc025_final_export": {
                 "code_info": {
-                  "lineno": "3",
-                  "end_lineno": "",
-                  "file_path": "DDEP_ABC025_ING_004_calculate_additional_metrics_columnTransforms_1_inline_sql.sql",
-                  "code": "spark.sql(\"CREATE TEMPORARY TABLE tmp_abc025_final_export AS SELECT *, CAST((monthly_payment * 360 - approved_amount) AS DECIMAL(15, 2)) AS total_interest FROM abc025_final_export\")"
+                  "code": "spark.sql(\"\"\"CREATE TEMPORARY TABLE tmp_abc025_final_export AS SELECT *, CAST((monthly_payment * 360 - approved_amount) AS DECIMAL(15, 2)) AS total_interest FROM abc025_final_export;\"\"\")",
+                  "lineno": "1",
+                  "file_path": "DDEP_ABC025_ING_004_calculate_additional_metrics_columnTransforms_1_inline_sql",
+                  "end_lineno": "12"
                 },
                 "operation": "Copy",
                 "source_columns": [
@@ -1632,7 +1661,7 @@
                   "ddep_day",
                   "monthly_payment"
                 ],
-                "source_entity": "d595df4f",
+                "source_entity": "4eafff6e",
                 "target_columns": [
                   "application_id",
                   "customer_id",
@@ -1646,38 +1675,38 @@
                   "ddep_day",
                   "monthly_payment"
                 ],
-                "target_entity": "76761af8",
-                "operation_description": "Copy column without modification",
+                "target_entity": "f45e8bfc",
+                "operation_description": "Copy application_id from original table",
                 "source_entity_name": "abc025_final_export",
                 "target_entity_name": "tmp_abc025_final_export"
               },
               "abc025_final_export_tmp_abc025_final_export_1": {
                 "code_info": {
-                  "lineno": "3",
-                  "end_lineno": "",
-                  "file_path": "DDEP_ABC025_ING_004_calculate_additional_metrics_columnTransforms_1_inline_sql.sql",
-                  "code": "spark.sql(\"CREATE TEMPORARY TABLE tmp_abc025_final_export AS SELECT *, CAST((monthly_payment * 360 - approved_amount) AS DECIMAL(15, 2)) AS total_interest FROM abc025_final_export\")"
+                  "code": "spark.sql(\"\"\"CREATE TEMPORARY TABLE tmp_abc025_final_export AS SELECT *, CAST((monthly_payment * 360 - approved_amount) AS DECIMAL(15, 2)) AS total_interest FROM abc025_final_export;\"\"\")",
+                  "lineno": "1",
+                  "file_path": "DDEP_ABC025_ING_004_calculate_additional_metrics_columnTransforms_1_inline_sql",
+                  "end_lineno": "12"
                 },
                 "operation": "Build Composite Column",
                 "source_columns": [
                   "monthly_payment",
                   "approved_amount"
                 ],
-                "source_entity": "d595df4f",
+                "source_entity": "4eafff6e",
                 "target_columns": [
                   "total_interest"
                 ],
-                "target_entity": "76761af8",
-                "operation_description": "Calculate total interest as (monthly_payment * 360 - approved_amount)",
+                "target_entity": "f45e8bfc",
+                "operation_description": "Calculate total_interest as (monthly_payment * 360 - approved_amount)",
                 "source_entity_name": "abc025_final_export",
                 "target_entity_name": "tmp_abc025_final_export"
               },
               "tmp_abc025_final_export_abc025_final_export": {
                 "code_info": {
-                  "lineno": "5",
-                  "end_lineno": "",
-                  "file_path": "DDEP_ABC025_ING_004_calculate_additional_metrics_columnTransforms_1_inline_sql.sql",
-                  "code": "spark.sql(\"REPLACE INTO abc025_final_export SELECT * FROM tmp_abc025_final_export\")"
+                  "code": "spark.sql(\"\"\"REPLACE INTO abc025_final_export SELECT * FROM tmp_abc025_final_export\"\"\")",
+                  "lineno": "1",
+                  "file_path": "DDEP_ABC025_ING_004_calculate_additional_metrics_columnTransforms_1_inline_sql",
+                  "end_lineno": "12"
                 },
                 "operation": "Copy",
                 "source_columns": [
@@ -1694,7 +1723,7 @@
                   "monthly_payment",
                   "total_interest"
                 ],
-                "source_entity": "76761af8",
+                "source_entity": "f45e8bfc",
                 "target_columns": [
                   "application_id",
                   "customer_id",
@@ -1709,8 +1738,8 @@
                   "monthly_payment",
                   "total_interest"
                 ],
-                "target_entity": "efbec741",
-                "operation_description": "Copy application_id from tmp_abc025_final_export",
+                "target_entity": "97aefcc6",
+                "operation_description": "Copy application_id from tmp_abc025_final_export to abc025_final_export",
                 "source_entity_name": "tmp_abc025_final_export",
                 "target_entity_name": "abc025_final_export"
               }
@@ -1719,29 +1748,10 @@
           "repartition_final_export": {
             "dataframe": {
               "abc025_final_export": {
-                "id": "62a7f0ac",
+                "id": "f49e5174",
                 "name": "abc025_final_export",
-                "columns": {
-                  "application_id": "string",
-                  "customer_id": "string",
-                  "risk_category": "string",
-                  "decision_status": "string",
-                  "approved_amount": "decimal(15,2)",
-                  "interest_rate": "decimal(5,2)",
-                  "decision_date": "date",
-                  "ddep_year": "int",
-                  "ddep_month": "int",
-                  "ddep_day": "int",
-                  "monthly_payment": "decimal(15,2)",
-                  "total_interest": "decimal(15,2)"
-                },
                 "entity_type": "dataframe",
                 "entity_value": "ddep-metadata://au.com.demolabs.ddep.abc025.transform/dataset/abc025_final_export@latest",
-                "dropped_columns": []
-              },
-              "abc025_final_export_1": {
-                "id": "94d06cf9",
-                "name": "abc025_final_export",
                 "columns": {
                   "application_id": "string",
                   "customer_id": "string",
@@ -1755,19 +1765,36 @@
                   "ddep_day": "int",
                   "monthly_payment": "decimal(15,2)",
                   "total_interest": "decimal(15,2)"
-                },
-                "entity_type": "parquet",
+                }
+              },
+              "abc025_final_export_1": {
+                "id": "a9a40070",
+                "name": "abc025_final_export",
+                "entity_type": "dataframe",
                 "entity_value": "ddep-metadata://au.com.demolabs.ddep.abc025.transform/dataset/abc025_final_export@latest",
-                "dropped_columns": []
+                "columns": {
+                  "application_id": "string",
+                  "customer_id": "string",
+                  "risk_category": "string",
+                  "decision_status": "string",
+                  "approved_amount": "decimal(15,2)",
+                  "interest_rate": "decimal(5,2)",
+                  "decision_date": "date",
+                  "ddep_year": "int",
+                  "ddep_month": "int",
+                  "ddep_day": "int",
+                  "monthly_payment": "decimal(15,2)",
+                  "total_interest": "decimal(15,2)"
+                }
               }
             },
             "operation": {
               "abc025_final_export_abc025_final_export": {
                 "code_info": {
                   "code": "{'name': 'repartition_final_export', 'description': 'Repartition final export data for writing', 'conditionals': [], 'dataset': 'ddep-metadata://au.com.demolabs.ddep.abc025.transform/dataset/abc025_final_export@latest', 'strategy': {'partitions': 10, '$': 'au.com.demolabs.ddep.metadata.v2.process.stage.LiteralRepartitionStrategy'}, 'columns': [], '$': 'au.com.demolabs.ddep.metadata.v2.process.stage.RepartitionDataframeStage'}",
-                  "lineno": 1,
+                  "lineno": "1",
                   "file_path": "repartition_final_export",
-                  "end_lineno": 1
+                  "end_lineno": "12"
                 },
                 "operation": "repartition",
                 "source_columns": [
@@ -1784,7 +1811,7 @@
                   "monthly_payment",
                   "total_interest"
                 ],
-                "source_entity": "94d06cf9",
+                "source_entity": "f49e5174",
                 "target_columns": [
                   "application_id",
                   "customer_id",
@@ -1799,7 +1826,7 @@
                   "monthly_payment",
                   "total_interest"
                 ],
-                "target_entity": "62a7f0ac",
+                "target_entity": "a9a40070",
                 "operation_description": "Redistribute data across 10 partitions",
                 "source_entity_name": "abc025_final_export",
                 "target_entity_name": "abc025_final_export"
@@ -1809,29 +1836,10 @@
           "write_target_abc025_final_export_parquet_target_connector": {
             "dataframe": {
               "abc025_final_export_parquet_target_connector": {
-                "id": "642cda29",
+                "id": "1f9eb453",
                 "name": "abc025_final_export_parquet_target_connector",
-                "columns": {
-                  "application_id": "string",
-                  "customer_id": "string",
-                  "risk_category": "string",
-                  "decision_status": "string",
-                  "approved_amount": "decimal(15,2)",
-                  "interest_rate": "decimal(5,2)",
-                  "decision_date": "date",
-                  "ddep_year": "int",
-                  "ddep_month": "int",
-                  "ddep_day": "int",
-                  "monthly_payment": "decimal(15,2)",
-                  "total_interest": "decimal(15,2)"
-                },
                 "entity_type": "dataframe",
                 "entity_value": "ddep-metadata://au.com.demolabs.ddep.abc025.transform/dataset/abc025_final_export@latest",
-                "dropped_columns": []
-              },
-              "ddep-storage://au.com.demolabs.ddep.abc025/abc025/abc025_final_export": {
-                "id": "d132b01b",
-                "name": "ddep-storage://au.com.demolabs.ddep.abc025/abc025/abc025_final_export",
                 "columns": {
                   "application_id": "string",
                   "customer_id": "string",
@@ -1845,19 +1853,36 @@
                   "ddep_day": "int",
                   "monthly_payment": "decimal(15,2)",
                   "total_interest": "decimal(15,2)"
-                },
+                }
+              },
+              "ddep-storage://au.com.demolabs.ddep.abc025/abc025/abc025_final_export": {
+                "id": "66500c3c",
+                "name": "ddep-storage://au.com.demolabs.ddep.abc025/abc025/abc025_final_export",
                 "entity_type": "au.com.demolabs.ddep.metadata.v2.process.connection.ProcessConnectionParquetFileTarget",
                 "entity_value": "ddep-metadata://au.com.demolabs.ddep.abc025.transform/dataset/abc025_final_export@latest",
-                "dropped_columns": []
+                "columns": {
+                  "application_id": "string",
+                  "customer_id": "string",
+                  "risk_category": "string",
+                  "decision_status": "string",
+                  "approved_amount": "decimal(15,2)",
+                  "interest_rate": "decimal(5,2)",
+                  "decision_date": "date",
+                  "ddep_year": "int",
+                  "ddep_month": "int",
+                  "ddep_day": "int",
+                  "monthly_payment": "decimal(15,2)",
+                  "total_interest": "decimal(15,2)"
+                }
               }
             },
             "operation": {
               "abc025_final_export_parquet_target_connector_ddep-storage://au.com.demolabs.ddep.abc025/abc025/abc025_final_export": {
                 "code_info": {
                   "code": "{'name': 'write_target_abc025_final_export_parquet_target_connector', 'description': 'Write final export data to parquet storage', 'conditionals': [], 'connectionName': 'abc025_final_export_parquet_target_connector', '$': 'au.com.demolabs.ddep.metadata.v2.process.stage.WriteTargetStage'}",
-                  "lineno": 1,
+                  "lineno": "1",
                   "file_path": "write_target_abc025_final_export_parquet_target_connector",
-                  "end_lineno": 1
+                  "end_lineno": "7"
                 },
                 "operation": "write",
                 "source_columns": [
@@ -1874,7 +1899,7 @@
                   "monthly_payment",
                   "total_interest"
                 ],
-                "source_entity": "642cda29",
+                "source_entity": "1f9eb453",
                 "target_columns": [
                   "application_id",
                   "customer_id",
@@ -1889,7 +1914,7 @@
                   "monthly_payment",
                   "total_interest"
                 ],
-                "target_entity": "d132b01b",
+                "target_entity": "66500c3c",
                 "operation_description": "Copy data from DataFrame to Parquet file",
                 "source_entity_name": "abc025_final_export_parquet_target_connector",
                 "target_entity_name": "ddep-storage://au.com.demolabs.ddep.abc025/abc025/abc025_final_export"
@@ -1899,29 +1924,10 @@
           "write_target_abc025_final_export_spark_metastore_target_connector": {
             "dataframe": {
               "abc025_final_export_spark_metastore_target_connector": {
-                "id": "b27a1053",
+                "id": "5bc4268d",
                 "name": "abc025_final_export_spark_metastore_target_connector",
-                "columns": {
-                  "application_id": "string",
-                  "customer_id": "string",
-                  "risk_category": "string",
-                  "decision_status": "string",
-                  "approved_amount": "decimal(15,2)",
-                  "interest_rate": "decimal(5,2)",
-                  "decision_date": "date",
-                  "ddep_year": "int",
-                  "ddep_month": "int",
-                  "ddep_day": "int",
-                  "monthly_payment": "decimal(15,2)",
-                  "total_interest": "decimal(15,2)"
-                },
                 "entity_type": "dataframe",
                 "entity_value": "ddep-metadata://au.com.demolabs.ddep.abc025.transform/dataset/abc025_final_export@latest",
-                "dropped_columns": []
-              },
-              "ddep-storage://au.com.demolabs.ddep.abc025/abc025/abc025_final_export": {
-                "id": "daec777d",
-                "name": "ddep-storage://au.com.demolabs.ddep.abc025/abc025/abc025_final_export",
                 "columns": {
                   "application_id": "string",
                   "customer_id": "string",
@@ -1935,19 +1941,36 @@
                   "ddep_day": "int",
                   "monthly_payment": "decimal(15,2)",
                   "total_interest": "decimal(15,2)"
-                },
+                }
+              },
+              "ddep-storage://au.com.demolabs.ddep.abc025/abc025/abc025_final_export": {
+                "id": "6b990067",
+                "name": "ddep-storage://au.com.demolabs.ddep.abc025/abc025/abc025_final_export",
                 "entity_type": "au.com.demolabs.ddep.metadata.v2.process.connection.ProcessConnectionSparkMetastoreExternalTableTarget",
                 "entity_value": "ddep-metadata://au.com.demolabs.ddep.abc025.transform/dataset/abc025_final_export@latest",
-                "dropped_columns": []
+                "columns": {
+                  "application_id": "string",
+                  "customer_id": "string",
+                  "risk_category": "string",
+                  "decision_status": "string",
+                  "approved_amount": "decimal(15,2)",
+                  "interest_rate": "decimal(5,2)",
+                  "decision_date": "date",
+                  "ddep_year": "int",
+                  "ddep_month": "int",
+                  "ddep_day": "int",
+                  "monthly_payment": "decimal(15,2)",
+                  "total_interest": "decimal(15,2)"
+                }
               }
             },
             "operation": {
               "abc025_final_export_spark_metastore_target_connector_ddep-storage://au.com.demolabs.ddep.abc025/abc025/abc025_final_export": {
                 "code_info": {
                   "code": "{'name': 'write_target_abc025_final_export_spark_metastore_target_connector', 'description': 'Update Spark metastore with final export data', 'conditionals': [], 'connectionName': 'abc025_final_export_spark_metastore_target_connector', '$': 'au.com.demolabs.ddep.metadata.v2.process.stage.WriteTargetStage'}",
-                  "lineno": 1,
+                  "lineno": "1",
                   "file_path": "write_target_abc025_final_export_spark_metastore_target_connector",
-                  "end_lineno": 1
+                  "end_lineno": "7"
                 },
                 "operation": "write",
                 "source_columns": [
@@ -1964,7 +1987,7 @@
                   "monthly_payment",
                   "total_interest"
                 ],
-                "source_entity": "b27a1053",
+                "source_entity": "5bc4268d",
                 "target_columns": [
                   "application_id",
                   "customer_id",
@@ -1979,8 +2002,8 @@
                   "monthly_payment",
                   "total_interest"
                 ],
-                "target_entity": "daec777d",
-                "operation_description": "Copy data to Spark metastore",
+                "target_entity": "6b990067",
+                "operation_description": "Copy data from DataFrame to Spark metastore",
                 "source_entity_name": "abc025_final_export_spark_metastore_target_connector",
                 "target_entity_name": "ddep-storage://au.com.demolabs.ddep.abc025/abc025/abc025_final_export"
               }
